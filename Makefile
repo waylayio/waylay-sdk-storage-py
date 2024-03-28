@@ -134,6 +134,8 @@ ci-install-types: ci-install-api ### Install the environment including types wit
 ci-install-api: _install_requirements ### Install the minimal environment with frozen requirements
 	pip install './${API_FOLDER}[dev]'
 
+ci-test: exec-test ### perform ci unit tests
+
 _install_requirements:
 	pip install --upgrade pip
 	pip install -r requirements.txt

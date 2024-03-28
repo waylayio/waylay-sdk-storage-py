@@ -30,7 +30,7 @@ jobs:
       - name: code qa
         run: make ci-code-qa
       - name: unit tests
-        run: make test
+        run: make ci-test
 
   test-minimal:
     runs-on: ubuntu-latest
@@ -50,7 +50,7 @@ jobs:
       - name: install dependencies
         run: make ci-install-api
       - name: unit tests
-        run: make test
+        run: make ci-test
 
   publish-api:
     needs: 
