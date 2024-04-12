@@ -1,0 +1,11 @@
+LICENSE.txt
+pyproject.toml
+src/waylay/services/storage/api/__init__.py
+src/waylay/services/storage/api/about_api.py
+src/waylay/services/storage/api/bucket_api.py
+src/waylay/services/storage/api/object_api.py
+src/waylay/services/storage/api/py.typed
+src/waylay/services/storage/api/subscription_api.py
+src/waylay/services/storage/service/__init__.py
+src/waylay/services/storage/service/py.typed
+src/waylay/services/storage/service/service.py

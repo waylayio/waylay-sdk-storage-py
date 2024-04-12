@@ -1,0 +1,3 @@
+pydantic ~= 2.6
+typing-extensions ~= 4.9
+waylay-sdk-core@git+https://github.com/waylayio/waylay-sdk-py@cc464ef9ee120bc54ff6381add0c92a2d06e2944
