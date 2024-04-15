@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "waylay-sdk-storage"
-version = "0.4.1"
+version = "0.4.1.20240415"
 description = "Waylay Storage"
 authors = [
     { name = "Waylay", email = "info@waylay.io"}
