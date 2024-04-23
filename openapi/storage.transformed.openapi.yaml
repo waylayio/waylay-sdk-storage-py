@@ -920,7 +920,7 @@ paths:
         - About
       summary: Version
       description: Get the application version.
-      operationId: get_about
+      operationId: version_about
       responses:
         '200':
           description: Successful Response
@@ -928,10 +928,10 @@ paths:
             application/json:
               schema:
                 type: string
-                title: Response Get
+                title: Response Version
       security:
         - waylayApiKeySecret: []
-      x-py-method: get
+      x-py-method: version
       x-consumes-multipart: false
       x-consumes-urlencoded: false
       x-consumes-json: false

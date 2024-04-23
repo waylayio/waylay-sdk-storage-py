@@ -34,6 +34,8 @@ response = await waylay_client.demo.gadgets.combatulate_trinket(
     raw_response=False,
     select_path=None,
     response_type=None,
+    # optional flag to disable the validation of the request arguments when using typed requests
+    validate_request=True,
     # optional named arguments passed to the http client  (named)
     timeout=10.0,
 )

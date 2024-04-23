@@ -33,7 +33,6 @@ class CreateQuery(WaylayBaseModel):
     store: StrictStr | None = None
 
     model_config = ConfigDict(
-        validate_assignment=True,
         protected_namespaces=(),
         extra="allow",
         alias_generator=_create_query_alias_for,
@@ -74,7 +73,6 @@ class DeleteByQuery(WaylayBaseModel):
     max_keys: StrictInt | None = None
 
     model_config = ConfigDict(
-        validate_assignment=True,
         protected_namespaces=(),
         extra="allow",
         alias_generator=_delete_by_query_alias_for,
@@ -94,7 +92,6 @@ class GetQuery(WaylayBaseModel):
     store: StrictStr | None = None
 
     model_config = ConfigDict(
-        validate_assignment=True,
         protected_namespaces=(),
         extra="allow",
         alias_generator=_get_query_alias_for,
@@ -132,7 +129,6 @@ class ListQuery(WaylayBaseModel):
     max_keys: StrictInt | None = None
 
     model_config = ConfigDict(
-        validate_assignment=True,
         protected_namespaces=(),
         extra="allow",
         alias_generator=_list_query_alias_for,
@@ -173,7 +169,6 @@ class QueryQuery(WaylayBaseModel):
     max_keys: StrictInt | None = None
 
     model_config = ConfigDict(
-        validate_assignment=True,
         protected_namespaces=(),
         extra="allow",
         alias_generator=_query_query_alias_for,
@@ -193,7 +188,6 @@ class RemoveQuery(WaylayBaseModel):
     store: StrictStr | None = None
 
     model_config = ConfigDict(
-        validate_assignment=True,
         protected_namespaces=(),
         extra="allow",
         alias_generator=_remove_query_alias_for,
@@ -213,7 +207,6 @@ class ReplaceQuery(WaylayBaseModel):
     store: StrictStr | None = None
 
     model_config = ConfigDict(
-        validate_assignment=True,
         protected_namespaces=(),
         extra="allow",
         alias_generator=_replace_query_alias_for,
