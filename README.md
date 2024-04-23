@@ -36,22 +36,15 @@ from waylay.sdk.api.api_exceptions import ApiError
 waylay_client = WaylayClient.from_profile()
 
 # Note that the typed model classes for responses/parameters/... are only available when `waylay-sdk-storage-types` is installed
-from waylay.services.storage.models.tenant_status_report import TenantStatusReport
 try:
-    # Status
-    # calls `GET /storage/v1/status`
-    api_response = await waylay_client.storage.about.status(
-        # query parameters:
-        query = {
-            'include_buckets': True
-            'include_queues': True
-            'include_disk_usage': False
-        },
+    # Version
+    # calls `GET /storage/v1/`
+    api_response = await waylay_client.storage.about.version(
     )
-    print("The response of storage.about.status:\n")
+    print("The response of storage.about.version:\n")
     pprint(api_response)
 except ApiError as e:
-    print("Exception when calling storage.about.status: %s\n" % e)
+    print("Exception when calling storage.about.version: %s\n" % e)
 ```
 
 
@@ -63,8 +56,8 @@ All URIs are relative to *https://api.waylay.io*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-*AboutApi* | [**get**](docs/AboutApi.md#get) | **GET** /storage/v1/ | Version
 *AboutApi* | [**status**](docs/AboutApi.md#status) | **GET** /storage/v1/status | Status
+*AboutApi* | [**version**](docs/AboutApi.md#version) | **GET** /storage/v1/ | Version
 *BucketApi* | [**get**](docs/BucketApi.md#get) | **GET** /storage/v1/bucket/{bucket_name} | Get Bucket
 *BucketApi* | [**list**](docs/BucketApi.md#list) | **GET** /storage/v1/bucket | List Buckets
 *ObjectApi* | [**copy_or_move**](docs/ObjectApi.md#copy_or_move) | **PUT** /storage/v1/bucket/{bucket_name}/{target_path} | Copy Or Move Object

@@ -764,7 +764,7 @@ paths:
       - About
       summary: Version
       description: Get the application version.
-      operationId: get_about
+      operationId: version_about
       responses:
         '200':
           description: Successful Response
@@ -772,7 +772,7 @@ paths:
             application/json:
               schema:
                 type: string
-                title: Response Get
+                title: Response Version
       security: *id001
   /storage/v1/status:
     get:
