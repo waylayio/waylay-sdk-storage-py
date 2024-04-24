@@ -37,7 +37,6 @@ class CopyOrMoveQuery(WaylayBaseModel):
     store: StrictStr | None = None
 
     model_config = ConfigDict(
-        validate_assignment=True,
         protected_namespaces=(),
         extra="allow",
         alias_generator=_copy_or_move_query_alias_for,
@@ -60,7 +59,6 @@ class CreateFolderQuery(WaylayBaseModel):
     store: StrictStr | None = None
 
     model_config = ConfigDict(
-        validate_assignment=True,
         protected_namespaces=(),
         extra="allow",
         alias_generator=_create_folder_query_alias_for,
@@ -122,7 +120,6 @@ class ListQuery(WaylayBaseModel):
     content_type: StrictStr | None = None
 
     model_config = ConfigDict(
-        validate_assignment=True,
         protected_namespaces=(),
         extra="allow",
         alias_generator=_list_query_alias_for,
@@ -154,7 +151,6 @@ class RemoveQuery(WaylayBaseModel):
     store: StrictStr | None = None
 
     model_config = ConfigDict(
-        validate_assignment=True,
         protected_namespaces=(),
         extra="allow",
         alias_generator=_remove_query_alias_for,

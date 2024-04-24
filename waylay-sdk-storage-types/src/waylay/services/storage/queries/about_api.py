@@ -18,6 +18,21 @@ from pydantic import (
 from waylay.sdk.api._models import BaseModel as WaylayBaseModel
 
 
+def _get_query_alias_for(field_name: str) -> str:
+    return field_name
+
+
+class GetQuery(WaylayBaseModel):
+    """Model for `get` query parameters."""
+
+    model_config = ConfigDict(
+        protected_namespaces=(),
+        extra="allow",
+        alias_generator=_get_query_alias_for,
+        populate_by_name=True,
+    )
+
+
 def _status_query_alias_for(field_name: str) -> str:
     if field_name == "store":
         return "store"
@@ -39,25 +54,8 @@ class StatusQuery(WaylayBaseModel):
     include_disk_usage: StrictBool | None = None
 
     model_config = ConfigDict(
-        validate_assignment=True,
         protected_namespaces=(),
         extra="allow",
         alias_generator=_status_query_alias_for,
-        populate_by_name=True,
-    )
-
-
-def _version_query_alias_for(field_name: str) -> str:
-    return field_name
-
-
-class VersionQuery(WaylayBaseModel):
-    """Model for `version` query parameters."""
-
-    model_config = ConfigDict(
-        validate_assignment=True,
-        protected_namespaces=(),
-        extra="allow",
-        alias_generator=_version_query_alias_for,
         populate_by_name=True,
     )

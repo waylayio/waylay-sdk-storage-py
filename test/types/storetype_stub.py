@@ -44,11 +44,16 @@ class STORETYPEStub:
     @classmethod
     def create_json(cls):
         """Create a dict stub instance."""
-        return store_type_faker.generate()
+        return store_type_faker.generate(use_defaults=True, use_examples=True)
 
     @classmethod
     def create_instance(cls) -> "STORETYPE":
         """Create STORETYPE stub instance."""
         if not MODELS_AVAILABLE:
             raise ImportError("Models must be installed to create class stubs")
-        return STORETYPEAdapter.validate_python(cls.create_json())
+        json = cls.create_json()
+        if not json:
+            # use backup example based on the pydantic model schema
+            backup_faker = JSF(STORETYPEAdapter.json_schema(), allow_none_optionals=1)
+            json = backup_faker.generate(use_defaults=True, use_examples=True)
+        return STORETYPEAdapter.validate_python(json, context={"skip_validation": True})

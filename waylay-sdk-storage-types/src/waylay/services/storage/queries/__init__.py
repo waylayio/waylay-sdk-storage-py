@@ -3,7 +3,7 @@
 
 This code was generated from the OpenAPI documentation of 'Waylay Storage'
 
-version: v0.4.1
+version: 0.4.2
 
  Manage storage buckets and subscriptions.
 
