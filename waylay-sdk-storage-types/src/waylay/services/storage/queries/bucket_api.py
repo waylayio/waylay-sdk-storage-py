@@ -29,7 +29,6 @@ class GetQuery(WaylayBaseModel):
     store: StrictStr | None = None
 
     model_config = ConfigDict(
-        validate_assignment=True,
         protected_namespaces=(),
         extra="allow",
         alias_generator=_get_query_alias_for,
@@ -49,7 +48,6 @@ class ListQuery(WaylayBaseModel):
     store: StrictStr | None = None
 
     model_config = ConfigDict(
-        validate_assignment=True,
         protected_namespaces=(),
         extra="allow",
         alias_generator=_list_query_alias_for,

@@ -64,7 +64,7 @@ typecheck: install ### Run type checks
 code-qa: install ### perform code quality checks
 	@${VENV_TYPES_ACTIVATE} && make exec-code-qa
 
-test: test-types test-notypes ### Run unit tests with and without types installed
+test: test-notypes test-types ### Run unit tests with and without types installed
 
 test-types: install-types ### Run unit tests with types installed
 	@${VENV_TYPES_ACTIVATE} && make exec-test

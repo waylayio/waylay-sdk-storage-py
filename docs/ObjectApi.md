@@ -26,7 +26,7 @@ Copy or move object to new location.
 ```python
 from pprint import pprint
 
-# Import the waylay-client from the waylay-sdk package
+# Import the waylay-client from the waylay-sdk-core package
 from waylay.sdk.client import WaylayClient
 from waylay.sdk.api.api_exceptions import ApiError
 
@@ -107,7 +107,7 @@ Create a (virtual) folder.  * (`all=true`) force creation of a hidden folder,   
 ```python
 from pprint import pprint
 
-# Import the waylay-client from the waylay-sdk package
+# Import the waylay-client from the waylay-sdk-core package
 from waylay.sdk.client import WaylayClient
 from waylay.sdk.api.api_exceptions import ApiError
 
@@ -187,7 +187,7 @@ List, inspect or sign objects.  * list the objects of a bucket with {object_path
 ```python
 from pprint import pprint
 
-# Import the waylay-client from the waylay-sdk package
+# Import the waylay-client from the waylay-sdk-core package
 from waylay.sdk.client import WaylayClient
 from waylay.sdk.api.api_exceptions import ApiError
 
@@ -285,7 +285,7 @@ Remove the object or folder at {object_path}.  An {object_path} ending in a `/` 
 ```python
 from pprint import pprint
 
-# Import the waylay-client from the waylay-sdk package
+# Import the waylay-client from the waylay-sdk-core package
 from waylay.sdk.client import WaylayClient
 from waylay.sdk.api.api_exceptions import ApiError
 

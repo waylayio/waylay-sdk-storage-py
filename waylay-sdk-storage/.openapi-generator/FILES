@@ -1,5 +1,4 @@
 LICENSE.txt
-README.md
 pyproject.toml
 src/waylay/services/storage/api/__init__.py
 src/waylay/services/storage/api/about_api.py

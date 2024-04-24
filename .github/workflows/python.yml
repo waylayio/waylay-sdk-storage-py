@@ -134,4 +134,3 @@ jobs:
       uses: pypa/gh-action-pypi-publish@release/v1
       with:
         packages-dir: waylay-sdk-storage-types/dist
-        password: ${{ secrets.PYPI_TYPES_PKG_API_TOKEN }}

@@ -4,7 +4,7 @@ info:
   description: |
 
     Manage storage buckets and subscriptions.
-  version: v0.4.1
+  version: 0.4.2
 paths:
   /storage/v1/bucket:
     get:
@@ -920,7 +920,7 @@ paths:
         - About
       summary: Version
       description: Get the application version.
-      operationId: version_about
+      operationId: get_about
       responses:
         '200':
           description: Successful Response
@@ -928,10 +928,10 @@ paths:
             application/json:
               schema:
                 type: string
-                title: Response Version
+                title: Response Get
       security:
         - waylayApiKeySecret: []
-      x-py-method: version
+      x-py-method: get
       x-consumes-multipart: false
       x-consumes-urlencoded: false
       x-consumes-json: false

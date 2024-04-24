@@ -93,3 +93,5 @@ test/types/validation_error_stub.py
 test/types/venttype_stub.py
 test/types/web_script_channel_config_stub.py
 test/types/web_script_channel_config_type_stub.py
+waylay-sdk-storage-types/README.md
+waylay-sdk-storage/README.md

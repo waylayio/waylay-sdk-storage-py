@@ -28,7 +28,7 @@ Create a new notification subscription on a bucket with a given or generated id.
 ```python
 from pprint import pprint
 
-# Import the waylay-client from the waylay-sdk package
+# Import the waylay-client from the waylay-sdk-core package
 from waylay.sdk.client import WaylayClient
 from waylay.sdk.api.api_exceptions import ApiError
 
@@ -106,7 +106,7 @@ Remove all notification subscription on a bucket that match a given event and/or
 ```python
 from pprint import pprint
 
-# Import the waylay-client from the waylay-sdk package
+# Import the waylay-client from the waylay-sdk-core package
 from waylay.sdk.client import WaylayClient
 from waylay.sdk.api.api_exceptions import ApiError
 
@@ -193,7 +193,7 @@ Fetch a notification subscription.
 ```python
 from pprint import pprint
 
-# Import the waylay-client from the waylay-sdk package
+# Import the waylay-client from the waylay-sdk-core package
 from waylay.sdk.client import WaylayClient
 from waylay.sdk.api.api_exceptions import ApiError
 
@@ -269,7 +269,7 @@ List notification subscriptions per bucket that have notification enabled.
 ```python
 from pprint import pprint
 
-# Import the waylay-client from the waylay-sdk package
+# Import the waylay-client from the waylay-sdk-core package
 from waylay.sdk.client import WaylayClient
 from waylay.sdk.api.api_exceptions import ApiError
 
@@ -352,7 +352,7 @@ List notification subscriptions for given bucket.
 ```python
 from pprint import pprint
 
-# Import the waylay-client from the waylay-sdk package
+# Import the waylay-client from the waylay-sdk-core package
 from waylay.sdk.client import WaylayClient
 from waylay.sdk.api.api_exceptions import ApiError
 
@@ -439,7 +439,7 @@ Remove a notification subscription.
 ```python
 from pprint import pprint
 
-# Import the waylay-client from the waylay-sdk package
+# Import the waylay-client from the waylay-sdk-core package
 from waylay.sdk.client import WaylayClient
 from waylay.sdk.api.api_exceptions import ApiError
 
@@ -517,7 +517,7 @@ Create or replace a notification subscription on a bucket with a given id.
 ```python
 from pprint import pprint
 
-# Import the waylay-client from the waylay-sdk package
+# Import the waylay-client from the waylay-sdk-core package
 from waylay.sdk.client import WaylayClient
 from waylay.sdk.api.api_exceptions import ApiError
 

@@ -1,5 +1,7 @@
 """Automatic pytest fixtures."""
 
+import random
+
 import httpx
 import pytest
 import starlette.requests as req
@@ -8,6 +10,7 @@ from waylay.sdk import ApiClient, WaylayClient, WaylayConfig
 from waylay.sdk.auth import NoCredentials
 from waylay.services.storage.service import StorageService
 
+random.seed(10)
 GATEWAY_URL = "http://example.io"
 
 

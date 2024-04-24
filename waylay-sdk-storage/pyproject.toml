@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "waylay-sdk-storage"
-version = "0.4.1b1"
+version = "0.4.2b20240423"
 description = "Waylay Storage"
 authors = [
     { name = "Waylay", email = "info@waylay.io"}
@@ -12,7 +12,7 @@ authors = [
 keywords = ["Waylay Storage"]
 requires-python = ">= 3.9"
 dependencies = [
-    "waylay-sdk ~= 0.0.4rc5",
+    "waylay-sdk-core ~= 0.2.1",
     "pydantic ~= 2.6",
     "typing-extensions ~= 4.10",
     "eval-type-backport ~= 0.1.3; python_version < '3.10'",
@@ -22,8 +22,9 @@ license={file = "LICENSE.txt"}
 
 [project.urls]
 Homepage = "https://www.waylay.io/"
-Documentation = "https://docs.waylay.io/#/"
+Documentation = "https://docs.waylay.io/#/api/?id=software-development-kits"
 Repository = "https://github.com/waylayio/waylay-sdk-storage-py.git"
+"Openapi Specification" = "https://docs.waylay.io/openapi/public/redocly/storage.html"
 
 [project.optional-dependencies]
 dev = [
