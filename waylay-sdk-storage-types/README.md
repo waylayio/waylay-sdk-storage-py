@@ -4,7 +4,7 @@ Manage storage buckets and subscriptions.
 
 
 This Python package is automatically generated based on the 
-Waylay Storage OpenAPI specification (API version: 0.4.1)
+Waylay Storage OpenAPI specification (API version: 0.4.2)
 For more information, please visit [the openapi specification](https://docs.waylay.io/openapi/public/redocly/storage.html).
 
 It is considered an extension of the waylay-sdk-storage package, and it consists of the typed model classes for all path params, query params, body params and responses for each of the api methods in `waylay-sdk-storage`.
@@ -34,15 +34,22 @@ from waylay.sdk.api.api_exceptions import ApiError
 waylay_client = WaylayClient.from_profile()
 
 # Note that the typed model classes for responses/parameters/... are only available when `waylay-sdk-storage-types` is installed
+from waylay.services.storage.models.tenant_status_report import TenantStatusReport
 try:
-    # Version
-    # calls `GET /storage/v1/`
-    api_response = await waylay_client.storage.about.version(
+    # Status
+    # calls `GET /storage/v1/status`
+    api_response = await waylay_client.storage.about.status(
+        # query parameters:
+        query = {
+            'include_buckets': True
+            'include_queues': True
+            'include_disk_usage': False
+        },
     )
-    print("The response of storage.about.version:\n")
+    print("The response of storage.about.status:\n")
     pprint(api_response)
 except ApiError as e:
-    print("Exception when calling storage.about.version: %s\n" % e)
+    print("Exception when calling storage.about.status: %s\n" % e)
 ```
 
 
