@@ -46,6 +46,45 @@ def test_registered(waylay_client: WaylayClient):
     assert isinstance(waylay_client.storage.about, AboutApi)
 
 
+def _get_set_mock_response(httpx_mock: HTTPXMock, gateway_url: str):
+    mock_response = "''"
+    httpx_mock_kwargs = {
+        "method": "GET",
+        "url": re.compile(f"^{gateway_url}/storage/v1/(\\?.*)?"),
+        "content": json.dumps(mock_response, default=str),
+        "status_code": 200,
+    }
+    httpx_mock.add_response(**httpx_mock_kwargs)
+
+
+@pytest.mark.asyncio
+@pytest.mark.skipif(not MODELS_AVAILABLE, reason="Types not installed.")
+async def test_get(service: StorageService, gateway_url: str, httpx_mock: HTTPXMock):
+    """Test case for get
+    Version
+    """
+    # set path params
+    kwargs = {}
+    _get_set_mock_response(httpx_mock, gateway_url)
+    resp = await service.about.get(**kwargs)
+    check_type(resp, Union[str,])
+
+
+@pytest.mark.asyncio
+@pytest.mark.skipif(MODELS_AVAILABLE, reason="Types installed.")
+async def test_get_without_types(
+    service: StorageService, gateway_url: str, httpx_mock: HTTPXMock
+):
+    """Test case for get with models not installed
+    Version
+    """
+    # set path params
+    kwargs = {}
+    _get_set_mock_response(httpx_mock, gateway_url)
+    resp = await service.about.get(**kwargs)
+    check_type(resp, Model)
+
+
 def _status_set_mock_response(httpx_mock: HTTPXMock, gateway_url: str):
     mock_response = TenantStatusReportStub.create_json()
     httpx_mock_kwargs = {
@@ -97,45 +136,4 @@ async def test_status_without_types(
     }
     _status_set_mock_response(httpx_mock, gateway_url)
     resp = await service.about.status(**kwargs)
-    check_type(resp, Model)
-
-
-def _version_set_mock_response(httpx_mock: HTTPXMock, gateway_url: str):
-    mock_response = "''"
-    httpx_mock_kwargs = {
-        "method": "GET",
-        "url": re.compile(f"^{gateway_url}/storage/v1/(\\?.*)?"),
-        "content": json.dumps(mock_response, default=str),
-        "status_code": 200,
-    }
-    httpx_mock.add_response(**httpx_mock_kwargs)
-
-
-@pytest.mark.asyncio
-@pytest.mark.skipif(not MODELS_AVAILABLE, reason="Types not installed.")
-async def test_version(
-    service: StorageService, gateway_url: str, httpx_mock: HTTPXMock
-):
-    """Test case for version
-    Version
-    """
-    # set path params
-    kwargs = {}
-    _version_set_mock_response(httpx_mock, gateway_url)
-    resp = await service.about.version(**kwargs)
-    check_type(resp, Union[str,])
-
-
-@pytest.mark.asyncio
-@pytest.mark.skipif(MODELS_AVAILABLE, reason="Types installed.")
-async def test_version_without_types(
-    service: StorageService, gateway_url: str, httpx_mock: HTTPXMock
-):
-    """Test case for version with models not installed
-    Version
-    """
-    # set path params
-    kwargs = {}
-    _version_set_mock_response(httpx_mock, gateway_url)
-    resp = await service.about.version(**kwargs)
     check_type(resp, Model)
