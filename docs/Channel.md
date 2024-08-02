@@ -5,7 +5,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**type** | [**SystemChannelConfigType**](SystemChannelConfigType.md) |  | [optional] 
+**type** | [**SystemChannelConfigType**](SystemChannelConfigType.md) |  | [optional] [default to SystemChannelConfigType.SYSTEM]
 **description** | **str** |  | [optional] 
 **payload** | [**PayloadConfig**](PayloadConfig.md) |  | [optional] 
 **authentication** | [**AuthenticationConfig**](AuthenticationConfig.md) |  | [optional] 

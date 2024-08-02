@@ -4,7 +4,7 @@ info:
   description: |
 
     Manage storage buckets and subscriptions.
-  version: 0.4.2
+  version: 0.4.4
 paths:
   /storage/v1/bucket:
     get:

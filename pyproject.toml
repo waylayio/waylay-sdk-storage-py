@@ -2,7 +2,6 @@
 include = ["pyproject.toml", "test/**/*.py"]
 
 [tool.ruff.lint]
-ignore-init-module-imports = true
 # allow duplicate imports
 ignore=["F811"]
 # https://docs.astral.sh/ruff/rules

@@ -26,7 +26,7 @@ from ..models.system_channel_config_type import SystemChannelConfigType
 class SystemChannelConfig(WaylayBaseModel):
     """Channel configuration for functionality that is fixed by the platform.  This cannot be selected by the end user.."""
 
-    type: SystemChannelConfigType | None = None
+    type: SystemChannelConfigType | None = SystemChannelConfigType.SYSTEM
     description: StrictStr | None = None
     payload: PayloadConfig | None = None
     authentication: AuthenticationConfig | None = None
