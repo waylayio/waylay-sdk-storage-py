@@ -6,7 +6,7 @@ Channel configuration for invoking a waylay webscript.
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**type** | [**WebScriptChannelConfigType**](WebScriptChannelConfigType.md) |  | [optional] 
+**type** | [**WebScriptChannelConfigType**](WebScriptChannelConfigType.md) |  | [optional] [default to WebScriptChannelConfigType.WEBSCRIPT]
 **description** | **str** |  | [optional] 
 **payload** | [**PayloadConfig**](PayloadConfig.md) |  | [optional] 
 **authentication** | [**AuthenticationConfig**](AuthenticationConfig.md) |  | [optional] 

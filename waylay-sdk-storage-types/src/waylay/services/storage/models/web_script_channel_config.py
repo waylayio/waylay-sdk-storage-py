@@ -27,7 +27,7 @@ from ..models.web_script_channel_config_type import WebScriptChannelConfigType
 class WebScriptChannelConfig(WaylayBaseModel):
     """Channel configuration for invoking a waylay webscript.."""
 
-    type: WebScriptChannelConfigType | None = None
+    type: WebScriptChannelConfigType | None = WebScriptChannelConfigType.WEBSCRIPT
     description: StrictStr | None = None
     payload: PayloadConfig | None = None
     authentication: AuthenticationConfig | None = None
