@@ -99,7 +99,7 @@ _bucket_model_schema = json.loads(
       "title" : " Links",
       "type" : "object",
       "additionalProperties" : {
-        "$ref" : "#/components/schemas/_Links"
+        "$ref" : "#/components/schemas/_Links_value"
       }
     },
     "alias" : {
@@ -139,7 +139,7 @@ _bucket_configuration_model_schema = json.loads(
       "title" : " Links",
       "type" : "object",
       "additionalProperties" : {
-        "$ref" : "#/components/schemas/_Links"
+        "$ref" : "#/components/schemas/_Links_value"
       }
     },
     "alias" : {
@@ -197,7 +197,7 @@ _bucket_listing_model_schema = json.loads(
       "title" : " Links",
       "type" : "object",
       "additionalProperties" : {
-        "$ref" : "#/components/schemas/_Links"
+        "$ref" : "#/components/schemas/_Links_value"
       }
     },
     "buckets" : {
@@ -224,7 +224,7 @@ _bucket_object_model_schema = json.loads(
       "title" : " Links",
       "type" : "object",
       "additionalProperties" : {
-        "$ref" : "#/components/schemas/_Links"
+        "$ref" : "#/components/schemas/_Links_value"
       }
     },
     "bucket" : {
@@ -285,7 +285,7 @@ _bucket_object_listing_model_schema = json.loads(
       "title" : " Links",
       "type" : "object",
       "additionalProperties" : {
-        "$ref" : "#/components/schemas/_Links"
+        "$ref" : "#/components/schemas/_Links_value"
       }
     },
     "objects" : {
@@ -396,7 +396,7 @@ _hal_entity_model_schema = json.loads(
       "title" : " Links",
       "type" : "object",
       "additionalProperties" : {
-        "$ref" : "#/components/schemas/_Links"
+        "$ref" : "#/components/schemas/_Links_value"
       }
     }
   },
@@ -422,6 +422,10 @@ _hal_link_model_schema = json.loads(
     },
     "form_data" : {
       "title" : "Form Data",
+      "type" : "object"
+    },
+    "headers" : {
+      "title" : "Headers",
       "type" : "object"
     }
   },
@@ -461,9 +465,9 @@ _http_validation_error_model_schema = json.loads(
 )
 MODEL_DEFINITIONS.update({"HTTPValidationError": _http_validation_error_model_schema})
 
-_links_model_schema = json.loads(
+_links_value_model_schema = json.loads(
     r"""{
-  "title" : "_Links",
+  "title" : "_Links_value",
   "anyOf" : [ {
     "$ref" : "#/components/schemas/HALLink"
   }, {
@@ -476,7 +480,7 @@ _links_model_schema = json.loads(
 """,
     object_hook=with_example_provider,
 )
-MODEL_DEFINITIONS.update({"_Links": _links_model_schema})
+MODEL_DEFINITIONS.update({"_Links_value": _links_value_model_schema})
 
 _location_inner_model_schema = json.loads(
     r"""{
@@ -646,7 +650,7 @@ _store_model_schema = json.loads(
       "title" : " Links",
       "type" : "object",
       "additionalProperties" : {
-        "$ref" : "#/components/schemas/_Links"
+        "$ref" : "#/components/schemas/_Links_value"
       }
     },
     "type" : {
@@ -677,7 +681,7 @@ _subscription_config_model_schema = json.loads(
       "title" : " Links",
       "type" : "object",
       "additionalProperties" : {
-        "$ref" : "#/components/schemas/_Links"
+        "$ref" : "#/components/schemas/_Links_value"
       }
     },
     "id" : {
@@ -719,7 +723,7 @@ _subscriptions_model_schema = json.loads(
       "title" : " Links",
       "type" : "object",
       "additionalProperties" : {
-        "$ref" : "#/components/schemas/_Links"
+        "$ref" : "#/components/schemas/_Links_value"
       }
     },
     "bucket" : {
@@ -756,7 +760,7 @@ _subscriptions_listing_model_schema = json.loads(
       "title" : " Links",
       "type" : "object",
       "additionalProperties" : {
-        "$ref" : "#/components/schemas/_Links"
+        "$ref" : "#/components/schemas/_Links_value"
       }
     },
     "buckets" : {

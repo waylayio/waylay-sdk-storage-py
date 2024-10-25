@@ -6,7 +6,7 @@ Output model representing a collection of HAL links.
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**links** | [**Dict[str, Links]**](Links.md) |  | [optional] 
+**links** | [**Dict[str, LinksValue]**](LinksValue.md) |  | [optional] 
 
 ## Example
 

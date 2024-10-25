@@ -6,7 +6,7 @@ List of Bucket representations.
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**links** | [**Dict[str, Links]**](Links.md) |  | [optional] 
+**links** | [**Dict[str, LinksValue]**](LinksValue.md) |  | [optional] 
 **buckets** | [**List[Bucket]**](Bucket.md) |  | 
 
 ## Example

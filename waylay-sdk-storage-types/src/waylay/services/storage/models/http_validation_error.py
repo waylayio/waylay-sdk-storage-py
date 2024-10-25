@@ -16,6 +16,7 @@ from typing import List
 from pydantic import (
     ConfigDict,
 )
+
 from waylay.sdk.api._models import BaseModel as WaylayBaseModel
 
 from ..models.validation_error import ValidationError

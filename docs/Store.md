@@ -6,7 +6,7 @@ Representation of a backend store.
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**links** | [**Dict[str, Links]**](Links.md) |  | [optional] 
+**links** | [**Dict[str, LinksValue]**](LinksValue.md) |  | [optional] 
 **type** | [**STORETYPE**](STORETYPE.md) |  | 
 **name** | **str** |  | 
 **url** | **str** |  | 

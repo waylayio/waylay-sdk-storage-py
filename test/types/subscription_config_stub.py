@@ -32,7 +32,7 @@ subscription_config_model_schema = json.loads(
       "title" : " Links",
       "type" : "object",
       "additionalProperties" : {
-        "$ref" : "#/components/schemas/_Links"
+        "$ref" : "#/components/schemas/_Links_value"
       }
     },
     "id" : {
@@ -84,7 +84,7 @@ class SubscriptionConfigStub:
         if not MODELS_AVAILABLE:
             raise ImportError("Models must be installed to create class stubs")
         json = cls.create_json()
-        if not json:
+        if json is None:
             # use backup example based on the pydantic model schema
             backup_faker = JSF(
                 SubscriptionConfigAdapter.json_schema(), allow_none_optionals=1

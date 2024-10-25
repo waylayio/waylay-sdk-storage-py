@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **href** | **str** |  | 
 **method** | **str** |  | [optional] 
 **form_data** | **object** |  | [optional] 
+**headers** | **object** |  | [optional] 
 
 ## Example
 

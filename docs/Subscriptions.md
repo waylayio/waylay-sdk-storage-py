@@ -6,7 +6,7 @@ Listing object for subscriptions.
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**links** | [**Dict[str, Links]**](Links.md) |  | [optional] 
+**links** | [**Dict[str, LinksValue]**](LinksValue.md) |  | [optional] 
 **bucket** | [**Bucket**](Bucket.md) |  | 
 **subscriptions** | [**List[SubscriptionConfig]**](SubscriptionConfig.md) |  | 
 **warnings** | **List[object]** |  | [optional] 

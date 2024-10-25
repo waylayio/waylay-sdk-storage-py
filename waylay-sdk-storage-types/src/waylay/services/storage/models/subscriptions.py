@@ -17,17 +17,18 @@ from pydantic import (
     ConfigDict,
     Field,
 )
+
 from waylay.sdk.api._models import BaseModel as WaylayBaseModel
 
 from ..models.bucket import Bucket
-from ..models.links import Links
+from ..models.links_value import LinksValue
 from ..models.subscription_config import SubscriptionConfig
 
 
 class Subscriptions(WaylayBaseModel):
     """Listing object for subscriptions.."""
 
-    links: Dict[str, Links] | None = Field(default=None, alias="_links")
+    links: Dict[str, LinksValue] | None = Field(default=None, alias="_links")
     bucket: Bucket
     subscriptions: List[SubscriptionConfig]
     warnings: List[Dict[str, Any]] | None = None

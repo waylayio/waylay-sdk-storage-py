@@ -6,7 +6,7 @@ List of storage object representations.
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**links** | [**Dict[str, Links]**](Links.md) |  | [optional] 
+**links** | [**Dict[str, LinksValue]**](LinksValue.md) |  | [optional] 
 **objects** | [**List[BucketObject]**](BucketObject.md) |  | 
 
 ## Example

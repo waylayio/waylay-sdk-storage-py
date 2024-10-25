@@ -17,16 +17,17 @@ from pydantic import (
     ConfigDict,
     Field,
 )
+
 from waylay.sdk.api._models import BaseModel as WaylayBaseModel
 
 from ..models.bucket_object import BucketObject
-from ..models.links import Links
+from ..models.links_value import LinksValue
 
 
 class BucketObjectListing(WaylayBaseModel):
     """List of storage object representations.."""
 
-    links: Dict[str, Links] | None = Field(default=None, alias="_links")
+    links: Dict[str, LinksValue] | None = Field(default=None, alias="_links")
     objects: List[BucketObject]
 
     model_config = ConfigDict(

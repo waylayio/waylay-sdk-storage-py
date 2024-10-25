@@ -22,7 +22,7 @@ docs/HALEntity.md
 docs/HALLink.md
 docs/HTTPMETHOD.md
 docs/HTTPValidationError.md
-docs/Links.md
+docs/LinksValue.md
 docs/LocationInner.md
 docs/NotificationQueueStatus.md
 docs/NotificationQueueStatusReport.md
@@ -73,7 +73,7 @@ test/types/hal_entity_stub.py
 test/types/hal_link_stub.py
 test/types/http_validation_error_stub.py
 test/types/httpmethod_stub.py
-test/types/links_stub.py
+test/types/links_value_stub.py
 test/types/location_inner_stub.py
 test/types/notification_queue_status_report_stub.py
 test/types/notification_queue_status_stub.py

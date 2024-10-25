@@ -17,15 +17,16 @@ from pydantic import (
     ConfigDict,
     Field,
 )
+
 from waylay.sdk.api._models import BaseModel as WaylayBaseModel
 
-from ..models.links import Links
+from ..models.links_value import LinksValue
 
 
 class HALEntity(WaylayBaseModel):
     """Output model representing a collection of HAL links.."""
 
-    links: Dict[str, Links] | None = Field(default=None, alias="_links")
+    links: Dict[str, LinksValue] | None = Field(default=None, alias="_links")
 
     model_config = ConfigDict(
         populate_by_name=True, protected_namespaces=(), extra="ignore"
