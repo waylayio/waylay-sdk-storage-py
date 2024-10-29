@@ -20,17 +20,18 @@ from pydantic import (
     StrictInt,
     StrictStr,
 )
+
 from waylay.sdk.api._models import BaseModel as WaylayBaseModel
 
 from ..models.bucketcreationstatus import BUCKETCREATIONSTATUS
-from ..models.links import Links
+from ..models.links_value import LinksValue
 from ..models.store import Store
 
 
 class BucketConfiguration(WaylayBaseModel):
     """Representation of a bucket configuration.."""
 
-    links: Dict[str, Links] | None = Field(default=None, alias="_links")
+    links: Dict[str, LinksValue] | None = Field(default=None, alias="_links")
     alias: StrictStr | None = None
     name: StrictStr
     store: Store | None = None

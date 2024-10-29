@@ -18,7 +18,7 @@ src/waylay/services/storage/models/hal_entity.py
 src/waylay/services/storage/models/hal_link.py
 src/waylay/services/storage/models/http_validation_error.py
 src/waylay/services/storage/models/httpmethod.py
-src/waylay/services/storage/models/links.py
+src/waylay/services/storage/models/links_value.py
 src/waylay/services/storage/models/location_inner.py
 src/waylay/services/storage/models/notification_queue_status.py
 src/waylay/services/storage/models/notification_queue_status_report.py

@@ -6,7 +6,7 @@ Representation of a storage bucket.
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**links** | [**Dict[str, Links]**](Links.md) |  | [optional] 
+**links** | [**Dict[str, LinksValue]**](LinksValue.md) |  | [optional] 
 **alias** | **str** |  | [optional] 
 **name** | **str** |  | 
 **store** | [**Store**](Store.md) |  | [optional] 

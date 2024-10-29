@@ -6,7 +6,7 @@ info:
     Manage storage buckets and subscriptions.
 
     '
-  version: v0.4.4
+  version: v0.5.2
 paths:
   /storage/v1/bucket:
     get:
@@ -1129,6 +1129,9 @@ components:
         form_data:
           type: object
           title: Form Data
+        headers:
+          type: object
+          title: Headers
       type: object
       required:
       - href

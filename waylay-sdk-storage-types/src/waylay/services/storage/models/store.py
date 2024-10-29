@@ -18,16 +18,17 @@ from pydantic import (
     Field,
     StrictStr,
 )
+
 from waylay.sdk.api._models import BaseModel as WaylayBaseModel
 
-from ..models.links import Links
+from ..models.links_value import LinksValue
 from ..models.storetype import STORETYPE
 
 
 class Store(WaylayBaseModel):
     """Representation of a backend store.."""
 
-    links: Dict[str, Links] | None = Field(default=None, alias="_links")
+    links: Dict[str, LinksValue] | None = Field(default=None, alias="_links")
     type: STORETYPE
     name: StrictStr
     url: StrictStr

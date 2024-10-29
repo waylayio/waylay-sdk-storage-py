@@ -22,5 +22,5 @@ from typing_extensions import (
 
 from ..models.hal_link import HALLink
 
-Links = Union[Annotated[HALLink, ""], Annotated[List[HALLink], ""]]
-"""Links."""
+LinksValue = Union[Annotated[HALLink, ""], Annotated[List[HALLink], ""]]
+"""LinksValue."""

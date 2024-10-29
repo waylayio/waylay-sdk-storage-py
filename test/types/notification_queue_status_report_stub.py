@@ -77,7 +77,7 @@ class NotificationQueueStatusReportStub:
         if not MODELS_AVAILABLE:
             raise ImportError("Models must be installed to create class stubs")
         json = cls.create_json()
-        if not json:
+        if json is None:
             # use backup example based on the pydantic model schema
             backup_faker = JSF(
                 NotificationQueueStatusReportAdapter.json_schema(),

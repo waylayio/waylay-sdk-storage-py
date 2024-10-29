@@ -17,6 +17,7 @@ from pydantic import (
     ConfigDict,
     StrictStr,
 )
+
 from waylay.sdk.api._models import BaseModel as WaylayBaseModel
 
 
@@ -26,6 +27,7 @@ class HALLink(WaylayBaseModel):
     href: StrictStr
     method: StrictStr | None = None
     form_data: Dict[str, Any] | None = None
+    headers: Dict[str, Any] | None = None
 
     model_config = ConfigDict(
         populate_by_name=True, protected_namespaces=(), extra="ignore"
