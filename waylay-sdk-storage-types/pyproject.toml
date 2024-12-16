@@ -12,7 +12,7 @@ authors = [
 keywords = ["Waylay Storage" , "Types"]
 requires-python = ">= 3.9"
 dependencies = [
-    "waylay-sdk-core ~= 0.2.4",
+    "waylay-sdk-core ~= 0.3.2",
     "waylay-sdk-storage == 0.5.2.20241025",
     "pydantic ~= 2.6",
     "typing-extensions ~= 4.10",
