@@ -176,7 +176,7 @@ str | False _(default)_ | **`Any`** | If any other string value for the selected
 > object_path: str,
 > query: ListQuery,
 > headers
-> ) -> ResponseList
+> ) -> ResponseListObject
 
 List Objects
 
@@ -195,7 +195,7 @@ from waylay.sdk.api.api_exceptions import ApiError
 waylay_client = WaylayClient.from_profile()
 
 # Note that the typed model classes for responses/parameters/... are only available when `waylay-sdk-storage-types` is installed
-from waylay.services.storage.models.response_list import ResponseList
+from waylay.services.storage.models.response_list_object import ResponseListObject
 try:
     # List Objects
     # calls `GET /storage/v1/bucket/{bucket_name}/{object_path}`
@@ -205,9 +205,7 @@ try:
         # query parameters:
         query = {
             'stat': False
-            'recursive': True
-            'all': True
-            'fetch_content_type': True
+            'fetch_content_type': False
             'get_as_attachment': True
             'content_length_min': 0
         },
@@ -233,10 +231,10 @@ Name     | Type  | API binding   | Description   | Notes
 **query['recursive']** (dict) <br> **query.recursive** (Query) | **bool** | query parameter `"recursive"` |  | [optional] 
 **query['all']** (dict) <br> **query.all** (Query) | **bool** | query parameter `"all"` |  | [optional] 
 **query['start_after']** (dict) <br> **query.start_after** (Query) | **str** | query parameter `"start_after"` |  | [optional] 
-**query['fetch_content_type']** (dict) <br> **query.fetch_content_type** (Query) | **bool** | query parameter `"fetch_content_type"` |  | [optional] [default True]
+**query['fetch_content_type']** (dict) <br> **query.fetch_content_type** (Query) | **bool** | query parameter `"fetch_content_type"` | If true, fetch content type for each object when not already available from the listing (e.g. on s3 stores). This is less efficient but may be necessary for certain use cases. | [optional] [default False]
 **query['get_as_attachment']** (dict) <br> **query.get_as_attachment** (Query) | **bool** | query parameter `"get_as_attachment"` |  | [optional] [default True]
-**query['max_keys']** (dict) <br> **query.max_keys** (Query) | **int** | query parameter `"max_keys"` |  | [optional] 
 **query['sign']** (dict) <br> **query.sign** (Query) | **str** | query parameter `"sign"` |  | [optional] 
+**query['max_keys']** (dict) <br> **query.max_keys** (Query) | **int** | query parameter `"max_keys"` |  | [optional] 
 **query['store']** (dict) <br> **query.store** (Query) | **str** | query parameter `"store"` |  | [optional] 
 **query['expiry_days']** (dict) <br> **query.expiry_days** (Query) | **int** | query parameter `"expiry_days"` |  | [optional] 
 **query['expiry_hours']** (dict) <br> **query.expiry_hours** (Query) | **int** | query parameter `"expiry_hours"` |  | [optional] 
@@ -250,7 +248,7 @@ Name     | Type  | API binding   | Description   | Notes
 
 Selected path param | Raw response param | Return Type  | Description | Links
 ------------------- | ------------------ | ------------ | ----------- | -----
-Literal[""] _(default)_  | False _(default)_ | **`ResponseList`** |  | [ResponseList](ResponseList.md)
+Literal[""] _(default)_  | False _(default)_ | **`ResponseListObject`** |  | [ResponseListObject](ResponseListObject.md)
 str | False _(default)_ | **`Any`** | If any other string value for the selected path is provided, the exact type of the response will only be known at runtime. | 
 / | True | `Response` | The raw http response object.
 
@@ -302,8 +300,6 @@ try:
         'object_path_example', # object_path | path param "object_path"
         # query parameters:
         query = {
-            'recursive': True
-            'all': True
         },
     )
     print("The response of storage.object.remove:\n")

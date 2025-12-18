@@ -1,6 +1,6 @@
 # AuthenticationConfig
 
-Configuration for the authentication method used when forwarding an event to a channel.
+Authentication configuration when forwarding an event to a channel.
 
 ## Properties
 

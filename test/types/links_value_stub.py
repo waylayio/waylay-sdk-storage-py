@@ -25,7 +25,7 @@ except ImportError as exc:
 
 links_value_model_schema = json.loads(
     r"""{
-  "title" : "_Links_value",
+  "title" : "Links_value",
   "anyOf" : [ {
     "$ref" : "#/components/schemas/HALLink"
   }, {

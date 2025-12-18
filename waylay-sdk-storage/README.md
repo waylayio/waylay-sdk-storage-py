@@ -4,14 +4,14 @@ Manage storage buckets and subscriptions.
 
 
 This Python package is automatically generated based on the 
-Waylay Storage OpenAPI specification (API version: 0.5.2)
+Waylay Storage OpenAPI specification (API version: 0.9.0)
 For more information, please visit [the openapi specification](https://docs.waylay.io/openapi/public/redocly/storage.html).
 
 It consists of a plugin for the waylay-sdk-core package, and contains the Storage api methods.
 Note that the typed model classes for all path params, query params, body params and responses for each of the api methods are contained in a separate package called waylay-sdk-storage-types.
 
 ## Requirements.
-This package requires Python 3.9+.
+This package requires Python 3.10+.
 
 ## Installation
 

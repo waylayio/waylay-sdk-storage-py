@@ -8,8 +8,8 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **href** | **str** |  | 
 **method** | **str** |  | [optional] 
-**form_data** | **object** |  | [optional] 
-**headers** | **object** |  | [optional] 
+**form_data** | **Dict[str, object]** |  | [optional] 
+**headers** | **Dict[str, object]** |  | [optional] 
 
 ## Example
 

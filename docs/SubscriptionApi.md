@@ -17,11 +17,11 @@ Method | HTTP request | Description
 > bucket_name: str,
 > query: CreateQuery,
 > headers
-> ) -> SubscriptionConfig
+> ) -> SubscriptionConfigOutput
 
 Create Bucket Subscription
 
-Create a new notification subscription on a bucket with a given or generated id.
+Create a new notification subscription...  on a bucket with a given or generated id.  > it can take a few minutes before this change > is fully effective on the forwarding of change events
 
 ### Example
 
@@ -36,7 +36,8 @@ from waylay.sdk.api.api_exceptions import ApiError
 waylay_client = WaylayClient.from_profile()
 
 # Note that the typed model classes for responses/parameters/... are only available when `waylay-sdk-storage-types` is installed
-from waylay.services.storage.models.subscription_config import SubscriptionConfig
+from waylay.services.storage.models.subscription_config_input import SubscriptionConfigInput
+from waylay.services.storage.models.subscription_config_output import SubscriptionConfigOutput
 try:
     # Create Bucket Subscription
     # calls `POST /storage/v1/subscription/{bucket_name}`
@@ -46,7 +47,7 @@ try:
         query = {
         },
         # json data: use a generated model or a json-serializable python data structure (dict, list)
-        json = waylay.services.storage.SubscriptionConfig() # SubscriptionConfig | 
+        json = waylay.services.storage.SubscriptionConfigInput() # SubscriptionConfigInput | 
     )
     print("The response of storage.subscription.create:\n")
     pprint(api_response)
@@ -63,7 +64,7 @@ POST /storage/v1/subscription/{bucket_name}
 Name     | Type  | API binding   | Description   | Notes
 -------- | ----- | ------------- | ------------- | -------------
 **bucket_name** | **str** | path parameter `"bucket_name"` |  | 
-**json** | [**SubscriptionConfig**](SubscriptionConfig.md) | json request body |  | 
+**json** | [**SubscriptionConfigInput**](SubscriptionConfigInput.md) | json request body |  | 
 **query** | [QueryParamTypes](Operation.md#req_arg_query) \| **None** | URL query parameter |  | 
 **query['store']** (dict) <br> **query.store** (Query) | **str** | query parameter `"store"` |  | [optional] 
 **headers** | [HeaderTypes](Operation.md#req_headers) | request headers |  | 
@@ -72,7 +73,7 @@ Name     | Type  | API binding   | Description   | Notes
 
 Selected path param | Raw response param | Return Type  | Description | Links
 ------------------- | ------------------ | ------------ | ----------- | -----
-Literal[""] _(default)_  | False _(default)_ | **`SubscriptionConfig`** |  | [SubscriptionConfig](SubscriptionConfig.md)
+Literal[""] _(default)_  | False _(default)_ | **`SubscriptionConfigOutput`** |  | [SubscriptionConfigOutput](SubscriptionConfigOutput.md)
 str | False _(default)_ | **`Any`** | If any other string value for the selected path is provided, the exact type of the response will only be known at runtime. | 
 / | True | `Response` | The raw http response object.
 
@@ -99,7 +100,7 @@ str | False _(default)_ | **`Any`** | If any other string value for the selected
 
 Delete All Bucket Subscriptions
 
-Remove all notification subscription on a bucket that match a given event and/or channel filter.
+Remove all notification subscriptions on a bucket that match a given event and/or channel filter.  > it can take a few minutes before this change > is fully effective on the forwarding of change events
 
 ### Example
 
@@ -124,8 +125,6 @@ try:
         'bucket_name_example', # bucket_name | path param "bucket_name"
         # query parameters:
         query = {
-            'event_type': 'delete'
-            'channel_type': 'webhook'
         },
     )
     print("The response of storage.subscription.delete_by:\n")
@@ -182,7 +181,7 @@ str | False _(default)_ | **`Any`** | If any other string value for the selected
 > subscription_id: str,
 > query: GetQuery,
 > headers
-> ) -> SubscriptionConfig
+> ) -> SubscriptionConfigOutput
 
 Get Bucket Subscription
 
@@ -201,7 +200,7 @@ from waylay.sdk.api.api_exceptions import ApiError
 waylay_client = WaylayClient.from_profile()
 
 # Note that the typed model classes for responses/parameters/... are only available when `waylay-sdk-storage-types` is installed
-from waylay.services.storage.models.subscription_config import SubscriptionConfig
+from waylay.services.storage.models.subscription_config_output import SubscriptionConfigOutput
 try:
     # Get Bucket Subscription
     # calls `GET /storage/v1/subscription/{bucket_name}/{subscription_id}`
@@ -236,7 +235,7 @@ Name     | Type  | API binding   | Description   | Notes
 
 Selected path param | Raw response param | Return Type  | Description | Links
 ------------------- | ------------------ | ------------ | ----------- | -----
-Literal[""] _(default)_  | False _(default)_ | **`SubscriptionConfig`** |  | [SubscriptionConfig](SubscriptionConfig.md)
+Literal[""] _(default)_  | False _(default)_ | **`SubscriptionConfigOutput`** |  | [SubscriptionConfigOutput](SubscriptionConfigOutput.md)
 str | False _(default)_ | **`Any`** | If any other string value for the selected path is provided, the exact type of the response will only be known at runtime. | 
 / | True | `Response` | The raw http response object.
 
@@ -286,8 +285,6 @@ try:
     api_response = await waylay_client.storage.subscription.list(
         # query parameters:
         query = {
-            'event_type': 'delete'
-            'channel_type': 'webhook'
         },
     )
     print("The response of storage.subscription.list:\n")
@@ -370,8 +367,6 @@ try:
         'bucket_name_example', # bucket_name | path param "bucket_name"
         # query parameters:
         query = {
-            'event_type': 'delete'
-            'channel_type': 'webhook'
         },
     )
     print("The response of storage.subscription.query:\n")
@@ -506,11 +501,11 @@ str | False _(default)_ | **`Any`** | If any other string value for the selected
 > subscription_id: str,
 > query: ReplaceQuery,
 > headers
-> ) -> SubscriptionConfig
+> ) -> SubscriptionConfigOutput
 
 Replace Bucket Subscription
 
-Create or replace a notification subscription on a bucket with a given id.
+Create or replace a notification subscription on a bucket with a given id.  > it can take a few minutes before this change > is fully effective on the forwarding of change events
 
 ### Example
 
@@ -525,7 +520,8 @@ from waylay.sdk.api.api_exceptions import ApiError
 waylay_client = WaylayClient.from_profile()
 
 # Note that the typed model classes for responses/parameters/... are only available when `waylay-sdk-storage-types` is installed
-from waylay.services.storage.models.subscription_config import SubscriptionConfig
+from waylay.services.storage.models.subscription_config_input import SubscriptionConfigInput
+from waylay.services.storage.models.subscription_config_output import SubscriptionConfigOutput
 try:
     # Replace Bucket Subscription
     # calls `PUT /storage/v1/subscription/{bucket_name}/{subscription_id}`
@@ -536,7 +532,7 @@ try:
         query = {
         },
         # json data: use a generated model or a json-serializable python data structure (dict, list)
-        json = waylay.services.storage.SubscriptionConfig() # SubscriptionConfig | 
+        json = waylay.services.storage.SubscriptionConfigInput() # SubscriptionConfigInput | 
     )
     print("The response of storage.subscription.replace:\n")
     pprint(api_response)
@@ -554,7 +550,7 @@ Name     | Type  | API binding   | Description   | Notes
 -------- | ----- | ------------- | ------------- | -------------
 **bucket_name** | **str** | path parameter `"bucket_name"` |  | 
 **subscription_id** | **str** | path parameter `"subscription_id"` |  | 
-**json** | [**SubscriptionConfig**](SubscriptionConfig.md) | json request body |  | 
+**json** | [**SubscriptionConfigInput**](SubscriptionConfigInput.md) | json request body |  | 
 **query** | [QueryParamTypes](Operation.md#req_arg_query) \| **None** | URL query parameter |  | 
 **query['store']** (dict) <br> **query.store** (Query) | **str** | query parameter `"store"` |  | [optional] 
 **headers** | [HeaderTypes](Operation.md#req_headers) | request headers |  | 
@@ -563,7 +559,7 @@ Name     | Type  | API binding   | Description   | Notes
 
 Selected path param | Raw response param | Return Type  | Description | Links
 ------------------- | ------------------ | ------------ | ----------- | -----
-Literal[""] _(default)_  | False _(default)_ | **`SubscriptionConfig`** |  | [SubscriptionConfig](SubscriptionConfig.md)
+Literal[""] _(default)_  | False _(default)_ | **`SubscriptionConfigOutput`** |  | [SubscriptionConfigOutput](SubscriptionConfigOutput.md)
 str | False _(default)_ | **`Any`** | If any other string value for the selected path is provided, the exact type of the response will only be known at runtime. | 
 / | True | `Response` | The raw http response object.
 

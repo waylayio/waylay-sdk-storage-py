@@ -9,8 +9,8 @@ Name | Type | Description | Notes
 **status** | [**QUEUESETUPSTATUS**](QUEUESETUPSTATUS.md) |  | 
 **name** | **str** |  | 
 **method** | **str** |  | 
-**configured_parameters** | **object** |  | [optional] 
-**actual_parameters** | **object** |  | [optional] 
+**configured_parameters** | **Dict[str, object]** |  | [optional] 
+**actual_parameters** | **Dict[str, object]** |  | [optional] 
 **error** | **str** |  | [optional] 
 
 ## Example

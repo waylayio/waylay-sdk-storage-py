@@ -27,9 +27,9 @@ channel_model_schema = json.loads(
     r"""{
   "title" : "Channel",
   "anyOf" : [ {
-    "$ref" : "#/components/schemas/WebScriptChannelConfig"
+    "$ref" : "#/components/schemas/WebScriptChannelConfig-Input"
   }, {
-    "$ref" : "#/components/schemas/SystemChannelConfig"
+    "$ref" : "#/components/schemas/SystemChannelConfig-Input"
   } ]
 }
 """,

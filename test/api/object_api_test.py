@@ -11,7 +11,6 @@ Do not edit the class manually.
 import json
 import re
 from importlib.util import find_spec
-from typing import Union
 from urllib.parse import quote
 
 import pytest
@@ -24,7 +23,7 @@ from waylay.services.storage.service import StorageService
 
 from ..types.bucket_object_stub import BucketObjectStub
 from ..types.hal_entity_stub import HALEntityStub
-from ..types.response_list_stub import ResponseListStub
+from ..types.response_list_object_stub import ResponseListObjectStub
 
 MODELS_AVAILABLE = (
     True if find_spec("waylay.services.storage.models") is not None else False
@@ -34,7 +33,7 @@ if MODELS_AVAILABLE:
     from waylay.services.storage.models import (
         BucketObject,
         HALEntity,
-        ResponseList,
+        ResponseListObject,
     )
     from waylay.services.storage.queries.object_api import (
         CopyOrMoveQuery,
@@ -98,7 +97,7 @@ async def test_copy_or_move(
         httpx_mock, gateway_url, quote(str(bucket_name)), quote(str(target_path))
     )
     resp = await service.object.copy_or_move(bucket_name, target_path, **kwargs)
-    check_type(resp, Union[HALEntity,])
+    check_type(resp, HALEntity)
 
 
 @pytest.mark.asyncio
@@ -167,7 +166,7 @@ async def test_create_folder(
         httpx_mock, gateway_url, quote(str(bucket_name)), quote(str(object_path))
     )
     resp = await service.object.create_folder(bucket_name, object_path, **kwargs)
-    check_type(resp, Union[BucketObject,])
+    check_type(resp, BucketObject)
 
 
 @pytest.mark.asyncio
@@ -199,7 +198,7 @@ async def test_create_folder_without_types(
 def _list_set_mock_response(
     httpx_mock: HTTPXMock, gateway_url: str, bucket_name: str, object_path: str
 ):
-    mock_response = ResponseListStub.create_json()
+    mock_response = ResponseListObjectStub.create_json()
     httpx_mock_kwargs = {
         "method": "GET",
         "url": re.compile(
@@ -229,10 +228,10 @@ async def test_list(service: StorageService, gateway_url: str, httpx_mock: HTTPX
             recursive=True,
             all=True,
             start_after="start_after_example",
-            fetch_content_type=True,
+            fetch_content_type=False,
             get_as_attachment=True,
-            max_keys=56,
             sign="sign_example",
+            max_keys=56,
             store="store_example",
             expiry_days=56,
             expiry_hours=56,
@@ -246,7 +245,7 @@ async def test_list(service: StorageService, gateway_url: str, httpx_mock: HTTPX
         httpx_mock, gateway_url, quote(str(bucket_name)), quote(str(object_path))
     )
     resp = await service.object.list(bucket_name, object_path, **kwargs)
-    check_type(resp, Union[ResponseList,])
+    check_type(resp, ResponseListObject)
 
 
 @pytest.mark.asyncio
@@ -268,10 +267,10 @@ async def test_list_without_types(
             "recursive": True,
             "all": True,
             "start_after": "start_after_example",
-            "fetch_content_type": True,
+            "fetch_content_type": False,
             "get_as_attachment": True,
-            "max_keys": 56,
             "sign": "sign_example",
+            "max_keys": 56,
             "store": "store_example",
             "expiry_days": 56,
             "expiry_hours": 56,
@@ -328,7 +327,7 @@ async def test_remove(service: StorageService, gateway_url: str, httpx_mock: HTT
         httpx_mock, gateway_url, quote(str(bucket_name)), quote(str(object_path))
     )
     resp = await service.object.remove(bucket_name, object_path, **kwargs)
-    check_type(resp, Union[HALEntity,])
+    check_type(resp, HALEntity)
 
 
 @pytest.mark.asyncio

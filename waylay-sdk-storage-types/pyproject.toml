@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "waylay-sdk-storage-types"
-version = "0.5.2.20241025"
+version = "0.9.0.20251218"
 description = "Waylay Storage Types "
 authors = [
     { name = "Waylay", email = "info@waylay.io"}
@@ -12,11 +12,8 @@ authors = [
 keywords = ["Waylay Storage" , "Types"]
 requires-python = ">= 3.9"
 dependencies = [
-    "waylay-sdk-core ~= 0.3.2",
-    "waylay-sdk-storage == 0.5.2.20241025",
-    "pydantic ~= 2.6",
-    "typing-extensions ~= 4.10",
-    "eval-type-backport ~= 0.1.3; python_version < '3.10'",
+    "waylay-sdk-core ~= 0.4.1",
+    "waylay-sdk-storage == 0.9.0.20251218",
 ]
 readme = "README.md"
 license={file = "LICENSE.txt"}
@@ -58,7 +55,7 @@ include = ["pyproject.toml", "src/**/*.py"]
 ignore=["F811"]
 # https://docs.astral.sh/ruff/rules
 select= [
-    "UP007", "FA102",  # convert Union to | (pep-604)
+    "UP007", "FA102", "UP045",  # convert Union to | (pep-604)
     "I001", "F401",  # sort and remove unused imports
     "PIE790",  # remove unnecessary pass statements
     "E303",  # too many blank lines

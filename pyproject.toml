@@ -6,7 +6,7 @@ include = ["pyproject.toml", "test/**/*.py"]
 ignore=["F811"]
 # https://docs.astral.sh/ruff/rules
 select= [
-    "UP007", "FA102",  # convert Union to | (pep-604)
+    "UP007", "FA102", "UP045",  # convert Union to | (pep-604)
     "I001", "F401",  # sort and remove unused imports
     "PIE790",  # remove unnecessary pass statements
     "E303",  # too many blank lines

@@ -45,21 +45,18 @@ _authentication_config_model_schema = json.loads(
   "type" : "object",
   "properties" : {
     "method" : {
-      "allOf" : [ {
-        "$ref" : "#/components/schemas/AUTH"
-      } ],
-      "default" : "DEFAULT"
+      "$ref" : "#/components/schemas/AUTH"
     },
     "key" : {
-      "title" : "Key",
-      "type" : "string"
+      "type" : "string",
+      "nullable" : true
     },
     "secret" : {
-      "title" : "Secret",
-      "type" : "string"
+      "type" : "string",
+      "nullable" : true
     }
   },
-  "description" : "Configuration for the authentication method used when forwarding an event to a channel."
+  "description" : "Authentication configuration when forwarding an event to a channel."
 }
 """,
     object_hook=with_example_provider,
@@ -96,10 +93,10 @@ _bucket_model_schema = json.loads(
   "type" : "object",
   "properties" : {
     "_links" : {
-      "title" : " Links",
+      "title" : "Links",
       "type" : "object",
       "additionalProperties" : {
-        "$ref" : "#/components/schemas/_Links_value"
+        "$ref" : "#/components/schemas/Links_value"
       }
     },
     "alias" : {
@@ -136,10 +133,10 @@ _bucket_configuration_model_schema = json.loads(
   "type" : "object",
   "properties" : {
     "_links" : {
-      "title" : " Links",
+      "title" : "Links",
       "type" : "object",
       "additionalProperties" : {
-        "$ref" : "#/components/schemas/_Links_value"
+        "$ref" : "#/components/schemas/Links_value"
       }
     },
     "alias" : {
@@ -163,14 +160,10 @@ _bucket_configuration_model_schema = json.loads(
       "type" : "integer"
     },
     "status" : {
-      "allOf" : [ {
-        "$ref" : "#/components/schemas/BUCKET_CREATION_STATUS"
-      } ],
-      "default" : "unknown"
+      "$ref" : "#/components/schemas/BUCKET_CREATION_STATUS"
     },
     "public_policy_json" : {
-      "title" : "Public Policy Json",
-      "type" : "object"
+      "$ref" : "#/components/schemas/S3PolicyDef"
     },
     "public_policy_type" : {
       "title" : "Public Policy Type",
@@ -194,10 +187,10 @@ _bucket_listing_model_schema = json.loads(
   "type" : "object",
   "properties" : {
     "_links" : {
-      "title" : " Links",
+      "title" : "Links",
       "type" : "object",
       "additionalProperties" : {
-        "$ref" : "#/components/schemas/_Links_value"
+        "$ref" : "#/components/schemas/Links_value"
       }
     },
     "buckets" : {
@@ -221,10 +214,10 @@ _bucket_object_model_schema = json.loads(
   "type" : "object",
   "properties" : {
     "_links" : {
-      "title" : " Links",
+      "title" : "Links",
       "type" : "object",
       "additionalProperties" : {
-        "$ref" : "#/components/schemas/_Links_value"
+        "$ref" : "#/components/schemas/Links_value"
       }
     },
     "bucket" : {
@@ -282,10 +275,10 @@ _bucket_object_listing_model_schema = json.loads(
   "type" : "object",
   "properties" : {
     "_links" : {
-      "title" : " Links",
+      "title" : "Links",
       "type" : "object",
       "additionalProperties" : {
-        "$ref" : "#/components/schemas/_Links_value"
+        "$ref" : "#/components/schemas/Links_value"
       }
     },
     "objects" : {
@@ -318,9 +311,9 @@ _channel_model_schema = json.loads(
     r"""{
   "title" : "Channel",
   "anyOf" : [ {
-    "$ref" : "#/components/schemas/WebScriptChannelConfig"
+    "$ref" : "#/components/schemas/WebScriptChannelConfig-Input"
   }, {
-    "$ref" : "#/components/schemas/SystemChannelConfig"
+    "$ref" : "#/components/schemas/SystemChannelConfig-Input"
   } ]
 }
 """,
@@ -328,19 +321,34 @@ _channel_model_schema = json.loads(
 )
 MODEL_DEFINITIONS.update({"Channel": _channel_model_schema})
 
+_channel_1_model_schema = json.loads(
+    r"""{
+  "title" : "Channel",
+  "anyOf" : [ {
+    "$ref" : "#/components/schemas/WebScriptChannelConfig-Output"
+  }, {
+    "$ref" : "#/components/schemas/SystemChannelConfig-Output"
+  } ]
+}
+""",
+    object_hook=with_example_provider,
+)
+MODEL_DEFINITIONS.update({"Channel_1": _channel_1_model_schema})
+
 _event_filter_model_schema = json.loads(
     r"""{
   "type" : "object",
   "properties" : {
     "prefix" : {
-      "title" : "Prefix",
-      "type" : "string"
+      "type" : "string",
+      "nullable" : true
     },
     "suffix" : {
-      "title" : "Suffix",
-      "type" : "string"
+      "type" : "string",
+      "nullable" : true
     },
     "events" : {
+      "title" : "Events",
       "uniqueItems" : true,
       "type" : "array",
       "items" : {
@@ -349,15 +357,15 @@ _event_filter_model_schema = json.loads(
       "default" : [ "put" ]
     },
     "description" : {
-      "title" : "Description",
-      "type" : "string"
+      "type" : "string",
+      "nullable" : true
     },
     "queue" : {
-      "title" : "Queue",
-      "type" : "string"
+      "type" : "string",
+      "nullable" : true
     }
   },
-  "description" : "Filter on change events in a storage backend.\n\nThe `prefix` and `suffix` properties are conditions on the object path\n(not including the bucket name). When not specified, all paths in the bucket will selected.\n\nThe `events` property can contain `put` and/or `delete` values, corresponding\nto create/update and deletion events.\nWhen not specified, only the create/update events are filtered."
+  "description" : "Filter on change events in a storage backend.\n\nThe `prefix` and `suffix` properties are conditions on the object path\n(not including the bucket name).\nWhen not specified, all paths in the bucket will selected.\n\nThe `events` property can contain `put` and/or `delete` values, corresponding\nto create/update and deletion events.\nWhen not specified, only the create/update events are filtered."
 }
 """,
     object_hook=with_example_provider,
@@ -369,16 +377,16 @@ _expiry_model_schema = json.loads(
   "type" : "object",
   "properties" : {
     "seconds" : {
-      "title" : "Seconds",
-      "type" : "integer"
+      "type" : "integer",
+      "nullable" : true
     },
     "hours" : {
-      "title" : "Hours",
-      "type" : "integer"
+      "type" : "integer",
+      "nullable" : true
     },
     "days" : {
-      "title" : "Days",
-      "type" : "integer"
+      "type" : "integer",
+      "nullable" : true
     }
   },
   "description" : "Input model for expiry parameters."
@@ -393,10 +401,10 @@ _hal_entity_model_schema = json.loads(
   "type" : "object",
   "properties" : {
     "_links" : {
-      "title" : " Links",
+      "title" : "Links",
       "type" : "object",
       "additionalProperties" : {
-        "$ref" : "#/components/schemas/_Links_value"
+        "$ref" : "#/components/schemas/Links_value"
       }
     }
   },
@@ -417,16 +425,18 @@ _hal_link_model_schema = json.loads(
       "type" : "string"
     },
     "method" : {
-      "title" : "Method",
-      "type" : "string"
+      "type" : "string",
+      "nullable" : true
     },
     "form_data" : {
-      "title" : "Form Data",
-      "type" : "object"
+      "type" : "object",
+      "additionalProperties" : true,
+      "nullable" : true
     },
     "headers" : {
-      "title" : "Headers",
-      "type" : "object"
+      "type" : "object",
+      "additionalProperties" : true,
+      "nullable" : true
     }
   },
   "description" : "Represents a HAL link."
@@ -467,7 +477,7 @@ MODEL_DEFINITIONS.update({"HTTPValidationError": _http_validation_error_model_sc
 
 _links_value_model_schema = json.loads(
     r"""{
-  "title" : "_Links_value",
+  "title" : "Links_value",
   "anyOf" : [ {
     "$ref" : "#/components/schemas/HALLink"
   }, {
@@ -480,7 +490,7 @@ _links_value_model_schema = json.loads(
 """,
     object_hook=with_example_provider,
 )
-MODEL_DEFINITIONS.update({"_Links_value": _links_value_model_schema})
+MODEL_DEFINITIONS.update({"Links_value": _links_value_model_schema})
 
 _location_inner_model_schema = json.loads(
     r"""{
@@ -514,11 +524,13 @@ _notification_queue_status_model_schema = json.loads(
     },
     "configured_parameters" : {
       "title" : "Configured Parameters",
-      "type" : "object"
+      "type" : "object",
+      "additionalProperties" : true
     },
     "actual_parameters" : {
       "title" : "Actual Parameters",
-      "type" : "object"
+      "type" : "object",
+      "additionalProperties" : true
     },
     "error" : {
       "title" : "Error",
@@ -554,7 +566,8 @@ _notification_queue_status_report_model_schema = json.loads(
       "title" : "Messages",
       "type" : "array",
       "items" : {
-        "type" : "object"
+        "type" : "object",
+        "additionalProperties" : true
       }
     }
   },
@@ -572,13 +585,16 @@ _payload_config_model_schema = json.loads(
   "type" : "object",
   "properties" : {
     "signed_links" : {
+      "title" : "Signed Links",
       "type" : "array",
       "items" : {
         "$ref" : "#/components/schemas/SIGN"
       }
     },
     "reference" : {
-      "title" : "Reference"
+      "title" : "Reference",
+      "nullable" : true,
+      "anyOf" : [ ]
     }
   },
   "description" : "Configuration object that specifies the expected notification payload."
@@ -600,9 +616,26 @@ _queue_setup_status_model_schema = json.loads(
 )
 MODEL_DEFINITIONS.update({"QUEUE_SETUP_STATUS": _queue_setup_status_model_schema})
 
-_response_list_model_schema = json.loads(
+_resource_model_schema = json.loads(
     r"""{
-  "title" : "Response List",
+  "title" : "Resource",
+  "anyOf" : [ {
+    "type" : "string"
+  }, {
+    "type" : "array",
+    "items" : {
+      "type" : "string"
+    }
+  } ]
+}
+""",
+    object_hook=with_example_provider,
+)
+MODEL_DEFINITIONS.update({"Resource": _resource_model_schema})
+
+_response_list_object_model_schema = json.loads(
+    r"""{
+  "title" : "Response List Object",
   "anyOf" : [ {
     "$ref" : "#/components/schemas/BucketObjectListing"
   }, {
@@ -614,7 +647,49 @@ _response_list_model_schema = json.loads(
 """,
     object_hook=with_example_provider,
 )
-MODEL_DEFINITIONS.update({"Response_List": _response_list_model_schema})
+MODEL_DEFINITIONS.update({"Response_List_Object": _response_list_object_model_schema})
+
+_s3_policy_def_model_schema = json.loads(
+    r"""{
+  "title" : "S3PolicyDef",
+  "type" : "object",
+  "properties" : {
+    "Statement" : {
+      "title" : "Statement",
+      "type" : "array",
+      "items" : {
+        "$ref" : "#/components/schemas/S3PolicyStatement"
+      }
+    },
+    "Version" : {
+      "title" : "Version",
+      "type" : "string"
+    }
+  },
+  "additionalProperties" : true,
+  "description" : "AWS S3 Policy definition."
+}
+""",
+    object_hook=with_example_provider,
+)
+MODEL_DEFINITIONS.update({"S3PolicyDef": _s3_policy_def_model_schema})
+
+_s3_policy_statement_model_schema = json.loads(
+    r"""{
+  "title" : "S3PolicyStatement",
+  "type" : "object",
+  "properties" : {
+    "Resource" : {
+      "$ref" : "#/components/schemas/Resource"
+    }
+  },
+  "additionalProperties" : true,
+  "description" : "AWS S3 Policy definition statement."
+}
+""",
+    object_hook=with_example_provider,
+)
+MODEL_DEFINITIONS.update({"S3PolicyStatement": _s3_policy_statement_model_schema})
 
 _sign_model_schema = json.loads(
     r"""{
@@ -633,7 +708,7 @@ _store_type_model_schema = json.loads(
   "title" : "STORE_TYPE",
   "type" : "string",
   "description" : "Supported backend store types.",
-  "enum" : [ "gs", "s3", "azure" ]
+  "enum" : [ "gs", "s3", "azure", "zenko" ]
 }
 """,
     object_hook=with_example_provider,
@@ -647,10 +722,10 @@ _store_model_schema = json.loads(
   "type" : "object",
   "properties" : {
     "_links" : {
-      "title" : " Links",
+      "title" : "Links",
       "type" : "object",
       "additionalProperties" : {
-        "$ref" : "#/components/schemas/_Links_value"
+        "$ref" : "#/components/schemas/Links_value"
       }
     },
     "type" : {
@@ -672,16 +747,16 @@ _store_model_schema = json.loads(
 )
 MODEL_DEFINITIONS.update({"Store": _store_model_schema})
 
-_subscription_config_model_schema = json.loads(
+_subscription_config_input_model_schema = json.loads(
     r"""{
   "required" : [ "channel", "filters" ],
   "type" : "object",
   "properties" : {
     "_links" : {
-      "title" : " Links",
+      "title" : "Links",
       "type" : "object",
       "additionalProperties" : {
-        "$ref" : "#/components/schemas/_Links_value"
+        "$ref" : "#/components/schemas/Links_value"
       }
     },
     "id" : {
@@ -712,7 +787,53 @@ _subscription_config_model_schema = json.loads(
 """,
     object_hook=with_example_provider,
 )
-MODEL_DEFINITIONS.update({"SubscriptionConfig": _subscription_config_model_schema})
+MODEL_DEFINITIONS.update({
+    "SubscriptionConfig-Input": _subscription_config_input_model_schema
+})
+
+_subscription_config_output_model_schema = json.loads(
+    r"""{
+  "required" : [ "channel", "filters" ],
+  "type" : "object",
+  "properties" : {
+    "_links" : {
+      "title" : "Links",
+      "type" : "object",
+      "additionalProperties" : {
+        "$ref" : "#/components/schemas/Links_value"
+      }
+    },
+    "id" : {
+      "title" : "Id",
+      "type" : "string"
+    },
+    "title" : {
+      "title" : "Title",
+      "type" : "string"
+    },
+    "description" : {
+      "title" : "Description",
+      "type" : "string"
+    },
+    "channel" : {
+      "$ref" : "#/components/schemas/Channel_1"
+    },
+    "filters" : {
+      "title" : "Filters",
+      "type" : "array",
+      "items" : {
+        "$ref" : "#/components/schemas/EventFilter"
+      }
+    }
+  },
+  "description" : "Specification of a notification subscription that forwards to a given channel."
+}
+""",
+    object_hook=with_example_provider,
+)
+MODEL_DEFINITIONS.update({
+    "SubscriptionConfig-Output": _subscription_config_output_model_schema
+})
 
 _subscriptions_model_schema = json.loads(
     r"""{
@@ -720,10 +841,10 @@ _subscriptions_model_schema = json.loads(
   "type" : "object",
   "properties" : {
     "_links" : {
-      "title" : " Links",
+      "title" : "Links",
       "type" : "object",
       "additionalProperties" : {
-        "$ref" : "#/components/schemas/_Links_value"
+        "$ref" : "#/components/schemas/Links_value"
       }
     },
     "bucket" : {
@@ -733,14 +854,15 @@ _subscriptions_model_schema = json.loads(
       "title" : "Subscriptions",
       "type" : "array",
       "items" : {
-        "$ref" : "#/components/schemas/SubscriptionConfig"
+        "$ref" : "#/components/schemas/SubscriptionConfig-Output"
       }
     },
     "warnings" : {
       "title" : "Warnings",
       "type" : "array",
       "items" : {
-        "type" : "object"
+        "type" : "object",
+        "additionalProperties" : true
       }
     }
   },
@@ -757,10 +879,10 @@ _subscriptions_listing_model_schema = json.loads(
   "type" : "object",
   "properties" : {
     "_links" : {
-      "title" : " Links",
+      "title" : "Links",
       "type" : "object",
       "additionalProperties" : {
-        "$ref" : "#/components/schemas/_Links_value"
+        "$ref" : "#/components/schemas/Links_value"
       }
     },
     "buckets" : {
@@ -778,16 +900,16 @@ _subscriptions_listing_model_schema = json.loads(
 )
 MODEL_DEFINITIONS.update({"SubscriptionsListing": _subscriptions_listing_model_schema})
 
-_system_channel_config_model_schema = json.loads(
+_system_channel_config_input_model_schema = json.loads(
     r"""{
   "type" : "object",
   "properties" : {
     "type" : {
-      "$ref" : "#/components/schemas/SystemChannelConfig_type"
+      "$ref" : "#/components/schemas/SystemChannelConfig_Input_type"
     },
     "description" : {
-      "title" : "Description",
-      "type" : "string"
+      "type" : "string",
+      "nullable" : true
     },
     "payload" : {
       "$ref" : "#/components/schemas/PayloadConfig"
@@ -804,11 +926,13 @@ _system_channel_config_model_schema = json.loads(
 """,
     object_hook=with_example_provider,
 )
-MODEL_DEFINITIONS.update({"SystemChannelConfig": _system_channel_config_model_schema})
+MODEL_DEFINITIONS.update({
+    "SystemChannelConfig-Input": _system_channel_config_input_model_schema
+})
 
-_system_channel_config_type_model_schema = json.loads(
+_system_channel_config_input_type_model_schema = json.loads(
     r"""{
-  "title" : "SystemChannelConfig_type",
+  "title" : "SystemChannelConfig_Input_type",
   "type" : "string",
   "default" : "system",
   "enum" : [ "system" ]
@@ -817,7 +941,37 @@ _system_channel_config_type_model_schema = json.loads(
     object_hook=with_example_provider,
 )
 MODEL_DEFINITIONS.update({
-    "SystemChannelConfig_type": _system_channel_config_type_model_schema
+    "SystemChannelConfig_Input_type": _system_channel_config_input_type_model_schema
+})
+
+_system_channel_config_output_model_schema = json.loads(
+    r"""{
+  "type" : "object",
+  "properties" : {
+    "type" : {
+      "$ref" : "#/components/schemas/SystemChannelConfig_Input_type"
+    },
+    "description" : {
+      "type" : "string",
+      "nullable" : true
+    },
+    "payload" : {
+      "$ref" : "#/components/schemas/PayloadConfig"
+    },
+    "authentication" : {
+      "$ref" : "#/components/schemas/AuthenticationConfig"
+    },
+    "expiry" : {
+      "$ref" : "#/components/schemas/Expiry"
+    }
+  },
+  "description" : "Channel configuration for functionality that is fixed by the platform.\n\nThis cannot be selected by the end user."
+}
+""",
+    object_hook=with_example_provider,
+)
+MODEL_DEFINITIONS.update({
+    "SystemChannelConfig-Output": _system_channel_config_output_model_schema
 })
 
 _tenant_status_report_model_schema = json.loads(
@@ -903,17 +1057,17 @@ _validation_error_model_schema = json.loads(
 )
 MODEL_DEFINITIONS.update({"ValidationError": _validation_error_model_schema})
 
-_web_script_channel_config_model_schema = json.loads(
+_web_script_channel_config_input_model_schema = json.loads(
     r"""{
   "required" : [ "name" ],
   "type" : "object",
   "properties" : {
     "type" : {
-      "$ref" : "#/components/schemas/WebScriptChannelConfig_type"
+      "$ref" : "#/components/schemas/WebScriptChannelConfig_Input_type"
     },
     "description" : {
-      "title" : "Description",
-      "type" : "string"
+      "type" : "string",
+      "nullable" : true
     },
     "payload" : {
       "$ref" : "#/components/schemas/PayloadConfig"
@@ -929,14 +1083,11 @@ _web_script_channel_config_model_schema = json.loads(
       "type" : "string"
     },
     "version" : {
-      "title" : "Version",
-      "type" : "string"
+      "type" : "string",
+      "nullable" : true
     },
     "method" : {
-      "allOf" : [ {
-        "$ref" : "#/components/schemas/HTTP_METHOD"
-      } ],
-      "default" : "POST"
+      "$ref" : "#/components/schemas/HTTP_METHOD"
     }
   },
   "description" : "Channel configuration for invoking a waylay webscript."
@@ -945,12 +1096,12 @@ _web_script_channel_config_model_schema = json.loads(
     object_hook=with_example_provider,
 )
 MODEL_DEFINITIONS.update({
-    "WebScriptChannelConfig": _web_script_channel_config_model_schema
+    "WebScriptChannelConfig-Input": _web_script_channel_config_input_model_schema
 })
 
-_web_script_channel_config_type_model_schema = json.loads(
+_web_script_channel_config_input_type_model_schema = json.loads(
     r"""{
-  "title" : "WebScriptChannelConfig_type",
+  "title" : "WebScriptChannelConfig_Input_type",
   "type" : "string",
   "default" : "webscript",
   "enum" : [ "webscript" ]
@@ -959,5 +1110,47 @@ _web_script_channel_config_type_model_schema = json.loads(
     object_hook=with_example_provider,
 )
 MODEL_DEFINITIONS.update({
-    "WebScriptChannelConfig_type": _web_script_channel_config_type_model_schema
+    "WebScriptChannelConfig_Input_type": _web_script_channel_config_input_type_model_schema
+})
+
+_web_script_channel_config_output_model_schema = json.loads(
+    r"""{
+  "required" : [ "name" ],
+  "type" : "object",
+  "properties" : {
+    "type" : {
+      "$ref" : "#/components/schemas/WebScriptChannelConfig_Input_type"
+    },
+    "description" : {
+      "type" : "string",
+      "nullable" : true
+    },
+    "payload" : {
+      "$ref" : "#/components/schemas/PayloadConfig"
+    },
+    "authentication" : {
+      "$ref" : "#/components/schemas/AuthenticationConfig"
+    },
+    "expiry" : {
+      "$ref" : "#/components/schemas/Expiry"
+    },
+    "name" : {
+      "title" : "Name",
+      "type" : "string"
+    },
+    "version" : {
+      "type" : "string",
+      "nullable" : true
+    },
+    "method" : {
+      "$ref" : "#/components/schemas/HTTP_METHOD"
+    }
+  },
+  "description" : "Channel configuration for invoking a waylay webscript."
+}
+""",
+    object_hook=with_example_provider,
+)
+MODEL_DEFINITIONS.update({
+    "WebScriptChannelConfig-Output": _web_script_channel_config_output_model_schema
 })

@@ -12,7 +12,7 @@ Do not edit the class manually.
 from __future__ import annotations
 
 from datetime import datetime
-from typing import Any, Dict
+from typing import Dict
 
 from pydantic import (
     ConfigDict,
@@ -20,11 +20,11 @@ from pydantic import (
     StrictInt,
     StrictStr,
 )
-
 from waylay.sdk.api._models import BaseModel as WaylayBaseModel
 
 from ..models.bucketcreationstatus import BUCKETCREATIONSTATUS
 from ..models.links_value import LinksValue
+from ..models.s3_policy_def import S3PolicyDef
 from ..models.store import Store
 
 
@@ -38,7 +38,7 @@ class BucketConfiguration(WaylayBaseModel):
     creation_date: datetime | None = None
     size: StrictInt | None = None
     status: BUCKETCREATIONSTATUS | None = None
-    public_policy_json: Dict[str, Any] | None = None
+    public_policy_json: S3PolicyDef | None = None
     public_policy_type: StrictStr | None = None
     error: StrictStr | None = None
 

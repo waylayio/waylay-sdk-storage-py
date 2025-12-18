@@ -11,7 +11,6 @@ Do not edit the class manually.
 import json
 import re
 from importlib.util import find_spec
-from typing import Union
 from urllib.parse import quote
 
 import pytest
@@ -23,7 +22,8 @@ from waylay.services.storage.api import SubscriptionApi
 from waylay.services.storage.service import StorageService
 
 from ..types.hal_entity_stub import HALEntityStub
-from ..types.subscription_config_stub import SubscriptionConfigStub
+from ..types.subscription_config_input_stub import SubscriptionConfigInputStub
+from ..types.subscription_config_output_stub import SubscriptionConfigOutputStub
 from ..types.subscriptions_listing_stub import SubscriptionsListingStub
 from ..types.subscriptions_stub import SubscriptionsStub
 
@@ -34,7 +34,7 @@ MODELS_AVAILABLE = (
 if MODELS_AVAILABLE:
     from waylay.services.storage.models import (
         HALEntity,
-        SubscriptionConfig,
+        SubscriptionConfigOutput,
         Subscriptions,
         SubscriptionsListing,
     )
@@ -66,7 +66,7 @@ def test_registered(waylay_client: WaylayClient):
 def _create_set_mock_response(
     httpx_mock: HTTPXMock, gateway_url: str, bucket_name: str
 ):
-    mock_response = SubscriptionConfigStub.create_json()
+    mock_response = SubscriptionConfigOutputStub.create_json()
     httpx_mock_kwargs = {
         "method": "POST",
         "url": re.compile(
@@ -92,11 +92,11 @@ async def test_create(service: StorageService, gateway_url: str, httpx_mock: HTT
         "query": CreateQuery(
             store="store_example",
         ),
-        "json": SubscriptionConfigStub.create_instance(),
+        "json": SubscriptionConfigInputStub.create_instance(),
     }
     _create_set_mock_response(httpx_mock, gateway_url, quote(str(bucket_name)))
     resp = await service.subscription.create(bucket_name, **kwargs)
-    check_type(resp, Union[SubscriptionConfig,])
+    check_type(resp, SubscriptionConfigOutput)
 
 
 @pytest.mark.asyncio
@@ -114,7 +114,7 @@ async def test_create_without_types(
         "query": {
             "store": "store_example",
         },
-        "json": SubscriptionConfigStub.create_json(),
+        "json": SubscriptionConfigInputStub.create_json(),
     }
     _create_set_mock_response(httpx_mock, gateway_url, quote(str(bucket_name)))
     resp = await service.subscription.create(bucket_name, **kwargs)
@@ -162,7 +162,7 @@ async def test_delete_by(
     }
     _delete_by_set_mock_response(httpx_mock, gateway_url, quote(str(bucket_name)))
     resp = await service.subscription.delete_by(bucket_name, **kwargs)
-    check_type(resp, Union[HALEntity,])
+    check_type(resp, HALEntity)
 
 
 @pytest.mark.asyncio
@@ -196,7 +196,7 @@ async def test_delete_by_without_types(
 def _get_set_mock_response(
     httpx_mock: HTTPXMock, gateway_url: str, bucket_name: str, subscription_id: str
 ):
-    mock_response = SubscriptionConfigStub.create_json()
+    mock_response = SubscriptionConfigOutputStub.create_json()
     httpx_mock_kwargs = {
         "method": "GET",
         "url": re.compile(
@@ -229,7 +229,7 @@ async def test_get(service: StorageService, gateway_url: str, httpx_mock: HTTPXM
         httpx_mock, gateway_url, quote(str(bucket_name)), quote(str(subscription_id))
     )
     resp = await service.subscription.get(bucket_name, subscription_id, **kwargs)
-    check_type(resp, Union[SubscriptionConfig,])
+    check_type(resp, SubscriptionConfigOutput)
 
 
 @pytest.mark.asyncio
@@ -289,7 +289,7 @@ async def test_list(service: StorageService, gateway_url: str, httpx_mock: HTTPX
     }
     _list_set_mock_response(httpx_mock, gateway_url)
     resp = await service.subscription.list(**kwargs)
-    check_type(resp, Union[SubscriptionsListing,])
+    check_type(resp, SubscriptionsListing)
 
 
 @pytest.mark.asyncio
@@ -354,7 +354,7 @@ async def test_query(service: StorageService, gateway_url: str, httpx_mock: HTTP
     }
     _query_set_mock_response(httpx_mock, gateway_url, quote(str(bucket_name)))
     resp = await service.subscription.query(bucket_name, **kwargs)
-    check_type(resp, Union[Subscriptions,])
+    check_type(resp, Subscriptions)
 
 
 @pytest.mark.asyncio
@@ -421,7 +421,7 @@ async def test_remove(service: StorageService, gateway_url: str, httpx_mock: HTT
         httpx_mock, gateway_url, quote(str(bucket_name)), quote(str(subscription_id))
     )
     resp = await service.subscription.remove(bucket_name, subscription_id, **kwargs)
-    check_type(resp, Union[HALEntity,])
+    check_type(resp, HALEntity)
 
 
 @pytest.mark.asyncio
@@ -452,7 +452,7 @@ async def test_remove_without_types(
 def _replace_set_mock_response(
     httpx_mock: HTTPXMock, gateway_url: str, bucket_name: str, subscription_id: str
 ):
-    mock_response = SubscriptionConfigStub.create_json()
+    mock_response = SubscriptionConfigOutputStub.create_json()
     httpx_mock_kwargs = {
         "method": "PUT",
         "url": re.compile(
@@ -482,13 +482,13 @@ async def test_replace(
         "query": ReplaceQuery(
             store="store_example",
         ),
-        "json": SubscriptionConfigStub.create_instance(),
+        "json": SubscriptionConfigInputStub.create_instance(),
     }
     _replace_set_mock_response(
         httpx_mock, gateway_url, quote(str(bucket_name)), quote(str(subscription_id))
     )
     resp = await service.subscription.replace(bucket_name, subscription_id, **kwargs)
-    check_type(resp, Union[SubscriptionConfig,])
+    check_type(resp, SubscriptionConfigOutput)
 
 
 @pytest.mark.asyncio
@@ -508,7 +508,7 @@ async def test_replace_without_types(
         "query": {
             "store": "store_example",
         },
-        "json": SubscriptionConfigStub.create_json(),
+        "json": SubscriptionConfigInputStub.create_json(),
     }
     _replace_set_mock_response(
         httpx_mock, gateway_url, quote(str(bucket_name)), quote(str(subscription_id))

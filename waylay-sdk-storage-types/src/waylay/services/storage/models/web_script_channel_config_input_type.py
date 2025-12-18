@@ -14,8 +14,8 @@ from __future__ import annotations
 from enum import Enum
 
 
-class WebScriptChannelConfigType(str, Enum):
-    """WebScriptChannelConfigType."""
+class WebScriptChannelConfigInputType(str, Enum):
+    """WebScriptChannelConfigInputType."""
 
     WEBSCRIPT = "webscript"
 

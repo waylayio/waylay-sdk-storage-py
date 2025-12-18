@@ -45,7 +45,8 @@ notification_queue_status_report_model_schema = json.loads(
       "title" : "Messages",
       "type" : "array",
       "items" : {
-        "type" : "object"
+        "type" : "object",
+        "additionalProperties" : true
       }
     }
   },

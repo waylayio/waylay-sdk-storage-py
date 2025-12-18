@@ -16,26 +16,25 @@ from pydantic import TypeAdapter
 from ..openapi import MODEL_DEFINITIONS, with_example_provider
 
 try:
-    from waylay.services.storage.models.web_script_channel_config import (
-        WebScriptChannelConfig,
+    from waylay.services.storage.models.system_channel_config_input import (
+        SystemChannelConfigInput,
     )
 
-    WebScriptChannelConfigAdapter = TypeAdapter(WebScriptChannelConfig)
+    SystemChannelConfigInputAdapter = TypeAdapter(SystemChannelConfigInput)
     MODELS_AVAILABLE = True
 except ImportError as exc:
     MODELS_AVAILABLE = False
 
-web_script_channel_config_model_schema = json.loads(
+system_channel_config_input_model_schema = json.loads(
     r"""{
-  "required" : [ "name" ],
   "type" : "object",
   "properties" : {
     "type" : {
-      "$ref" : "#/components/schemas/WebScriptChannelConfig_type"
+      "$ref" : "#/components/schemas/SystemChannelConfig_Input_type"
     },
     "description" : {
-      "title" : "Description",
-      "type" : "string"
+      "type" : "string",
+      "nullable" : true
     },
     "payload" : {
       "$ref" : "#/components/schemas/PayloadConfig"
@@ -45,56 +44,42 @@ web_script_channel_config_model_schema = json.loads(
     },
     "expiry" : {
       "$ref" : "#/components/schemas/Expiry"
-    },
-    "name" : {
-      "title" : "Name",
-      "type" : "string"
-    },
-    "version" : {
-      "title" : "Version",
-      "type" : "string"
-    },
-    "method" : {
-      "allOf" : [ {
-        "$ref" : "#/components/schemas/HTTP_METHOD"
-      } ],
-      "default" : "POST"
     }
   },
-  "description" : "Channel configuration for invoking a waylay webscript."
+  "description" : "Channel configuration for functionality that is fixed by the platform.\n\nThis cannot be selected by the end user."
 }
 """,
     object_hook=with_example_provider,
 )
-web_script_channel_config_model_schema.update({"definitions": MODEL_DEFINITIONS})
+system_channel_config_input_model_schema.update({"definitions": MODEL_DEFINITIONS})
 
-web_script_channel_config_faker = JSF(
-    web_script_channel_config_model_schema, allow_none_optionals=1
+system_channel_config_input_faker = JSF(
+    system_channel_config_input_model_schema, allow_none_optionals=1
 )
 
 
-class WebScriptChannelConfigStub:
-    """WebScriptChannelConfig unit test stubs."""
+class SystemChannelConfigInputStub:
+    """SystemChannelConfigInput unit test stubs."""
 
     @classmethod
     def create_json(cls):
         """Create a dict stub instance."""
-        return web_script_channel_config_faker.generate(
+        return system_channel_config_input_faker.generate(
             use_defaults=True, use_examples=True
         )
 
     @classmethod
-    def create_instance(cls) -> "WebScriptChannelConfig":
-        """Create WebScriptChannelConfig stub instance."""
+    def create_instance(cls) -> "SystemChannelConfigInput":
+        """Create SystemChannelConfigInput stub instance."""
         if not MODELS_AVAILABLE:
             raise ImportError("Models must be installed to create class stubs")
         json = cls.create_json()
         if json is None:
             # use backup example based on the pydantic model schema
             backup_faker = JSF(
-                WebScriptChannelConfigAdapter.json_schema(), allow_none_optionals=1
+                SystemChannelConfigInputAdapter.json_schema(), allow_none_optionals=1
             )
             json = backup_faker.generate(use_defaults=True, use_examples=True)
-        return WebScriptChannelConfigAdapter.validate_python(
+        return SystemChannelConfigInputAdapter.validate_python(
             json, context={"skip_validation": True}
         )

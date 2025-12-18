@@ -15,14 +15,13 @@ from pydantic import (
     ConfigDict,
     StrictStr,
 )
-
 from waylay.sdk.api._models import BaseModel as WaylayBaseModel
 
 from ..models.auth import AUTH
 
 
 class AuthenticationConfig(WaylayBaseModel):
-    """Configuration for the authentication method used when forwarding an event to a channel.."""
+    """Authentication configuration when forwarding an event to a channel.."""
 
     method: AUTH | None = None
     key: StrictStr | None = None

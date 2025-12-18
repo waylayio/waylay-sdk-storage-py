@@ -4,7 +4,7 @@ Manage storage buckets and subscriptions.
 
 
 This Python package is automatically generated based on the 
-Waylay Storage OpenAPI specification (API version: 0.5.2)
+Waylay Storage OpenAPI specification (API version: 0.9.0)
 For more information, please visit [the openapi specification](https://docs.waylay.io/openapi/public/redocly/storage.html).
 
 It consists of two sub-packages that are both plugins for the waylay-sdk-core package.
@@ -12,7 +12,7 @@ It consists of two sub-packages that are both plugins for the waylay-sdk-core pa
 - The `waylay-sdk-storage-types` sub-package is an extension that contains the typed model classes for all path params, query params, body params and responses for each of the api methods in `waylay-sdk-storage`.
 
 ## Requirements.
-This package requires Python 3.9+.
+This package requires Python 3.10+.
 
 ## Installation
 
@@ -96,6 +96,7 @@ Class | Method | HTTP request | Description
  - [BucketObjectListing](docs/BucketObjectListing.md)
  - [CHANNELTYPE](docs/CHANNELTYPE.md)
  - [Channel](docs/Channel.md)
+ - [Channel1](docs/Channel1.md)
  - [EventFilter](docs/EventFilter.md)
  - [Expiry](docs/Expiry.md)
  - [HALEntity](docs/HALEntity.md)
@@ -108,18 +109,24 @@ Class | Method | HTTP request | Description
  - [NotificationQueueStatusReport](docs/NotificationQueueStatusReport.md)
  - [PayloadConfig](docs/PayloadConfig.md)
  - [QUEUESETUPSTATUS](docs/QUEUESETUPSTATUS.md)
- - [ResponseList](docs/ResponseList.md)
+ - [Resource](docs/Resource.md)
+ - [ResponseListObject](docs/ResponseListObject.md)
+ - [S3PolicyDef](docs/S3PolicyDef.md)
+ - [S3PolicyStatement](docs/S3PolicyStatement.md)
  - [SIGN](docs/SIGN.md)
  - [STORETYPE](docs/STORETYPE.md)
  - [Store](docs/Store.md)
- - [SubscriptionConfig](docs/SubscriptionConfig.md)
+ - [SubscriptionConfigInput](docs/SubscriptionConfigInput.md)
+ - [SubscriptionConfigOutput](docs/SubscriptionConfigOutput.md)
  - [Subscriptions](docs/Subscriptions.md)
  - [SubscriptionsListing](docs/SubscriptionsListing.md)
- - [SystemChannelConfig](docs/SystemChannelConfig.md)
- - [SystemChannelConfigType](docs/SystemChannelConfigType.md)
+ - [SystemChannelConfigInput](docs/SystemChannelConfigInput.md)
+ - [SystemChannelConfigInputType](docs/SystemChannelConfigInputType.md)
+ - [SystemChannelConfigOutput](docs/SystemChannelConfigOutput.md)
  - [TenantStatusReport](docs/TenantStatusReport.md)
  - [VENTTYPE](docs/VENTTYPE.md)
  - [ValidationError](docs/ValidationError.md)
- - [WebScriptChannelConfig](docs/WebScriptChannelConfig.md)
- - [WebScriptChannelConfigType](docs/WebScriptChannelConfigType.md)
+ - [WebScriptChannelConfigInput](docs/WebScriptChannelConfigInput.md)
+ - [WebScriptChannelConfigInputType](docs/WebScriptChannelConfigInputType.md)
+ - [WebScriptChannelConfigOutput](docs/WebScriptChannelConfigOutput.md)
 

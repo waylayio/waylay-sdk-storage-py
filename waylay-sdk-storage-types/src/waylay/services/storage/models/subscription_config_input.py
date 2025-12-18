@@ -18,7 +18,6 @@ from pydantic import (
     Field,
     StrictStr,
 )
-
 from waylay.sdk.api._models import BaseModel as WaylayBaseModel
 
 from ..models.channel import Channel
@@ -26,7 +25,7 @@ from ..models.event_filter import EventFilter
 from ..models.links_value import LinksValue
 
 
-class SubscriptionConfig(WaylayBaseModel):
+class SubscriptionConfigInput(WaylayBaseModel):
     """Specification of a notification subscription that forwards to a given channel.."""
 
     links: Dict[str, LinksValue] | None = Field(default=None, alias="_links")

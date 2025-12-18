@@ -28,16 +28,16 @@ expiry_model_schema = json.loads(
   "type" : "object",
   "properties" : {
     "seconds" : {
-      "title" : "Seconds",
-      "type" : "integer"
+      "type" : "integer",
+      "nullable" : true
     },
     "hours" : {
-      "title" : "Hours",
-      "type" : "integer"
+      "type" : "integer",
+      "nullable" : true
     },
     "days" : {
-      "title" : "Days",
-      "type" : "integer"
+      "type" : "integer",
+      "nullable" : true
     }
   },
   "description" : "Input model for expiry parameters."

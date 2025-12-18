@@ -16,54 +16,54 @@ from pydantic import TypeAdapter
 from ..openapi import MODEL_DEFINITIONS, with_example_provider
 
 try:
-    from waylay.services.storage.models.system_channel_config_type import (
-        SystemChannelConfigType,
-    )
+    from waylay.services.storage.models.response_list_object import ResponseListObject
 
-    SystemChannelConfigTypeAdapter = TypeAdapter(SystemChannelConfigType)
+    ResponseListObjectAdapter = TypeAdapter(ResponseListObject)
     MODELS_AVAILABLE = True
 except ImportError as exc:
     MODELS_AVAILABLE = False
 
-system_channel_config_type_model_schema = json.loads(
+response_list_object_model_schema = json.loads(
     r"""{
-  "title" : "SystemChannelConfig_type",
-  "type" : "string",
-  "default" : "system",
-  "enum" : [ "system" ]
+  "title" : "Response List Object",
+  "anyOf" : [ {
+    "$ref" : "#/components/schemas/BucketObjectListing"
+  }, {
+    "$ref" : "#/components/schemas/BucketObject"
+  }, {
+    "$ref" : "#/components/schemas/HALEntity"
+  } ]
 }
 """,
     object_hook=with_example_provider,
 )
-system_channel_config_type_model_schema.update({"definitions": MODEL_DEFINITIONS})
+response_list_object_model_schema.update({"definitions": MODEL_DEFINITIONS})
 
-system_channel_config_type_faker = JSF(
-    system_channel_config_type_model_schema, allow_none_optionals=1
+response_list_object_faker = JSF(
+    response_list_object_model_schema, allow_none_optionals=1
 )
 
 
-class SystemChannelConfigTypeStub:
-    """SystemChannelConfigType unit test stubs."""
+class ResponseListObjectStub:
+    """ResponseListObject unit test stubs."""
 
     @classmethod
     def create_json(cls):
         """Create a dict stub instance."""
-        return system_channel_config_type_faker.generate(
-            use_defaults=True, use_examples=True
-        )
+        return response_list_object_faker.generate(use_defaults=True, use_examples=True)
 
     @classmethod
-    def create_instance(cls) -> "SystemChannelConfigType":
-        """Create SystemChannelConfigType stub instance."""
+    def create_instance(cls) -> "ResponseListObject":
+        """Create ResponseListObject stub instance."""
         if not MODELS_AVAILABLE:
             raise ImportError("Models must be installed to create class stubs")
         json = cls.create_json()
         if json is None:
             # use backup example based on the pydantic model schema
             backup_faker = JSF(
-                SystemChannelConfigTypeAdapter.json_schema(), allow_none_optionals=1
+                ResponseListObjectAdapter.json_schema(), allow_none_optionals=1
             )
             json = backup_faker.generate(use_defaults=True, use_examples=True)
-        return SystemChannelConfigTypeAdapter.validate_python(
+        return ResponseListObjectAdapter.validate_python(
             json, context={"skip_validation": True}
         )
