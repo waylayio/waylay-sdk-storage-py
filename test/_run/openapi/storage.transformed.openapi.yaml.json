@@ -1,0 +1,2709 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Waylay Storage",
+    "description": "\nManage storage buckets and subscriptions.\n",
+    "version": "0.9.0"
+  },
+  "paths": {
+    "/storage/v1/bucket": {
+      "get": {
+        "tags": [
+          "Bucket"
+        ],
+        "summary": "List Buckets",
+        "description": "List authorized buckets.",
+        "operationId": "list_bucket",
+        "parameters": [
+          {
+            "name": "store",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "nullable": true
+                }
+              ],
+              "title": "Store"
+            },
+            "x-showExample": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BucketListing"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "waylayApiKeySecret": []
+          }
+        ],
+        "x-py-method": "list",
+        "x-consumes-multipart": false,
+        "x-consumes-urlencoded": false,
+        "x-consumes-json": false,
+        "x-consumes-other": false
+      }
+    },
+    "/storage/v1/bucket/{bucket_name}": {
+      "get": {
+        "tags": [
+          "Bucket"
+        ],
+        "summary": "Get Bucket",
+        "description": "Get a descriptive representation of a bucket.",
+        "operationId": "get_bucket",
+        "parameters": [
+          {
+            "name": "bucket_name",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Bucket Name"
+            },
+            "x-showExample": false
+          },
+          {
+            "name": "store",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "nullable": true
+                }
+              ],
+              "title": "Store"
+            },
+            "x-showExample": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Bucket"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "waylayApiKeySecret": []
+          }
+        ],
+        "x-py-method": "get",
+        "x-consumes-multipart": false,
+        "x-consumes-urlencoded": false,
+        "x-consumes-json": false,
+        "x-consumes-other": false
+      }
+    },
+    "/storage/v1/bucket/{bucket_name}/{object_path}": {
+      "get": {
+        "tags": [
+          "Object"
+        ],
+        "summary": "List Objects",
+        "description": "List, inspect or sign objects.\n\n* list the objects of a bucket with {object_path} prefix\n    * (`recursive=true`) list content recursively\n    * (`all=true`) include hidden objects\n* (`stat=true`) get the meta of the object at {object_path}\n* (`sign=[GET,PUT,POST]`) fetch presigned urls to operate on {object_path}\n    * (`all=true`) allow link creation for hidden objects",
+        "operationId": "list_object",
+        "parameters": [
+          {
+            "name": "bucket_name",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Bucket Name"
+            },
+            "x-showExample": false
+          },
+          {
+            "name": "object_path",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Object Path"
+            },
+            "x-showExample": false
+          },
+          {
+            "name": "stat",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "title": "Stat"
+            },
+            "x-showExample": true
+          },
+          {
+            "name": "recursive",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "boolean",
+                  "nullable": true
+                }
+              ],
+              "title": "Recursive"
+            },
+            "x-showExample": false
+          },
+          {
+            "name": "all",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "boolean",
+                  "nullable": true
+                }
+              ],
+              "title": "All"
+            },
+            "x-showExample": false
+          },
+          {
+            "name": "start_after",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "nullable": true
+                }
+              ],
+              "title": "Start After"
+            },
+            "x-showExample": false
+          },
+          {
+            "name": "fetch_content_type",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "description": "If true, fetch content type for each object when not already available from the listing (e.g. on s3 stores).\nThis is less efficient but may be necessary for certain use cases.",
+              "default": false,
+              "title": "Fetch Content Type"
+            },
+            "description": "If true, fetch content type for each object when not already available from the listing (e.g. on s3 stores).\nThis is less efficient but may be necessary for certain use cases.",
+            "x-showExample": true
+          },
+          {
+            "name": "get_as_attachment",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": true,
+              "title": "Get As Attachment"
+            },
+            "x-showExample": true
+          },
+          {
+            "name": "sign",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "nullable": true
+                }
+              ],
+              "title": "Sign"
+            },
+            "x-showExample": false
+          },
+          {
+            "name": "max_keys",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "nullable": true
+                }
+              ],
+              "title": "Max Keys"
+            },
+            "x-showExample": false
+          },
+          {
+            "name": "store",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "nullable": true
+                }
+              ],
+              "title": "Store"
+            },
+            "x-showExample": false
+          },
+          {
+            "name": "expiry_days",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "nullable": true
+                }
+              ],
+              "title": "Expiry Days"
+            },
+            "x-showExample": false
+          },
+          {
+            "name": "expiry_hours",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "nullable": true
+                }
+              ],
+              "title": "Expiry Hours"
+            },
+            "x-showExample": false
+          },
+          {
+            "name": "expiry_seconds",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "nullable": true
+                }
+              ],
+              "title": "Expiry Seconds"
+            },
+            "x-showExample": false
+          },
+          {
+            "name": "content_length_min",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 0,
+              "title": "Content Length Min"
+            },
+            "x-showExample": true
+          },
+          {
+            "name": "content_length_max",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "nullable": true
+                }
+              ],
+              "title": "Content Length Max"
+            },
+            "x-showExample": false
+          },
+          {
+            "name": "content_type",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "nullable": true
+                }
+              ],
+              "title": "Content Type"
+            },
+            "x-showExample": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/components/schemas/BucketObjectListing"
+                    },
+                    {
+                      "$ref": "#/components/schemas/BucketObject"
+                    },
+                    {
+                      "$ref": "#/components/schemas/HALEntity"
+                    }
+                  ],
+                  "title": "Response List"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "waylayApiKeySecret": []
+          }
+        ],
+        "x-py-method": "list",
+        "x-consumes-multipart": false,
+        "x-consumes-urlencoded": false,
+        "x-consumes-json": false,
+        "x-consumes-other": false
+      },
+      "delete": {
+        "tags": [
+          "Object"
+        ],
+        "summary": "Remove Object Or Folder",
+        "description": "Remove the object or folder at {object_path}.\n\nAn {object_path} ending in a `/` requests folder deletion of an empty\nfolder unless:\n* (`recursive=true`) forces recursive deletion of a (non-empty) folder.\n* (`all=true`) forces recursive deletion, including hidden objects.",
+        "operationId": "remove_object",
+        "parameters": [
+          {
+            "name": "bucket_name",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Bucket Name"
+            },
+            "x-showExample": false
+          },
+          {
+            "name": "object_path",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Object Path"
+            },
+            "x-showExample": false
+          },
+          {
+            "name": "recursive",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "boolean",
+                  "nullable": true
+                }
+              ],
+              "title": "Recursive"
+            },
+            "x-showExample": false
+          },
+          {
+            "name": "all",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "boolean",
+                  "nullable": true
+                }
+              ],
+              "title": "All"
+            },
+            "x-showExample": false
+          },
+          {
+            "name": "start_after",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "nullable": true
+                }
+              ],
+              "title": "Start After"
+            },
+            "x-showExample": false
+          },
+          {
+            "name": "max_keys",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "nullable": true
+                }
+              ],
+              "title": "Max Keys"
+            },
+            "x-showExample": false
+          },
+          {
+            "name": "store",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "nullable": true
+                }
+              ],
+              "title": "Store"
+            },
+            "x-showExample": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HALEntity"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "waylayApiKeySecret": []
+          }
+        ],
+        "x-py-method": "remove",
+        "x-consumes-multipart": false,
+        "x-consumes-urlencoded": false,
+        "x-consumes-json": false,
+        "x-consumes-other": false
+      }
+    },
+    "/storage/v1/bucket/{bucket_name}/{object_path}/": {
+      "put": {
+        "tags": [
+          "Object"
+        ],
+        "summary": "Create Folder",
+        "description": "Create a (virtual) folder.\n\n* (`all=true`) force creation of a hidden folder,\n  having a path element that starts with a `.`.",
+        "operationId": "createFolder_object",
+        "parameters": [
+          {
+            "name": "bucket_name",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Bucket Name"
+            },
+            "x-showExample": false
+          },
+          {
+            "name": "object_path",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Object Path"
+            },
+            "x-showExample": false
+          },
+          {
+            "name": "all",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "title": "All"
+            },
+            "x-showExample": true
+          },
+          {
+            "name": "store",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "nullable": true
+                }
+              ],
+              "title": "Store"
+            },
+            "x-showExample": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BucketObject"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "waylayApiKeySecret": []
+          }
+        ],
+        "x-py-method": "create_folder",
+        "x-consumes-multipart": false,
+        "x-consumes-urlencoded": false,
+        "x-consumes-json": false,
+        "x-consumes-other": false
+      }
+    },
+    "/storage/v1/bucket/{bucket_name}/{target_path}": {
+      "put": {
+        "tags": [
+          "Object"
+        ],
+        "summary": "Copy Or Move Object",
+        "description": "Copy or move object to new location.",
+        "operationId": "copyOrMove_object",
+        "parameters": [
+          {
+            "name": "bucket_name",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Bucket Name"
+            },
+            "x-showExample": false
+          },
+          {
+            "name": "target_path",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Target Path"
+            },
+            "x-showExample": false
+          },
+          {
+            "name": "source",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Source"
+            },
+            "x-showExample": false
+          },
+          {
+            "name": "move",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "title": "Move"
+            },
+            "x-showExample": true
+          },
+          {
+            "name": "store",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "nullable": true
+                }
+              ],
+              "title": "Store"
+            },
+            "x-showExample": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HALEntity"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "waylayApiKeySecret": []
+          }
+        ],
+        "x-py-method": "copy_or_move",
+        "x-consumes-multipart": false,
+        "x-consumes-urlencoded": false,
+        "x-consumes-json": false,
+        "x-consumes-other": false
+      }
+    },
+    "/storage/v1/subscription": {
+      "get": {
+        "tags": [
+          "Subscription"
+        ],
+        "summary": "Query All Subscriptions",
+        "description": "List notification subscriptions per bucket that have notification enabled.",
+        "operationId": "list_subscription",
+        "parameters": [
+          {
+            "name": "store",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "nullable": true
+                }
+              ],
+              "title": "Store"
+            },
+            "x-showExample": false
+          },
+          {
+            "name": "prefix",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "nullable": true
+                }
+              ],
+              "title": "Prefix"
+            },
+            "x-showExample": false
+          },
+          {
+            "name": "suffix",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "nullable": true
+                }
+              ],
+              "title": "Suffix"
+            },
+            "x-showExample": false
+          },
+          {
+            "name": "event_type",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "$ref": "#/components/schemas/VENT_TYPE",
+                  "nullable": true
+                }
+              ],
+              "title": "Event Type"
+            },
+            "x-showExample": false
+          },
+          {
+            "name": "channel_type",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "$ref": "#/components/schemas/CHANNEL_TYPE",
+                  "nullable": true
+                }
+              ],
+              "title": "Channel Type"
+            },
+            "x-showExample": false
+          },
+          {
+            "name": "channel_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "nullable": true
+                }
+              ],
+              "title": "Channel Id"
+            },
+            "x-showExample": false
+          },
+          {
+            "name": "max_keys",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "nullable": true
+                }
+              ],
+              "title": "Max Keys"
+            },
+            "x-showExample": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubscriptionsListing"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "waylayApiKeySecret": []
+          }
+        ],
+        "x-py-method": "list",
+        "x-consumes-multipart": false,
+        "x-consumes-urlencoded": false,
+        "x-consumes-json": false,
+        "x-consumes-other": false
+      }
+    },
+    "/storage/v1/subscription/{bucket_name}": {
+      "get": {
+        "tags": [
+          "Subscription"
+        ],
+        "summary": "Query Bucket Subscriptions",
+        "description": "List notification subscriptions for given bucket.",
+        "operationId": "query_subscription",
+        "parameters": [
+          {
+            "name": "bucket_name",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Bucket Name"
+            },
+            "x-showExample": false
+          },
+          {
+            "name": "start_after",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "nullable": true
+                }
+              ],
+              "title": "Start After"
+            },
+            "x-showExample": false
+          },
+          {
+            "name": "store",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "nullable": true
+                }
+              ],
+              "title": "Store"
+            },
+            "x-showExample": false
+          },
+          {
+            "name": "prefix",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "nullable": true
+                }
+              ],
+              "title": "Prefix"
+            },
+            "x-showExample": false
+          },
+          {
+            "name": "suffix",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "nullable": true
+                }
+              ],
+              "title": "Suffix"
+            },
+            "x-showExample": false
+          },
+          {
+            "name": "event_type",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "$ref": "#/components/schemas/VENT_TYPE",
+                  "nullable": true
+                }
+              ],
+              "title": "Event Type"
+            },
+            "x-showExample": false
+          },
+          {
+            "name": "channel_type",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "$ref": "#/components/schemas/CHANNEL_TYPE",
+                  "nullable": true
+                }
+              ],
+              "title": "Channel Type"
+            },
+            "x-showExample": false
+          },
+          {
+            "name": "channel_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "nullable": true
+                }
+              ],
+              "title": "Channel Id"
+            },
+            "x-showExample": false
+          },
+          {
+            "name": "max_keys",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "nullable": true
+                }
+              ],
+              "title": "Max Keys"
+            },
+            "x-showExample": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Subscriptions"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "waylayApiKeySecret": []
+          }
+        ],
+        "x-py-method": "query",
+        "x-consumes-multipart": false,
+        "x-consumes-urlencoded": false,
+        "x-consumes-json": false,
+        "x-consumes-other": false
+      },
+      "delete": {
+        "tags": [
+          "Subscription"
+        ],
+        "summary": "Delete All Bucket Subscriptions",
+        "description": "Remove all notification subscriptions on a bucket\nthat match a given event and/or channel filter.\n\n> it can take a few minutes before this change\n> is fully effective on the forwarding of change events",
+        "operationId": "deleteBy_subscription",
+        "parameters": [
+          {
+            "name": "bucket_name",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Bucket Name"
+            },
+            "x-showExample": false
+          },
+          {
+            "name": "start_after",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "nullable": true
+                }
+              ],
+              "title": "Start After"
+            },
+            "x-showExample": false
+          },
+          {
+            "name": "prefix",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "nullable": true
+                }
+              ],
+              "title": "Prefix"
+            },
+            "x-showExample": false
+          },
+          {
+            "name": "suffix",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "nullable": true
+                }
+              ],
+              "title": "Suffix"
+            },
+            "x-showExample": false
+          },
+          {
+            "name": "event_type",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "$ref": "#/components/schemas/VENT_TYPE",
+                  "nullable": true
+                }
+              ],
+              "title": "Event Type"
+            },
+            "x-showExample": false
+          },
+          {
+            "name": "channel_type",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "$ref": "#/components/schemas/CHANNEL_TYPE",
+                  "nullable": true
+                }
+              ],
+              "title": "Channel Type"
+            },
+            "x-showExample": false
+          },
+          {
+            "name": "channel_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "nullable": true
+                }
+              ],
+              "title": "Channel Id"
+            },
+            "x-showExample": false
+          },
+          {
+            "name": "store",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "nullable": true
+                }
+              ],
+              "title": "Store"
+            },
+            "x-showExample": false
+          },
+          {
+            "name": "max_keys",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "nullable": true
+                }
+              ],
+              "title": "Max Keys"
+            },
+            "x-showExample": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HALEntity"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "waylayApiKeySecret": []
+          }
+        ],
+        "x-py-method": "delete_by",
+        "x-consumes-multipart": false,
+        "x-consumes-urlencoded": false,
+        "x-consumes-json": false,
+        "x-consumes-other": false
+      },
+      "post": {
+        "tags": [
+          "Subscription"
+        ],
+        "summary": "Create Bucket Subscription",
+        "description": "Create a new notification subscription...\n\non a bucket with a given or generated id.\n\n> it can take a few minutes before this change\n> is fully effective on the forwarding of change events",
+        "operationId": "create_subscription",
+        "parameters": [
+          {
+            "name": "bucket_name",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Bucket Name"
+            },
+            "x-showExample": false
+          },
+          {
+            "name": "store",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "nullable": true
+                }
+              ],
+              "title": "Store"
+            },
+            "x-showExample": false
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubscriptionConfig"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubscriptionConfig"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "waylayApiKeySecret": []
+          }
+        ],
+        "x-py-method": "create",
+        "x-consumes-multipart": false,
+        "x-consumes-urlencoded": false,
+        "x-consumes-json": true,
+        "x-consumes-other": false
+      }
+    },
+    "/storage/v1/subscription/{bucket_name}/{subscription_id}": {
+      "get": {
+        "tags": [
+          "Subscription"
+        ],
+        "summary": "Get Bucket Subscription",
+        "description": "Fetch a notification subscription.",
+        "operationId": "get_subscription",
+        "parameters": [
+          {
+            "name": "bucket_name",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Bucket Name"
+            },
+            "x-showExample": false
+          },
+          {
+            "name": "subscription_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Subscription Id"
+            },
+            "x-showExample": false
+          },
+          {
+            "name": "store",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "nullable": true
+                }
+              ],
+              "title": "Store"
+            },
+            "x-showExample": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubscriptionConfig"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "waylayApiKeySecret": []
+          }
+        ],
+        "x-py-method": "get",
+        "x-consumes-multipart": false,
+        "x-consumes-urlencoded": false,
+        "x-consumes-json": false,
+        "x-consumes-other": false
+      },
+      "delete": {
+        "tags": [
+          "Subscription"
+        ],
+        "summary": "Delete Bucket Subscription",
+        "description": "Remove a notification subscription.",
+        "operationId": "remove_subscription",
+        "parameters": [
+          {
+            "name": "bucket_name",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Bucket Name"
+            },
+            "x-showExample": false
+          },
+          {
+            "name": "subscription_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Subscription Id"
+            },
+            "x-showExample": false
+          },
+          {
+            "name": "store",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "nullable": true
+                }
+              ],
+              "title": "Store"
+            },
+            "x-showExample": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HALEntity"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "waylayApiKeySecret": []
+          }
+        ],
+        "x-py-method": "remove",
+        "x-consumes-multipart": false,
+        "x-consumes-urlencoded": false,
+        "x-consumes-json": false,
+        "x-consumes-other": false
+      },
+      "put": {
+        "tags": [
+          "Subscription"
+        ],
+        "summary": "Replace Bucket Subscription",
+        "description": "Create or replace a notification subscription on a bucket with a given id.\n\n> it can take a few minutes before this change\n> is fully effective on the forwarding of change events",
+        "operationId": "replace_subscription",
+        "parameters": [
+          {
+            "name": "bucket_name",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Bucket Name"
+            },
+            "x-showExample": false
+          },
+          {
+            "name": "subscription_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Subscription Id"
+            },
+            "x-showExample": false
+          },
+          {
+            "name": "store",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "nullable": true
+                }
+              ],
+              "title": "Store"
+            },
+            "x-showExample": false
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubscriptionConfig"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubscriptionConfig"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "waylayApiKeySecret": []
+          }
+        ],
+        "x-py-method": "replace",
+        "x-consumes-multipart": false,
+        "x-consumes-urlencoded": false,
+        "x-consumes-json": true,
+        "x-consumes-other": false
+      }
+    },
+    "/storage/v1/": {
+      "get": {
+        "tags": [
+          "About"
+        ],
+        "summary": "Version",
+        "description": "Get the application version.",
+        "operationId": "get_about",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "title": "Response Get"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "waylayApiKeySecret": []
+          }
+        ],
+        "x-py-method": "get",
+        "x-consumes-multipart": false,
+        "x-consumes-urlencoded": false,
+        "x-consumes-json": false,
+        "x-consumes-other": false
+      }
+    },
+    "/storage/v1/status": {
+      "get": {
+        "tags": [
+          "About"
+        ],
+        "summary": "Status",
+        "description": "Validate consistency of buckets and notification queues for this tenant.",
+        "operationId": "status_about",
+        "parameters": [
+          {
+            "name": "store",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "nullable": true
+                }
+              ],
+              "title": "Store"
+            },
+            "x-showExample": false
+          },
+          {
+            "name": "include_buckets",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": true,
+              "title": "Include Buckets"
+            },
+            "x-showExample": true
+          },
+          {
+            "name": "include_queues",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": true,
+              "title": "Include Queues"
+            },
+            "x-showExample": true
+          },
+          {
+            "name": "include_disk_usage",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "title": "Include Disk Usage"
+            },
+            "x-showExample": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TenantStatusReport"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "waylayApiKeySecret": []
+          }
+        ],
+        "x-py-method": "status",
+        "x-consumes-multipart": false,
+        "x-consumes-urlencoded": false,
+        "x-consumes-json": false,
+        "x-consumes-other": false
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AUTH": {
+        "type": "string",
+        "enum": [
+          "DEFAULT",
+          "NONE",
+          "API_KEY",
+          "TOKEN",
+          "WAYLAY_APP",
+          "WAYLAY_TOKEN",
+          "WEBSCRIPT"
+        ],
+        "description": "Supported authentication methods for notifications."
+      },
+      "AuthenticationConfig": {
+        "properties": {
+          "method": {
+            "$ref": "#/components/schemas/AUTH",
+            "default": "DEFAULT"
+          },
+          "key": {
+            "anyOf": [
+              {
+                "type": "string",
+                "nullable": true
+              }
+            ],
+            "title": "Key"
+          },
+          "secret": {
+            "anyOf": [
+              {
+                "type": "string",
+                "nullable": true
+              }
+            ],
+            "title": "Secret"
+          }
+        },
+        "type": "object",
+        "description": "Authentication configuration when forwarding an event to a channel."
+      },
+      "BUCKET_CREATION_STATUS": {
+        "type": "string",
+        "enum": [
+          "unknown",
+          "missing",
+          "invalid",
+          "up_to_date"
+        ],
+        "description": "Possbile bucket creation status codes."
+      },
+      "BUCKET_POLICY_STATUS": {
+        "type": "string",
+        "enum": [
+          "unknown",
+          "missing",
+          "out_dated",
+          "up_to_date"
+        ],
+        "description": "Possible bucket policy status codes."
+      },
+      "Bucket": {
+        "properties": {
+          "_links": {
+            "additionalProperties": {
+              "anyOf": [
+                {
+                  "$ref": "#/components/schemas/HALLink"
+                },
+                {
+                  "items": {
+                    "$ref": "#/components/schemas/HALLink"
+                  },
+                  "type": "array"
+                }
+              ]
+            },
+            "type": "object",
+            "title": "Links"
+          },
+          "alias": {
+            "type": "string",
+            "title": "Alias"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "store": {
+            "$ref": "#/components/schemas/Store"
+          },
+          "creation_date": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Creation Date"
+          },
+          "size": {
+            "type": "integer",
+            "title": "Size"
+          }
+        },
+        "type": "object",
+        "required": [
+          "name"
+        ],
+        "description": "Representation of a storage bucket."
+      },
+      "BucketConfiguration": {
+        "properties": {
+          "_links": {
+            "additionalProperties": {
+              "anyOf": [
+                {
+                  "$ref": "#/components/schemas/HALLink"
+                },
+                {
+                  "items": {
+                    "$ref": "#/components/schemas/HALLink"
+                  },
+                  "type": "array"
+                }
+              ]
+            },
+            "type": "object",
+            "title": "Links"
+          },
+          "alias": {
+            "type": "string",
+            "title": "Alias"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "store": {
+            "$ref": "#/components/schemas/Store"
+          },
+          "creation_date": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Creation Date"
+          },
+          "size": {
+            "type": "integer",
+            "title": "Size"
+          },
+          "status": {
+            "$ref": "#/components/schemas/BUCKET_CREATION_STATUS",
+            "default": "unknown"
+          },
+          "public_policy_json": {
+            "$ref": "#/components/schemas/S3PolicyDef"
+          },
+          "public_policy_type": {
+            "type": "string",
+            "title": "Public Policy Type"
+          },
+          "error": {
+            "type": "string",
+            "title": "Error"
+          }
+        },
+        "type": "object",
+        "required": [
+          "name"
+        ],
+        "description": "Representation of a bucket configuration."
+      },
+      "BucketListing": {
+        "properties": {
+          "_links": {
+            "additionalProperties": {
+              "anyOf": [
+                {
+                  "$ref": "#/components/schemas/HALLink"
+                },
+                {
+                  "items": {
+                    "$ref": "#/components/schemas/HALLink"
+                  },
+                  "type": "array"
+                }
+              ]
+            },
+            "type": "object",
+            "title": "Links"
+          },
+          "buckets": {
+            "items": {
+              "$ref": "#/components/schemas/Bucket"
+            },
+            "type": "array",
+            "title": "Buckets"
+          }
+        },
+        "type": "object",
+        "required": [
+          "buckets"
+        ],
+        "description": "List of Bucket representations."
+      },
+      "BucketObject": {
+        "properties": {
+          "_links": {
+            "additionalProperties": {
+              "anyOf": [
+                {
+                  "$ref": "#/components/schemas/HALLink"
+                },
+                {
+                  "items": {
+                    "$ref": "#/components/schemas/HALLink"
+                  },
+                  "type": "array"
+                }
+              ]
+            },
+            "type": "object",
+            "title": "Links"
+          },
+          "bucket": {
+            "$ref": "#/components/schemas/Bucket"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "last_modified": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Last Modified"
+          },
+          "etag": {
+            "type": "string",
+            "title": "Etag"
+          },
+          "size": {
+            "type": "integer",
+            "title": "Size"
+          },
+          "content_type": {
+            "type": "string",
+            "title": "Content Type"
+          },
+          "is_dir": {
+            "type": "boolean",
+            "title": "Is Dir",
+            "default": false
+          },
+          "storage_class": {
+            "type": "string",
+            "title": "Storage Class"
+          },
+          "owner_id": {
+            "type": "string",
+            "title": "Owner Id"
+          },
+          "owner_name": {
+            "type": "string",
+            "title": "Owner Name"
+          }
+        },
+        "type": "object",
+        "required": [
+          "bucket",
+          "name"
+        ],
+        "description": "Representation of a storage object."
+      },
+      "BucketObjectListing": {
+        "properties": {
+          "_links": {
+            "additionalProperties": {
+              "anyOf": [
+                {
+                  "$ref": "#/components/schemas/HALLink"
+                },
+                {
+                  "items": {
+                    "$ref": "#/components/schemas/HALLink"
+                  },
+                  "type": "array"
+                }
+              ]
+            },
+            "type": "object",
+            "title": "Links"
+          },
+          "objects": {
+            "items": {
+              "$ref": "#/components/schemas/BucketObject"
+            },
+            "type": "array",
+            "title": "Objects"
+          }
+        },
+        "type": "object",
+        "required": [
+          "objects"
+        ],
+        "description": "List of storage object representations."
+      },
+      "CHANNEL_TYPE": {
+        "type": "string",
+        "enum": [
+          "webhook",
+          "webscript",
+          "system"
+        ],
+        "description": "Supported notification channel types."
+      },
+      "VENT_TYPE": {
+        "type": "string",
+        "enum": [
+          "delete",
+          "put",
+          "get"
+        ],
+        "description": "Supported notification change event types."
+      },
+      "EventFilter": {
+        "properties": {
+          "prefix": {
+            "anyOf": [
+              {
+                "type": "string",
+                "nullable": true
+              }
+            ],
+            "title": "Prefix"
+          },
+          "suffix": {
+            "anyOf": [
+              {
+                "type": "string",
+                "nullable": true
+              }
+            ],
+            "title": "Suffix"
+          },
+          "events": {
+            "items": {
+              "$ref": "#/components/schemas/VENT_TYPE"
+            },
+            "type": "array",
+            "uniqueItems": true,
+            "title": "Events",
+            "default": [
+              "put"
+            ]
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string",
+                "nullable": true
+              }
+            ],
+            "title": "Description"
+          },
+          "queue": {
+            "anyOf": [
+              {
+                "type": "string",
+                "nullable": true
+              }
+            ],
+            "title": "Queue"
+          }
+        },
+        "type": "object",
+        "description": "Filter on change events in a storage backend.\n\nThe `prefix` and `suffix` properties are conditions on the object path\n(not including the bucket name).\nWhen not specified, all paths in the bucket will selected.\n\nThe `events` property can contain `put` and/or `delete` values, corresponding\nto create/update and deletion events.\nWhen not specified, only the create/update events are filtered."
+      },
+      "Expiry": {
+        "properties": {
+          "seconds": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "nullable": true
+              }
+            ],
+            "title": "Seconds"
+          },
+          "hours": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "nullable": true
+              }
+            ],
+            "title": "Hours"
+          },
+          "days": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "nullable": true
+              }
+            ],
+            "title": "Days"
+          }
+        },
+        "type": "object",
+        "description": "Input model for expiry parameters."
+      },
+      "HALEntity": {
+        "properties": {
+          "_links": {
+            "additionalProperties": {
+              "anyOf": [
+                {
+                  "$ref": "#/components/schemas/HALLink"
+                },
+                {
+                  "items": {
+                    "$ref": "#/components/schemas/HALLink"
+                  },
+                  "type": "array"
+                }
+              ]
+            },
+            "type": "object",
+            "title": "Links"
+          }
+        },
+        "type": "object",
+        "description": "Output model representing a collection of HAL links."
+      },
+      "HALLink": {
+        "properties": {
+          "href": {
+            "type": "string",
+            "title": "Href"
+          },
+          "method": {
+            "anyOf": [
+              {
+                "type": "string",
+                "nullable": true
+              }
+            ],
+            "title": "Method"
+          },
+          "form_data": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object",
+                "nullable": true
+              }
+            ],
+            "title": "Form Data"
+          },
+          "headers": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object",
+                "nullable": true
+              }
+            ],
+            "title": "Headers"
+          }
+        },
+        "type": "object",
+        "required": [
+          "href"
+        ],
+        "description": "Represents a HAL link."
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object"
+      },
+      "HTTP_METHOD": {
+        "type": "string",
+        "enum": [
+          "GET",
+          "PUT",
+          "POST"
+        ],
+        "description": "Supported notification methods."
+      },
+      "NotificationQueueStatus": {
+        "properties": {
+          "status": {
+            "$ref": "#/components/schemas/QUEUE_SETUP_STATUS"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "method": {
+            "type": "string",
+            "title": "Method"
+          },
+          "configured_parameters": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Configured Parameters"
+          },
+          "actual_parameters": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Actual Parameters"
+          },
+          "error": {
+            "type": "string",
+            "title": "Error"
+          }
+        },
+        "type": "object",
+        "required": [
+          "status",
+          "name",
+          "method"
+        ],
+        "description": "Response model for the notification queue configuration."
+      },
+      "NotificationQueueStatusReport": {
+        "properties": {
+          "store": {
+            "type": "string",
+            "title": "Store"
+          },
+          "notification_queues": {
+            "items": {
+              "$ref": "#/components/schemas/NotificationQueueStatus"
+            },
+            "type": "array",
+            "title": "Notification Queues"
+          },
+          "messages": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "array",
+            "title": "Messages"
+          }
+        },
+        "type": "object",
+        "required": [
+          "store",
+          "notification_queues"
+        ],
+        "description": "Response model for a notification queue status report."
+      },
+      "PayloadConfig": {
+        "properties": {
+          "signed_links": {
+            "items": {
+              "$ref": "#/components/schemas/SIGN"
+            },
+            "type": "array",
+            "title": "Signed Links"
+          },
+          "reference": {
+            "anyOf": [
+              {
+                "nullable": true
+              }
+            ],
+            "title": "Reference"
+          }
+        },
+        "type": "object",
+        "description": "Configuration object that specifies the expected notification payload."
+      },
+      "QUEUE_SETUP_STATUS": {
+        "type": "string",
+        "enum": [
+          "unknown",
+          "missing",
+          "invalid",
+          "not_specified",
+          "up_to_date"
+        ],
+        "description": "Possbile queue setup status codes."
+      },
+      "S3PolicyDef": {
+        "properties": {
+          "Statement": {
+            "items": {
+              "$ref": "#/components/schemas/S3PolicyStatement"
+            },
+            "type": "array",
+            "title": "Statement"
+          },
+          "Version": {
+            "type": "string",
+            "title": "Version"
+          }
+        },
+        "additionalProperties": true,
+        "type": "object",
+        "description": "AWS S3 Policy definition."
+      },
+      "S3PolicyStatement": {
+        "properties": {
+          "Resource": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              }
+            ],
+            "title": "Resource"
+          }
+        },
+        "additionalProperties": true,
+        "type": "object",
+        "description": "AWS S3 Policy definition statement."
+      },
+      "SIGN": {
+        "type": "string",
+        "enum": [
+          "GET",
+          "PUT",
+          "POST"
+        ],
+        "description": "Supported `sign` url parameter values."
+      },
+      "STORE_TYPE": {
+        "type": "string",
+        "enum": [
+          "gs",
+          "s3",
+          "azure",
+          "zenko"
+        ],
+        "description": "Supported backend store types."
+      },
+      "Store": {
+        "properties": {
+          "_links": {
+            "additionalProperties": {
+              "anyOf": [
+                {
+                  "$ref": "#/components/schemas/HALLink"
+                },
+                {
+                  "items": {
+                    "$ref": "#/components/schemas/HALLink"
+                  },
+                  "type": "array"
+                }
+              ]
+            },
+            "type": "object",
+            "title": "Links"
+          },
+          "type": {
+            "$ref": "#/components/schemas/STORE_TYPE"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "url": {
+            "type": "string",
+            "title": "Url"
+          }
+        },
+        "type": "object",
+        "required": [
+          "type",
+          "name",
+          "url"
+        ],
+        "description": "Representation of a backend store."
+      },
+      "SubscriptionConfig": {
+        "properties": {
+          "_links": {
+            "additionalProperties": {
+              "anyOf": [
+                {
+                  "$ref": "#/components/schemas/HALLink"
+                },
+                {
+                  "items": {
+                    "$ref": "#/components/schemas/HALLink"
+                  },
+                  "type": "array"
+                }
+              ]
+            },
+            "type": "object",
+            "title": "Links"
+          },
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "description": {
+            "type": "string",
+            "title": "Description"
+          },
+          "channel": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/WebScriptChannelConfig"
+              },
+              {
+                "$ref": "#/components/schemas/SystemChannelConfig"
+              }
+            ],
+            "title": "Channel",
+            "discriminator": {
+              "propertyName": "type",
+              "mapping": {
+                "system": "#/components/schemas/SystemChannelConfig",
+                "webscript": "#/components/schemas/WebScriptChannelConfig"
+              }
+            }
+          },
+          "filters": {
+            "items": {
+              "$ref": "#/components/schemas/EventFilter"
+            },
+            "type": "array",
+            "title": "Filters"
+          }
+        },
+        "type": "object",
+        "required": [
+          "channel",
+          "filters"
+        ],
+        "description": "Specification of a notification subscription that forwards to a given channel."
+      },
+      "Subscriptions": {
+        "properties": {
+          "_links": {
+            "additionalProperties": {
+              "anyOf": [
+                {
+                  "$ref": "#/components/schemas/HALLink"
+                },
+                {
+                  "items": {
+                    "$ref": "#/components/schemas/HALLink"
+                  },
+                  "type": "array"
+                }
+              ]
+            },
+            "type": "object",
+            "title": "Links"
+          },
+          "bucket": {
+            "$ref": "#/components/schemas/Bucket"
+          },
+          "subscriptions": {
+            "items": {
+              "$ref": "#/components/schemas/SubscriptionConfig"
+            },
+            "type": "array",
+            "title": "Subscriptions"
+          },
+          "warnings": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "array",
+            "title": "Warnings"
+          }
+        },
+        "type": "object",
+        "required": [
+          "bucket",
+          "subscriptions"
+        ],
+        "description": "Listing object for subscriptions."
+      },
+      "SubscriptionsListing": {
+        "properties": {
+          "_links": {
+            "additionalProperties": {
+              "anyOf": [
+                {
+                  "$ref": "#/components/schemas/HALLink"
+                },
+                {
+                  "items": {
+                    "$ref": "#/components/schemas/HALLink"
+                  },
+                  "type": "array"
+                }
+              ]
+            },
+            "type": "object",
+            "title": "Links"
+          },
+          "buckets": {
+            "items": {
+              "$ref": "#/components/schemas/Bucket"
+            },
+            "type": "array",
+            "title": "Buckets"
+          }
+        },
+        "type": "object",
+        "required": [
+          "buckets"
+        ],
+        "description": "List of buckets that support subscriptions."
+      },
+      "SystemChannelConfig": {
+        "properties": {
+          "type": {
+            "type": "string",
+            "default": "system",
+            "enum": [
+              "system"
+            ]
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string",
+                "nullable": true
+              }
+            ],
+            "title": "Description"
+          },
+          "payload": {
+            "$ref": "#/components/schemas/PayloadConfig"
+          },
+          "authentication": {
+            "$ref": "#/components/schemas/AuthenticationConfig"
+          },
+          "expiry": {
+            "$ref": "#/components/schemas/Expiry"
+          }
+        },
+        "type": "object",
+        "description": "Channel configuration for functionality that is fixed by the platform.\n\nThis cannot be selected by the end user."
+      },
+      "TenantStatusReport": {
+        "properties": {
+          "tenant": {
+            "type": "string",
+            "title": "Tenant"
+          },
+          "buckets": {
+            "items": {
+              "$ref": "#/components/schemas/BucketConfiguration"
+            },
+            "type": "array",
+            "title": "Buckets"
+          },
+          "queues": {
+            "items": {
+              "$ref": "#/components/schemas/NotificationQueueStatusReport"
+            },
+            "type": "array",
+            "title": "Queues"
+          },
+          "total_size": {
+            "type": "integer",
+            "title": "Total Size"
+          },
+          "bucket_status": {
+            "$ref": "#/components/schemas/BUCKET_CREATION_STATUS"
+          },
+          "policy_status": {
+            "$ref": "#/components/schemas/BUCKET_POLICY_STATUS"
+          },
+          "queue_status": {
+            "$ref": "#/components/schemas/QUEUE_SETUP_STATUS"
+          }
+        },
+        "type": "object",
+        "required": [
+          "tenant"
+        ],
+        "description": "Response model for a tenant status report."
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ]
+      },
+      "WebScriptChannelConfig": {
+        "properties": {
+          "type": {
+            "type": "string",
+            "default": "webscript",
+            "enum": [
+              "webscript"
+            ]
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string",
+                "nullable": true
+              }
+            ],
+            "title": "Description"
+          },
+          "payload": {
+            "$ref": "#/components/schemas/PayloadConfig"
+          },
+          "authentication": {
+            "$ref": "#/components/schemas/AuthenticationConfig"
+          },
+          "expiry": {
+            "$ref": "#/components/schemas/Expiry"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "version": {
+            "anyOf": [
+              {
+                "type": "string",
+                "nullable": true
+              }
+            ],
+            "title": "Version"
+          },
+          "method": {
+            "$ref": "#/components/schemas/HTTP_METHOD",
+            "default": "POST"
+          }
+        },
+        "type": "object",
+        "required": [
+          "name"
+        ],
+        "description": "Channel configuration for invoking a waylay webscript."
+      }
+    },
+    "securitySchemes": {
+      "waylayApiKeySecret": {
+        "type": "http",
+        "description": "Waylay apiKey/apiSecret basic authentication. All endpoints support also Waylay JWT Bearer authentication.",
+        "scheme": "basic"
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Bucket",
+      "description": "User operations on the buckets of the mapped object stores."
+    },
+    {
+      "name": "Object",
+      "description": "User operations on bucket objects."
+    },
+    {
+      "name": "Subscription",
+      "description": "User operations on change notification subscriptions."
+    },
+    {
+      "name": "About",
+      "description": "Service version and status."
+    }
+  ],
+  "servers": [
+    {
+      "url": "https://api.waylay.io",
+      "description": "Waylay enterprise gateway"
+    }
+  ]
+}
+

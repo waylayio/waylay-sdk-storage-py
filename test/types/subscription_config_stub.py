@@ -16,16 +16,14 @@ from pydantic import TypeAdapter
 from ..openapi import MODEL_DEFINITIONS, with_example_provider
 
 try:
-    from waylay.services.storage.models.subscription_config_output import (
-        SubscriptionConfigOutput,
-    )
+    from waylay.services.storage.models.subscription_config import SubscriptionConfig
 
-    SubscriptionConfigOutputAdapter = TypeAdapter(SubscriptionConfigOutput)
+    SubscriptionConfigAdapter = TypeAdapter(SubscriptionConfig)
     MODELS_AVAILABLE = True
 except ImportError as exc:
     MODELS_AVAILABLE = False
 
-subscription_config_output_model_schema = json.loads(
+subscription_config_model_schema = json.loads(
     r"""{
   "required" : [ "channel", "filters" ],
   "type" : "object",
@@ -50,7 +48,7 @@ subscription_config_output_model_schema = json.loads(
       "type" : "string"
     },
     "channel" : {
-      "$ref" : "#/components/schemas/Channel_1"
+      "$ref" : "#/components/schemas/Channel"
     },
     "filters" : {
       "title" : "Filters",
@@ -65,35 +63,33 @@ subscription_config_output_model_schema = json.loads(
 """,
     object_hook=with_example_provider,
 )
-subscription_config_output_model_schema.update({"definitions": MODEL_DEFINITIONS})
+subscription_config_model_schema.update({"definitions": MODEL_DEFINITIONS})
 
-subscription_config_output_faker = JSF(
-    subscription_config_output_model_schema, allow_none_optionals=1
+subscription_config_faker = JSF(
+    subscription_config_model_schema, allow_none_optionals=1
 )
 
 
-class SubscriptionConfigOutputStub:
-    """SubscriptionConfigOutput unit test stubs."""
+class SubscriptionConfigStub:
+    """SubscriptionConfig unit test stubs."""
 
     @classmethod
     def create_json(cls):
         """Create a dict stub instance."""
-        return subscription_config_output_faker.generate(
-            use_defaults=True, use_examples=True
-        )
+        return subscription_config_faker.generate(use_defaults=True, use_examples=True)
 
     @classmethod
-    def create_instance(cls) -> "SubscriptionConfigOutput":
-        """Create SubscriptionConfigOutput stub instance."""
+    def create_instance(cls) -> "SubscriptionConfig":
+        """Create SubscriptionConfig stub instance."""
         if not MODELS_AVAILABLE:
             raise ImportError("Models must be installed to create class stubs")
         json = cls.create_json()
         if json is None:
             # use backup example based on the pydantic model schema
             backup_faker = JSF(
-                SubscriptionConfigOutputAdapter.json_schema(), allow_none_optionals=1
+                SubscriptionConfigAdapter.json_schema(), allow_none_optionals=1
             )
             json = backup_faker.generate(use_defaults=True, use_examples=True)
-        return SubscriptionConfigOutputAdapter.validate_python(
+        return SubscriptionConfigAdapter.validate_python(
             json, context={"skip_validation": True}
         )

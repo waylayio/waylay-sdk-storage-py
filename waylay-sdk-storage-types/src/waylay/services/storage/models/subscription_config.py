@@ -25,7 +25,7 @@ from ..models.event_filter import EventFilter
 from ..models.links_value import LinksValue
 
 
-class SubscriptionConfigInput(WaylayBaseModel):
+class SubscriptionConfig(WaylayBaseModel):
     """Specification of a notification subscription that forwards to a given channel.."""
 
     links: Dict[str, LinksValue] | None = Field(default=None, alias="_links")

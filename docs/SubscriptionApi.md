@@ -17,7 +17,7 @@ Method | HTTP request | Description
 > bucket_name: str,
 > query: CreateQuery,
 > headers
-> ) -> SubscriptionConfigOutput
+> ) -> SubscriptionConfig
 
 Create Bucket Subscription
 
@@ -36,8 +36,7 @@ from waylay.sdk.api.api_exceptions import ApiError
 waylay_client = WaylayClient.from_profile()
 
 # Note that the typed model classes for responses/parameters/... are only available when `waylay-sdk-storage-types` is installed
-from waylay.services.storage.models.subscription_config_input import SubscriptionConfigInput
-from waylay.services.storage.models.subscription_config_output import SubscriptionConfigOutput
+from waylay.services.storage.models.subscription_config import SubscriptionConfig
 try:
     # Create Bucket Subscription
     # calls `POST /storage/v1/subscription/{bucket_name}`
@@ -47,7 +46,7 @@ try:
         query = {
         },
         # json data: use a generated model or a json-serializable python data structure (dict, list)
-        json = waylay.services.storage.SubscriptionConfigInput() # SubscriptionConfigInput | 
+        json = waylay.services.storage.SubscriptionConfig() # SubscriptionConfig | 
     )
     print("The response of storage.subscription.create:\n")
     pprint(api_response)
@@ -64,7 +63,7 @@ POST /storage/v1/subscription/{bucket_name}
 Name     | Type  | API binding   | Description   | Notes
 -------- | ----- | ------------- | ------------- | -------------
 **bucket_name** | **str** | path parameter `"bucket_name"` |  | 
-**json** | [**SubscriptionConfigInput**](SubscriptionConfigInput.md) | json request body |  | 
+**json** | [**SubscriptionConfig**](SubscriptionConfig.md) | json request body |  | 
 **query** | [QueryParamTypes](Operation.md#req_arg_query) \| **None** | URL query parameter |  | 
 **query['store']** (dict) <br> **query.store** (Query) | **str** | query parameter `"store"` |  | [optional] 
 **headers** | [HeaderTypes](Operation.md#req_headers) | request headers |  | 
@@ -73,7 +72,7 @@ Name     | Type  | API binding   | Description   | Notes
 
 Selected path param | Raw response param | Return Type  | Description | Links
 ------------------- | ------------------ | ------------ | ----------- | -----
-Literal[""] _(default)_  | False _(default)_ | **`SubscriptionConfigOutput`** |  | [SubscriptionConfigOutput](SubscriptionConfigOutput.md)
+Literal[""] _(default)_  | False _(default)_ | **`SubscriptionConfig`** |  | [SubscriptionConfig](SubscriptionConfig.md)
 str | False _(default)_ | **`Any`** | If any other string value for the selected path is provided, the exact type of the response will only be known at runtime. | 
 / | True | `Response` | The raw http response object.
 
@@ -181,7 +180,7 @@ str | False _(default)_ | **`Any`** | If any other string value for the selected
 > subscription_id: str,
 > query: GetQuery,
 > headers
-> ) -> SubscriptionConfigOutput
+> ) -> SubscriptionConfig
 
 Get Bucket Subscription
 
@@ -200,7 +199,7 @@ from waylay.sdk.api.api_exceptions import ApiError
 waylay_client = WaylayClient.from_profile()
 
 # Note that the typed model classes for responses/parameters/... are only available when `waylay-sdk-storage-types` is installed
-from waylay.services.storage.models.subscription_config_output import SubscriptionConfigOutput
+from waylay.services.storage.models.subscription_config import SubscriptionConfig
 try:
     # Get Bucket Subscription
     # calls `GET /storage/v1/subscription/{bucket_name}/{subscription_id}`
@@ -235,7 +234,7 @@ Name     | Type  | API binding   | Description   | Notes
 
 Selected path param | Raw response param | Return Type  | Description | Links
 ------------------- | ------------------ | ------------ | ----------- | -----
-Literal[""] _(default)_  | False _(default)_ | **`SubscriptionConfigOutput`** |  | [SubscriptionConfigOutput](SubscriptionConfigOutput.md)
+Literal[""] _(default)_  | False _(default)_ | **`SubscriptionConfig`** |  | [SubscriptionConfig](SubscriptionConfig.md)
 str | False _(default)_ | **`Any`** | If any other string value for the selected path is provided, the exact type of the response will only be known at runtime. | 
 / | True | `Response` | The raw http response object.
 
@@ -501,7 +500,7 @@ str | False _(default)_ | **`Any`** | If any other string value for the selected
 > subscription_id: str,
 > query: ReplaceQuery,
 > headers
-> ) -> SubscriptionConfigOutput
+> ) -> SubscriptionConfig
 
 Replace Bucket Subscription
 
@@ -520,8 +519,7 @@ from waylay.sdk.api.api_exceptions import ApiError
 waylay_client = WaylayClient.from_profile()
 
 # Note that the typed model classes for responses/parameters/... are only available when `waylay-sdk-storage-types` is installed
-from waylay.services.storage.models.subscription_config_input import SubscriptionConfigInput
-from waylay.services.storage.models.subscription_config_output import SubscriptionConfigOutput
+from waylay.services.storage.models.subscription_config import SubscriptionConfig
 try:
     # Replace Bucket Subscription
     # calls `PUT /storage/v1/subscription/{bucket_name}/{subscription_id}`
@@ -532,7 +530,7 @@ try:
         query = {
         },
         # json data: use a generated model or a json-serializable python data structure (dict, list)
-        json = waylay.services.storage.SubscriptionConfigInput() # SubscriptionConfigInput | 
+        json = waylay.services.storage.SubscriptionConfig() # SubscriptionConfig | 
     )
     print("The response of storage.subscription.replace:\n")
     pprint(api_response)
@@ -550,7 +548,7 @@ Name     | Type  | API binding   | Description   | Notes
 -------- | ----- | ------------- | ------------- | -------------
 **bucket_name** | **str** | path parameter `"bucket_name"` |  | 
 **subscription_id** | **str** | path parameter `"subscription_id"` |  | 
-**json** | [**SubscriptionConfigInput**](SubscriptionConfigInput.md) | json request body |  | 
+**json** | [**SubscriptionConfig**](SubscriptionConfig.md) | json request body |  | 
 **query** | [QueryParamTypes](Operation.md#req_arg_query) \| **None** | URL query parameter |  | 
 **query['store']** (dict) <br> **query.store** (Query) | **str** | query parameter `"store"` |  | [optional] 
 **headers** | [HeaderTypes](Operation.md#req_headers) | request headers |  | 
@@ -559,7 +557,7 @@ Name     | Type  | API binding   | Description   | Notes
 
 Selected path param | Raw response param | Return Type  | Description | Links
 ------------------- | ------------------ | ------------ | ----------- | -----
-Literal[""] _(default)_  | False _(default)_ | **`SubscriptionConfigOutput`** |  | [SubscriptionConfigOutput](SubscriptionConfigOutput.md)
+Literal[""] _(default)_  | False _(default)_ | **`SubscriptionConfig`** |  | [SubscriptionConfig](SubscriptionConfig.md)
 str | False _(default)_ | **`Any`** | If any other string value for the selected path is provided, the exact type of the response will only be known at runtime. | 
 / | True | `Response` | The raw http response object.
 

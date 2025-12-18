@@ -16,20 +16,18 @@ from pydantic import TypeAdapter
 from ..openapi import MODEL_DEFINITIONS, with_example_provider
 
 try:
-    from waylay.services.storage.models.web_script_channel_config_input_type import (
-        WebScriptChannelConfigInputType,
+    from waylay.services.storage.models.web_script_channel_config_type import (
+        WebScriptChannelConfigType,
     )
 
-    WebScriptChannelConfigInputTypeAdapter = TypeAdapter(
-        WebScriptChannelConfigInputType
-    )
+    WebScriptChannelConfigTypeAdapter = TypeAdapter(WebScriptChannelConfigType)
     MODELS_AVAILABLE = True
 except ImportError as exc:
     MODELS_AVAILABLE = False
 
-web_script_channel_config_input_type_model_schema = json.loads(
+web_script_channel_config_type_model_schema = json.loads(
     r"""{
-  "title" : "WebScriptChannelConfig_Input_type",
+  "title" : "WebScriptChannelConfig_type",
   "type" : "string",
   "default" : "webscript",
   "enum" : [ "webscript" ]
@@ -37,38 +35,35 @@ web_script_channel_config_input_type_model_schema = json.loads(
 """,
     object_hook=with_example_provider,
 )
-web_script_channel_config_input_type_model_schema.update({
-    "definitions": MODEL_DEFINITIONS
-})
+web_script_channel_config_type_model_schema.update({"definitions": MODEL_DEFINITIONS})
 
-web_script_channel_config_input_type_faker = JSF(
-    web_script_channel_config_input_type_model_schema, allow_none_optionals=1
+web_script_channel_config_type_faker = JSF(
+    web_script_channel_config_type_model_schema, allow_none_optionals=1
 )
 
 
-class WebScriptChannelConfigInputTypeStub:
-    """WebScriptChannelConfigInputType unit test stubs."""
+class WebScriptChannelConfigTypeStub:
+    """WebScriptChannelConfigType unit test stubs."""
 
     @classmethod
     def create_json(cls):
         """Create a dict stub instance."""
-        return web_script_channel_config_input_type_faker.generate(
+        return web_script_channel_config_type_faker.generate(
             use_defaults=True, use_examples=True
         )
 
     @classmethod
-    def create_instance(cls) -> "WebScriptChannelConfigInputType":
-        """Create WebScriptChannelConfigInputType stub instance."""
+    def create_instance(cls) -> "WebScriptChannelConfigType":
+        """Create WebScriptChannelConfigType stub instance."""
         if not MODELS_AVAILABLE:
             raise ImportError("Models must be installed to create class stubs")
         json = cls.create_json()
         if json is None:
             # use backup example based on the pydantic model schema
             backup_faker = JSF(
-                WebScriptChannelConfigInputTypeAdapter.json_schema(),
-                allow_none_optionals=1,
+                WebScriptChannelConfigTypeAdapter.json_schema(), allow_none_optionals=1
             )
             json = backup_faker.generate(use_defaults=True, use_examples=True)
-        return WebScriptChannelConfigInputTypeAdapter.validate_python(
+        return WebScriptChannelConfigTypeAdapter.validate_python(
             json, context={"skip_validation": True}
         )

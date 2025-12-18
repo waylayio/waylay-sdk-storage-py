@@ -14,8 +14,8 @@ from __future__ import annotations
 from enum import Enum
 
 
-class SystemChannelConfigInputType(str, Enum):
-    """SystemChannelConfigInputType."""
+class SystemChannelConfigType(str, Enum):
+    """SystemChannelConfigType."""
 
     SYSTEM = "system"
 

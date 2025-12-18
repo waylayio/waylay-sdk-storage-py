@@ -15,11 +15,13 @@ from typing import Union
 
 from typing_extensions import Annotated
 
-from ..models.system_channel_config_output import SystemChannelConfigOutput
-from ..models.web_script_channel_config_output import WebScriptChannelConfigOutput
+from ..models.bucket_object import BucketObject
+from ..models.bucket_object_listing import BucketObjectListing
+from ..models.hal_entity import HALEntity
 
-Channel1 = Union[
-    Annotated[WebScriptChannelConfigOutput, ""],
-    Annotated[SystemChannelConfigOutput, ""],
+ResponseList = Union[
+    Annotated[BucketObjectListing, ""],
+    Annotated[BucketObject, ""],
+    Annotated[HALEntity, ""],
 ]
-"""Channel1."""
+"""ResponseList."""

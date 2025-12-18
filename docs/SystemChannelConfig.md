@@ -1,4 +1,4 @@
-# SystemChannelConfigOutput
+# SystemChannelConfig
 
 Channel configuration for functionality that is fixed by the platform.  This cannot be selected by the end user.
 
@@ -6,7 +6,7 @@ Channel configuration for functionality that is fixed by the platform.  This can
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**type** | [**SystemChannelConfigInputType**](SystemChannelConfigInputType.md) |  | [optional] [default to SystemChannelConfigInputType.SYSTEM]
+**type** | [**SystemChannelConfigType**](SystemChannelConfigType.md) |  | [optional] [default to SystemChannelConfigType.SYSTEM]
 **description** | **str** |  | [optional] 
 **payload** | [**PayloadConfig**](PayloadConfig.md) |  | [optional] 
 **authentication** | [**AuthenticationConfig**](AuthenticationConfig.md) |  | [optional] 
@@ -15,19 +15,19 @@ Name | Type | Description | Notes
 ## Example
 
 ```python
-from waylay.services.storage.models.system_channel_config_output import SystemChannelConfigOutput
+from waylay.services.storage.models.system_channel_config import SystemChannelConfig
 
 # TODO update the JSON string below
 json = "{}"
-# create an instance of SystemChannelConfigOutput from a JSON string
-system_channel_config_output_instance = SystemChannelConfigOutput.from_json(json)
+# create an instance of SystemChannelConfig from a JSON string
+system_channel_config_instance = SystemChannelConfig.from_json(json)
 # print the JSON string representation of the object
-print SystemChannelConfigOutput.to_json()
+print SystemChannelConfig.to_json()
 
 # convert the object into a dict
-system_channel_config_output_dict = system_channel_config_output_instance.to_dict()
-# create an instance of SystemChannelConfigOutput from a dict
-system_channel_config_output_form_dict = system_channel_config_output.from_dict(system_channel_config_output_dict)
+system_channel_config_dict = system_channel_config_instance.to_dict()
+# create an instance of SystemChannelConfig from a dict
+system_channel_config_form_dict = system_channel_config.from_dict(system_channel_config_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

@@ -310,30 +310,23 @@ MODEL_DEFINITIONS.update({"CHANNEL_TYPE": _channel_type_model_schema})
 _channel_model_schema = json.loads(
     r"""{
   "title" : "Channel",
-  "anyOf" : [ {
-    "$ref" : "#/components/schemas/WebScriptChannelConfig-Input"
+  "discriminator" : {
+    "propertyName" : "type",
+    "mapping" : {
+      "system" : "#/components/schemas/SystemChannelConfig",
+      "webscript" : "#/components/schemas/WebScriptChannelConfig"
+    }
+  },
+  "oneOf" : [ {
+    "$ref" : "#/components/schemas/WebScriptChannelConfig"
   }, {
-    "$ref" : "#/components/schemas/SystemChannelConfig-Input"
+    "$ref" : "#/components/schemas/SystemChannelConfig"
   } ]
 }
 """,
     object_hook=with_example_provider,
 )
 MODEL_DEFINITIONS.update({"Channel": _channel_model_schema})
-
-_channel_1_model_schema = json.loads(
-    r"""{
-  "title" : "Channel",
-  "anyOf" : [ {
-    "$ref" : "#/components/schemas/WebScriptChannelConfig-Output"
-  }, {
-    "$ref" : "#/components/schemas/SystemChannelConfig-Output"
-  } ]
-}
-""",
-    object_hook=with_example_provider,
-)
-MODEL_DEFINITIONS.update({"Channel_1": _channel_1_model_schema})
 
 _event_filter_model_schema = json.loads(
     r"""{
@@ -633,9 +626,9 @@ _resource_model_schema = json.loads(
 )
 MODEL_DEFINITIONS.update({"Resource": _resource_model_schema})
 
-_response_list_object_model_schema = json.loads(
+_response_list_model_schema = json.loads(
     r"""{
-  "title" : "Response List Object",
+  "title" : "Response List",
   "anyOf" : [ {
     "$ref" : "#/components/schemas/BucketObjectListing"
   }, {
@@ -647,7 +640,7 @@ _response_list_object_model_schema = json.loads(
 """,
     object_hook=with_example_provider,
 )
-MODEL_DEFINITIONS.update({"Response_List_Object": _response_list_object_model_schema})
+MODEL_DEFINITIONS.update({"Response_List": _response_list_model_schema})
 
 _s3_policy_def_model_schema = json.loads(
     r"""{
@@ -747,7 +740,7 @@ _store_model_schema = json.loads(
 )
 MODEL_DEFINITIONS.update({"Store": _store_model_schema})
 
-_subscription_config_input_model_schema = json.loads(
+_subscription_config_model_schema = json.loads(
     r"""{
   "required" : [ "channel", "filters" ],
   "type" : "object",
@@ -787,53 +780,7 @@ _subscription_config_input_model_schema = json.loads(
 """,
     object_hook=with_example_provider,
 )
-MODEL_DEFINITIONS.update({
-    "SubscriptionConfig-Input": _subscription_config_input_model_schema
-})
-
-_subscription_config_output_model_schema = json.loads(
-    r"""{
-  "required" : [ "channel", "filters" ],
-  "type" : "object",
-  "properties" : {
-    "_links" : {
-      "title" : "Links",
-      "type" : "object",
-      "additionalProperties" : {
-        "$ref" : "#/components/schemas/Links_value"
-      }
-    },
-    "id" : {
-      "title" : "Id",
-      "type" : "string"
-    },
-    "title" : {
-      "title" : "Title",
-      "type" : "string"
-    },
-    "description" : {
-      "title" : "Description",
-      "type" : "string"
-    },
-    "channel" : {
-      "$ref" : "#/components/schemas/Channel_1"
-    },
-    "filters" : {
-      "title" : "Filters",
-      "type" : "array",
-      "items" : {
-        "$ref" : "#/components/schemas/EventFilter"
-      }
-    }
-  },
-  "description" : "Specification of a notification subscription that forwards to a given channel."
-}
-""",
-    object_hook=with_example_provider,
-)
-MODEL_DEFINITIONS.update({
-    "SubscriptionConfig-Output": _subscription_config_output_model_schema
-})
+MODEL_DEFINITIONS.update({"SubscriptionConfig": _subscription_config_model_schema})
 
 _subscriptions_model_schema = json.loads(
     r"""{
@@ -854,7 +801,7 @@ _subscriptions_model_schema = json.loads(
       "title" : "Subscriptions",
       "type" : "array",
       "items" : {
-        "$ref" : "#/components/schemas/SubscriptionConfig-Output"
+        "$ref" : "#/components/schemas/SubscriptionConfig"
       }
     },
     "warnings" : {
@@ -900,12 +847,12 @@ _subscriptions_listing_model_schema = json.loads(
 )
 MODEL_DEFINITIONS.update({"SubscriptionsListing": _subscriptions_listing_model_schema})
 
-_system_channel_config_input_model_schema = json.loads(
+_system_channel_config_model_schema = json.loads(
     r"""{
   "type" : "object",
   "properties" : {
     "type" : {
-      "$ref" : "#/components/schemas/SystemChannelConfig_Input_type"
+      "$ref" : "#/components/schemas/SystemChannelConfig_type"
     },
     "description" : {
       "type" : "string",
@@ -926,13 +873,11 @@ _system_channel_config_input_model_schema = json.loads(
 """,
     object_hook=with_example_provider,
 )
-MODEL_DEFINITIONS.update({
-    "SystemChannelConfig-Input": _system_channel_config_input_model_schema
-})
+MODEL_DEFINITIONS.update({"SystemChannelConfig": _system_channel_config_model_schema})
 
-_system_channel_config_input_type_model_schema = json.loads(
+_system_channel_config_type_model_schema = json.loads(
     r"""{
-  "title" : "SystemChannelConfig_Input_type",
+  "title" : "SystemChannelConfig_type",
   "type" : "string",
   "default" : "system",
   "enum" : [ "system" ]
@@ -941,37 +886,7 @@ _system_channel_config_input_type_model_schema = json.loads(
     object_hook=with_example_provider,
 )
 MODEL_DEFINITIONS.update({
-    "SystemChannelConfig_Input_type": _system_channel_config_input_type_model_schema
-})
-
-_system_channel_config_output_model_schema = json.loads(
-    r"""{
-  "type" : "object",
-  "properties" : {
-    "type" : {
-      "$ref" : "#/components/schemas/SystemChannelConfig_Input_type"
-    },
-    "description" : {
-      "type" : "string",
-      "nullable" : true
-    },
-    "payload" : {
-      "$ref" : "#/components/schemas/PayloadConfig"
-    },
-    "authentication" : {
-      "$ref" : "#/components/schemas/AuthenticationConfig"
-    },
-    "expiry" : {
-      "$ref" : "#/components/schemas/Expiry"
-    }
-  },
-  "description" : "Channel configuration for functionality that is fixed by the platform.\n\nThis cannot be selected by the end user."
-}
-""",
-    object_hook=with_example_provider,
-)
-MODEL_DEFINITIONS.update({
-    "SystemChannelConfig-Output": _system_channel_config_output_model_schema
+    "SystemChannelConfig_type": _system_channel_config_type_model_schema
 })
 
 _tenant_status_report_model_schema = json.loads(
@@ -1057,13 +972,13 @@ _validation_error_model_schema = json.loads(
 )
 MODEL_DEFINITIONS.update({"ValidationError": _validation_error_model_schema})
 
-_web_script_channel_config_input_model_schema = json.loads(
+_web_script_channel_config_model_schema = json.loads(
     r"""{
   "required" : [ "name" ],
   "type" : "object",
   "properties" : {
     "type" : {
-      "$ref" : "#/components/schemas/WebScriptChannelConfig_Input_type"
+      "$ref" : "#/components/schemas/WebScriptChannelConfig_type"
     },
     "description" : {
       "type" : "string",
@@ -1096,12 +1011,12 @@ _web_script_channel_config_input_model_schema = json.loads(
     object_hook=with_example_provider,
 )
 MODEL_DEFINITIONS.update({
-    "WebScriptChannelConfig-Input": _web_script_channel_config_input_model_schema
+    "WebScriptChannelConfig": _web_script_channel_config_model_schema
 })
 
-_web_script_channel_config_input_type_model_schema = json.loads(
+_web_script_channel_config_type_model_schema = json.loads(
     r"""{
-  "title" : "WebScriptChannelConfig_Input_type",
+  "title" : "WebScriptChannelConfig_type",
   "type" : "string",
   "default" : "webscript",
   "enum" : [ "webscript" ]
@@ -1110,47 +1025,5 @@ _web_script_channel_config_input_type_model_schema = json.loads(
     object_hook=with_example_provider,
 )
 MODEL_DEFINITIONS.update({
-    "WebScriptChannelConfig_Input_type": _web_script_channel_config_input_type_model_schema
-})
-
-_web_script_channel_config_output_model_schema = json.loads(
-    r"""{
-  "required" : [ "name" ],
-  "type" : "object",
-  "properties" : {
-    "type" : {
-      "$ref" : "#/components/schemas/WebScriptChannelConfig_Input_type"
-    },
-    "description" : {
-      "type" : "string",
-      "nullable" : true
-    },
-    "payload" : {
-      "$ref" : "#/components/schemas/PayloadConfig"
-    },
-    "authentication" : {
-      "$ref" : "#/components/schemas/AuthenticationConfig"
-    },
-    "expiry" : {
-      "$ref" : "#/components/schemas/Expiry"
-    },
-    "name" : {
-      "title" : "Name",
-      "type" : "string"
-    },
-    "version" : {
-      "type" : "string",
-      "nullable" : true
-    },
-    "method" : {
-      "$ref" : "#/components/schemas/HTTP_METHOD"
-    }
-  },
-  "description" : "Channel configuration for invoking a waylay webscript."
-}
-""",
-    object_hook=with_example_provider,
-)
-MODEL_DEFINITIONS.update({
-    "WebScriptChannelConfig-Output": _web_script_channel_config_output_model_schema
+    "WebScriptChannelConfig_type": _web_script_channel_config_type_model_schema
 })

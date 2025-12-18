@@ -42,7 +42,7 @@ subscriptions_model_schema = json.loads(
       "title" : "Subscriptions",
       "type" : "array",
       "items" : {
-        "$ref" : "#/components/schemas/SubscriptionConfig-Output"
+        "$ref" : "#/components/schemas/SubscriptionConfig"
       }
     },
     "warnings" : {

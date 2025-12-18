@@ -36,8 +36,7 @@ if TYPE_CHECKING:
     from waylay.services.storage.models import (
         HALEntity,
         HTTPValidationError,
-        SubscriptionConfigInput,
-        SubscriptionConfigOutput,
+        SubscriptionConfig,
         Subscriptions,
         SubscriptionsListing,
     )
@@ -56,8 +55,7 @@ try:
     from waylay.services.storage.models import (
         HALEntity,
         HTTPValidationError,
-        SubscriptionConfigInput,
-        SubscriptionConfigOutput,
+        SubscriptionConfig,
         Subscriptions,
         SubscriptionsListing,
     )
@@ -76,10 +74,10 @@ except ImportError:
     MODELS_AVAILABLE = False
 
     if not TYPE_CHECKING:
-        SubscriptionConfigInput = Model
+        SubscriptionConfig = Model
 
         CreateQuery = dict
-        SubscriptionConfigOutput = Model
+        SubscriptionConfig = Model
 
         HTTPValidationError = Model
 
@@ -89,7 +87,7 @@ except ImportError:
         HTTPValidationError = Model
 
         GetQuery = dict
-        SubscriptionConfigOutput = Model
+        SubscriptionConfig = Model
 
         HTTPValidationError = Model
 
@@ -108,10 +106,10 @@ except ImportError:
 
         HTTPValidationError = Model
 
-        SubscriptionConfigInput = Model
+        SubscriptionConfig = Model
 
         ReplaceQuery = dict
-        SubscriptionConfigOutput = Model
+        SubscriptionConfig = Model
 
         HTTPValidationError = Model
 
@@ -133,7 +131,7 @@ class SubscriptionApi(WithApiClient):
         self,
         bucket_name: StrictStr,
         *,
-        json: SubscriptionConfigInput,
+        json: SubscriptionConfig,
         query: CreateQuery | QueryParamTypes | None = None,
         raw_response: Literal[False] = False,
         select_path: Literal[""] = "",
@@ -141,14 +139,14 @@ class SubscriptionApi(WithApiClient):
         validate_request: StrictBool = True,
         headers: HeaderTypes | None = None,
         **kwargs,
-    ) -> SubscriptionConfigOutput: ...
+    ) -> SubscriptionConfig: ...
 
     @overload
     async def create(
         self,
         bucket_name: StrictStr,
         *,
-        json: SubscriptionConfigInput,
+        json: SubscriptionConfig,
         query: CreateQuery | QueryParamTypes | None = None,
         raw_response: Literal[False] = False,
         select_path: Literal[""] = "",
@@ -163,7 +161,7 @@ class SubscriptionApi(WithApiClient):
         self,
         bucket_name: StrictStr,
         *,
-        json: SubscriptionConfigInput,
+        json: SubscriptionConfig,
         query: CreateQuery | QueryParamTypes | None = None,
         raw_response: Literal[True],
         select_path: Literal["_not_used_"] = "_not_used_",
@@ -178,7 +176,7 @@ class SubscriptionApi(WithApiClient):
         self,
         bucket_name: StrictStr,
         *,
-        json: SubscriptionConfigInput,
+        json: SubscriptionConfig,
         query: CreateQuery | QueryParamTypes | None = None,
         raw_response: Literal[False] = False,
         select_path: str,
@@ -193,7 +191,7 @@ class SubscriptionApi(WithApiClient):
         self,
         bucket_name: StrictStr,
         *,
-        json: SubscriptionConfigInput,
+        json: SubscriptionConfig,
         query: CreateQuery | QueryParamTypes | None = None,
         raw_response: Literal[False] = False,
         select_path: str,
@@ -207,7 +205,7 @@ class SubscriptionApi(WithApiClient):
         self,
         bucket_name: StrictStr,
         *,
-        json: SubscriptionConfigInput,
+        json: SubscriptionConfig,
         query: CreateQuery | QueryParamTypes | None = None,
         raw_response: StrictBool = False,
         select_path: str = "",
@@ -215,14 +213,14 @@ class SubscriptionApi(WithApiClient):
         validate_request: StrictBool = True,
         headers: HeaderTypes | None = None,
         **kwargs,
-    ) -> SubscriptionConfigOutput | T | Response | Model:
+    ) -> SubscriptionConfig | T | Response | Model:
         """Create Bucket Subscription.
 
         Create a new notification subscription...  on a bucket with a given or generated id.  > it can take a few minutes before this change > is fully effective on the forwarding of change events
         :param bucket_name: (required)
         :type bucket_name: str
         :param json: The json request body.
-        :type json: SubscriptionConfigInput, optional
+        :type json: SubscriptionConfig, optional
         :param query: URL Query parameters.
         :type query: CreateQuery | QueryParamTypes, optional
         :param query['store'] (dict) <br> query.store (Query) :
@@ -258,7 +256,7 @@ class SubscriptionApi(WithApiClient):
         ## named body parameters
         body_args: Dict[str, Any] = {}
         if json is not None and validate_request:
-            body_adapter: Any = TypeAdapter(SubscriptionConfigInput)
+            body_adapter: Any = TypeAdapter(SubscriptionConfig)
             json = body_adapter.validate_python(json)  # type: ignore # https://github.com/pydantic/pydantic/discussions/7094
         body_args["json"] = json
 
@@ -270,7 +268,7 @@ class SubscriptionApi(WithApiClient):
             {"2XX": response_type}
             if response_type is not None
             else {
-                "200": SubscriptionConfigOutput if not select_path else Model,
+                "200": SubscriptionConfig if not select_path else Model,
             }
         )
         non_200_response_types_map: Dict[str, Any] = {
@@ -471,7 +469,7 @@ class SubscriptionApi(WithApiClient):
         validate_request: StrictBool = True,
         headers: HeaderTypes | None = None,
         **kwargs,
-    ) -> SubscriptionConfigOutput: ...
+    ) -> SubscriptionConfig: ...
 
     @overload
     async def get(
@@ -545,7 +543,7 @@ class SubscriptionApi(WithApiClient):
         validate_request: StrictBool = True,
         headers: HeaderTypes | None = None,
         **kwargs,
-    ) -> SubscriptionConfigOutput | T | Response | Model:
+    ) -> SubscriptionConfig | T | Response | Model:
         """Get Bucket Subscription.
 
         Fetch a notification subscription.
@@ -597,7 +595,7 @@ class SubscriptionApi(WithApiClient):
             {"2XX": response_type}
             if response_type is not None
             else {
-                "200": SubscriptionConfigOutput if not select_path else Model,
+                "200": SubscriptionConfig if not select_path else Model,
             }
         )
         non_200_response_types_map: Dict[str, Any] = {
@@ -1106,7 +1104,7 @@ class SubscriptionApi(WithApiClient):
         bucket_name: StrictStr,
         subscription_id: StrictStr,
         *,
-        json: SubscriptionConfigInput,
+        json: SubscriptionConfig,
         query: ReplaceQuery | QueryParamTypes | None = None,
         raw_response: Literal[False] = False,
         select_path: Literal[""] = "",
@@ -1114,7 +1112,7 @@ class SubscriptionApi(WithApiClient):
         validate_request: StrictBool = True,
         headers: HeaderTypes | None = None,
         **kwargs,
-    ) -> SubscriptionConfigOutput: ...
+    ) -> SubscriptionConfig: ...
 
     @overload
     async def replace(
@@ -1122,7 +1120,7 @@ class SubscriptionApi(WithApiClient):
         bucket_name: StrictStr,
         subscription_id: StrictStr,
         *,
-        json: SubscriptionConfigInput,
+        json: SubscriptionConfig,
         query: ReplaceQuery | QueryParamTypes | None = None,
         raw_response: Literal[False] = False,
         select_path: Literal[""] = "",
@@ -1138,7 +1136,7 @@ class SubscriptionApi(WithApiClient):
         bucket_name: StrictStr,
         subscription_id: StrictStr,
         *,
-        json: SubscriptionConfigInput,
+        json: SubscriptionConfig,
         query: ReplaceQuery | QueryParamTypes | None = None,
         raw_response: Literal[True],
         select_path: Literal["_not_used_"] = "_not_used_",
@@ -1154,7 +1152,7 @@ class SubscriptionApi(WithApiClient):
         bucket_name: StrictStr,
         subscription_id: StrictStr,
         *,
-        json: SubscriptionConfigInput,
+        json: SubscriptionConfig,
         query: ReplaceQuery | QueryParamTypes | None = None,
         raw_response: Literal[False] = False,
         select_path: str,
@@ -1170,7 +1168,7 @@ class SubscriptionApi(WithApiClient):
         bucket_name: StrictStr,
         subscription_id: StrictStr,
         *,
-        json: SubscriptionConfigInput,
+        json: SubscriptionConfig,
         query: ReplaceQuery | QueryParamTypes | None = None,
         raw_response: Literal[False] = False,
         select_path: str,
@@ -1185,7 +1183,7 @@ class SubscriptionApi(WithApiClient):
         bucket_name: StrictStr,
         subscription_id: StrictStr,
         *,
-        json: SubscriptionConfigInput,
+        json: SubscriptionConfig,
         query: ReplaceQuery | QueryParamTypes | None = None,
         raw_response: StrictBool = False,
         select_path: str = "",
@@ -1193,7 +1191,7 @@ class SubscriptionApi(WithApiClient):
         validate_request: StrictBool = True,
         headers: HeaderTypes | None = None,
         **kwargs,
-    ) -> SubscriptionConfigOutput | T | Response | Model:
+    ) -> SubscriptionConfig | T | Response | Model:
         """Replace Bucket Subscription.
 
         Create or replace a notification subscription on a bucket with a given id.  > it can take a few minutes before this change > is fully effective on the forwarding of change events
@@ -1202,7 +1200,7 @@ class SubscriptionApi(WithApiClient):
         :param subscription_id: (required)
         :type subscription_id: str
         :param json: The json request body.
-        :type json: SubscriptionConfigInput, optional
+        :type json: SubscriptionConfig, optional
         :param query: URL Query parameters.
         :type query: ReplaceQuery | QueryParamTypes, optional
         :param query['store'] (dict) <br> query.store (Query) :
@@ -1239,7 +1237,7 @@ class SubscriptionApi(WithApiClient):
         ## named body parameters
         body_args: Dict[str, Any] = {}
         if json is not None and validate_request:
-            body_adapter: Any = TypeAdapter(SubscriptionConfigInput)
+            body_adapter: Any = TypeAdapter(SubscriptionConfig)
             json = body_adapter.validate_python(json)  # type: ignore # https://github.com/pydantic/pydantic/discussions/7094
         body_args["json"] = json
 
@@ -1251,7 +1249,7 @@ class SubscriptionApi(WithApiClient):
             {"2XX": response_type}
             if response_type is not None
             else {
-                "200": SubscriptionConfigOutput if not select_path else Model,
+                "200": SubscriptionConfig if not select_path else Model,
             }
         )
         non_200_response_types_map: Dict[str, Any] = {

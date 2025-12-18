@@ -176,7 +176,7 @@ str | False _(default)_ | **`Any`** | If any other string value for the selected
 > object_path: str,
 > query: ListQuery,
 > headers
-> ) -> ResponseListObject
+> ) -> ResponseList
 
 List Objects
 
@@ -195,7 +195,7 @@ from waylay.sdk.api.api_exceptions import ApiError
 waylay_client = WaylayClient.from_profile()
 
 # Note that the typed model classes for responses/parameters/... are only available when `waylay-sdk-storage-types` is installed
-from waylay.services.storage.models.response_list_object import ResponseListObject
+from waylay.services.storage.models.response_list import ResponseList
 try:
     # List Objects
     # calls `GET /storage/v1/bucket/{bucket_name}/{object_path}`
@@ -248,7 +248,7 @@ Name     | Type  | API binding   | Description   | Notes
 
 Selected path param | Raw response param | Return Type  | Description | Links
 ------------------- | ------------------ | ------------ | ----------- | -----
-Literal[""] _(default)_  | False _(default)_ | **`ResponseListObject`** |  | [ResponseListObject](ResponseListObject.md)
+Literal[""] _(default)_  | False _(default)_ | **`ResponseList`** |  | [ResponseList](ResponseList.md)
 str | False _(default)_ | **`Any`** | If any other string value for the selected path is provided, the exact type of the response will only be known at runtime. | 
 / | True | `Response` | The raw http response object.
 

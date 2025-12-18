@@ -23,7 +23,7 @@ from waylay.services.storage.service import StorageService
 
 from ..types.bucket_object_stub import BucketObjectStub
 from ..types.hal_entity_stub import HALEntityStub
-from ..types.response_list_object_stub import ResponseListObjectStub
+from ..types.response_list_stub import ResponseListStub
 
 MODELS_AVAILABLE = (
     True if find_spec("waylay.services.storage.models") is not None else False
@@ -33,7 +33,7 @@ if MODELS_AVAILABLE:
     from waylay.services.storage.models import (
         BucketObject,
         HALEntity,
-        ResponseListObject,
+        ResponseList,
     )
     from waylay.services.storage.queries.object_api import (
         CopyOrMoveQuery,
@@ -198,7 +198,7 @@ async def test_create_folder_without_types(
 def _list_set_mock_response(
     httpx_mock: HTTPXMock, gateway_url: str, bucket_name: str, object_path: str
 ):
-    mock_response = ResponseListObjectStub.create_json()
+    mock_response = ResponseListStub.create_json()
     httpx_mock_kwargs = {
         "method": "GET",
         "url": re.compile(
@@ -245,7 +245,7 @@ async def test_list(service: StorageService, gateway_url: str, httpx_mock: HTTPX
         httpx_mock, gateway_url, quote(str(bucket_name)), quote(str(object_path))
     )
     resp = await service.object.list(bucket_name, object_path, **kwargs)
-    check_type(resp, ResponseListObject)
+    check_type(resp, ResponseList)
 
 
 @pytest.mark.asyncio

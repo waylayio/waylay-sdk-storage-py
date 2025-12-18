@@ -19,26 +19,18 @@ from waylay.sdk.api._models import BaseModel as WaylayBaseModel
 
 from ..models.authentication_config import AuthenticationConfig
 from ..models.expiry import Expiry
-from ..models.httpmethod import HTTPMETHOD
 from ..models.payload_config import PayloadConfig
-from ..models.web_script_channel_config_input_type import (
-    WebScriptChannelConfigInputType,
-)
+from ..models.system_channel_config_type import SystemChannelConfigType
 
 
-class WebScriptChannelConfigOutput(WaylayBaseModel):
-    """Channel configuration for invoking a waylay webscript.."""
+class SystemChannelConfig(WaylayBaseModel):
+    """Channel configuration for functionality that is fixed by the platform.  This cannot be selected by the end user.."""
 
-    type: WebScriptChannelConfigInputType | None = (
-        WebScriptChannelConfigInputType.WEBSCRIPT
-    )
+    type: SystemChannelConfigType | None = SystemChannelConfigType.SYSTEM
     description: StrictStr | None = None
     payload: PayloadConfig | None = None
     authentication: AuthenticationConfig | None = None
     expiry: Expiry | None = None
-    name: StrictStr
-    version: StrictStr | None = None
-    method: HTTPMETHOD | None = None
 
     model_config = ConfigDict(
         populate_by_name=True, protected_namespaces=(), extra="ignore"

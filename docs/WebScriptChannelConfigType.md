@@ -1,4 +1,4 @@
-# WebScriptChannelConfigInputType
+# WebScriptChannelConfigType
 
 
 ## Properties

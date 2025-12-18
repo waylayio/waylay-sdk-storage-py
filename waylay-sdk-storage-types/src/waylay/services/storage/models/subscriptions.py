@@ -21,7 +21,7 @@ from waylay.sdk.api._models import BaseModel as WaylayBaseModel
 
 from ..models.bucket import Bucket
 from ..models.links_value import LinksValue
-from ..models.subscription_config_output import SubscriptionConfigOutput
+from ..models.subscription_config import SubscriptionConfig
 
 
 class Subscriptions(WaylayBaseModel):
@@ -29,7 +29,7 @@ class Subscriptions(WaylayBaseModel):
 
     links: Dict[str, LinksValue] | None = Field(default=None, alias="_links")
     bucket: Bucket
-    subscriptions: List[SubscriptionConfigOutput]
+    subscriptions: List[SubscriptionConfig]
     warnings: List[Dict[str, Any]] | None = None
 
     model_config = ConfigDict(

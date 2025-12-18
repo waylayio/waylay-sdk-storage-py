@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **links** | [**Dict[str, LinksValue]**](LinksValue.md) |  | [optional] 
 **bucket** | [**Bucket**](Bucket.md) |  | 
-**subscriptions** | [**List[SubscriptionConfigOutput]**](SubscriptionConfigOutput.md) |  | 
+**subscriptions** | [**List[SubscriptionConfig]**](SubscriptionConfig.md) |  | 
 **warnings** | **List[Dict[str, object]]** |  | [optional] 
 
 ## Example

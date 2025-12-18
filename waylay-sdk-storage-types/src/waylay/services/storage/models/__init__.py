@@ -25,7 +25,6 @@ from .bucket_object_listing import BucketObjectListing
 from .bucketcreationstatus import BUCKETCREATIONSTATUS
 from .bucketpolicystatus import BUCKETPOLICYSTATUS
 from .channel import Channel
-from .channel1 import Channel1
 from .channeltype import CHANNELTYPE
 from .event_filter import EventFilter
 from .expiry import Expiry
@@ -40,25 +39,22 @@ from .notification_queue_status_report import NotificationQueueStatusReport
 from .payload_config import PayloadConfig
 from .queuesetupstatus import QUEUESETUPSTATUS
 from .resource import Resource
-from .response_list_object import ResponseListObject
+from .response_list import ResponseList
 from .s3_policy_def import S3PolicyDef
 from .s3_policy_statement import S3PolicyStatement
 from .sign import SIGN
 from .store import Store
 from .storetype import STORETYPE
-from .subscription_config_input import SubscriptionConfigInput
-from .subscription_config_output import SubscriptionConfigOutput
+from .subscription_config import SubscriptionConfig
 from .subscriptions import Subscriptions
 from .subscriptions_listing import SubscriptionsListing
-from .system_channel_config_input import SystemChannelConfigInput
-from .system_channel_config_input_type import SystemChannelConfigInputType
-from .system_channel_config_output import SystemChannelConfigOutput
+from .system_channel_config import SystemChannelConfig
+from .system_channel_config_type import SystemChannelConfigType
 from .tenant_status_report import TenantStatusReport
 from .validation_error import ValidationError
 from .venttype import VENTTYPE
-from .web_script_channel_config_input import WebScriptChannelConfigInput
-from .web_script_channel_config_input_type import WebScriptChannelConfigInputType
-from .web_script_channel_config_output import WebScriptChannelConfigOutput
+from .web_script_channel_config import WebScriptChannelConfig
+from .web_script_channel_config_type import WebScriptChannelConfigType
 
 __all__ = [
     "__version__",
@@ -73,7 +69,6 @@ __all__ = [
     "BucketObjectListing",
     "CHANNELTYPE",
     "Channel",
-    "Channel1",
     "EventFilter",
     "Expiry",
     "HALEntity",
@@ -87,23 +82,20 @@ __all__ = [
     "PayloadConfig",
     "QUEUESETUPSTATUS",
     "Resource",
-    "ResponseListObject",
+    "ResponseList",
     "S3PolicyDef",
     "S3PolicyStatement",
     "SIGN",
     "STORETYPE",
     "Store",
-    "SubscriptionConfigInput",
-    "SubscriptionConfigOutput",
+    "SubscriptionConfig",
     "Subscriptions",
     "SubscriptionsListing",
-    "SystemChannelConfigInput",
-    "SystemChannelConfigInputType",
-    "SystemChannelConfigOutput",
+    "SystemChannelConfig",
+    "SystemChannelConfigType",
     "TenantStatusReport",
     "VENTTYPE",
     "ValidationError",
-    "WebScriptChannelConfigInput",
-    "WebScriptChannelConfigInputType",
-    "WebScriptChannelConfigOutput",
+    "WebScriptChannelConfig",
+    "WebScriptChannelConfigType",
 ]

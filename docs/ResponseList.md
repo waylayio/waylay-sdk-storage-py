@@ -1,4 +1,4 @@
-# ResponseListObject
+# ResponseList
 
 
 ## Properties
@@ -21,19 +21,19 @@ Name | Type | Description | Notes
 ## Example
 
 ```python
-from waylay.services.storage.models.response_list_object import ResponseListObject
+from waylay.services.storage.models.response_list import ResponseList
 
 # TODO update the JSON string below
 json = "{}"
-# create an instance of ResponseListObject from a JSON string
-response_list_object_instance = ResponseListObject.from_json(json)
+# create an instance of ResponseList from a JSON string
+response_list_instance = ResponseList.from_json(json)
 # print the JSON string representation of the object
-print ResponseListObject.to_json()
+print ResponseList.to_json()
 
 # convert the object into a dict
-response_list_object_dict = response_list_object_instance.to_dict()
-# create an instance of ResponseListObject from a dict
-response_list_object_form_dict = response_list_object.from_dict(response_list_object_dict)
+response_list_dict = response_list_instance.to_dict()
+# create an instance of ResponseList from a dict
+response_list_form_dict = response_list.from_dict(response_list_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

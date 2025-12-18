@@ -1,4 +1,4 @@
-# WebScriptChannelConfigOutput
+# WebScriptChannelConfig
 
 Channel configuration for invoking a waylay webscript.
 
@@ -6,7 +6,7 @@ Channel configuration for invoking a waylay webscript.
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**type** | [**WebScriptChannelConfigInputType**](WebScriptChannelConfigInputType.md) |  | [optional] [default to WebScriptChannelConfigInputType.WEBSCRIPT]
+**type** | [**WebScriptChannelConfigType**](WebScriptChannelConfigType.md) |  | [optional] [default to WebScriptChannelConfigType.WEBSCRIPT]
 **description** | **str** |  | [optional] 
 **payload** | [**PayloadConfig**](PayloadConfig.md) |  | [optional] 
 **authentication** | [**AuthenticationConfig**](AuthenticationConfig.md) |  | [optional] 
@@ -18,19 +18,19 @@ Name | Type | Description | Notes
 ## Example
 
 ```python
-from waylay.services.storage.models.web_script_channel_config_output import WebScriptChannelConfigOutput
+from waylay.services.storage.models.web_script_channel_config import WebScriptChannelConfig
 
 # TODO update the JSON string below
 json = "{}"
-# create an instance of WebScriptChannelConfigOutput from a JSON string
-web_script_channel_config_output_instance = WebScriptChannelConfigOutput.from_json(json)
+# create an instance of WebScriptChannelConfig from a JSON string
+web_script_channel_config_instance = WebScriptChannelConfig.from_json(json)
 # print the JSON string representation of the object
-print WebScriptChannelConfigOutput.to_json()
+print WebScriptChannelConfig.to_json()
 
 # convert the object into a dict
-web_script_channel_config_output_dict = web_script_channel_config_output_instance.to_dict()
-# create an instance of WebScriptChannelConfigOutput from a dict
-web_script_channel_config_output_form_dict = web_script_channel_config_output.from_dict(web_script_channel_config_output_dict)
+web_script_channel_config_dict = web_script_channel_config_instance.to_dict()
+# create an instance of WebScriptChannelConfig from a dict
+web_script_channel_config_form_dict = web_script_channel_config.from_dict(web_script_channel_config_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

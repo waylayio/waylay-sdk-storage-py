@@ -37,7 +37,7 @@ if TYPE_CHECKING:
         BucketObject,
         HALEntity,
         HTTPValidationError,
-        ResponseListObject,
+        ResponseList,
     )
     from waylay.services.storage.queries.object_api import (
         CopyOrMoveQuery,
@@ -52,7 +52,7 @@ try:
         BucketObject,
         HALEntity,
         HTTPValidationError,
-        ResponseListObject,
+        ResponseList,
     )
     from waylay.services.storage.queries.object_api import (
         CopyOrMoveQuery,
@@ -77,7 +77,7 @@ except ImportError:
         HTTPValidationError = Model
 
         ListQuery = dict
-        ResponseListObject = Model
+        ResponseList = Model
 
         HTTPValidationError = Model
 
@@ -440,7 +440,7 @@ class ObjectApi(WithApiClient):
         validate_request: StrictBool = True,
         headers: HeaderTypes | None = None,
         **kwargs,
-    ) -> ResponseListObject: ...
+    ) -> ResponseList: ...
 
     @overload
     async def list(
@@ -514,7 +514,7 @@ class ObjectApi(WithApiClient):
         validate_request: StrictBool = True,
         headers: HeaderTypes | None = None,
         **kwargs,
-    ) -> ResponseListObject | T | Response | Model:
+    ) -> ResponseList | T | Response | Model:
         """List Objects.
 
         List, inspect or sign objects.  * list the objects of a bucket with {object_path} prefix     * (`recursive=true`) list content recursively     * (`all=true`) include hidden objects * (`stat=true`) get the meta of the object at {object_path} * (`sign=[GET,PUT,POST]`) fetch presigned urls to operate on {object_path}     * (`all=true`) allow link creation for hidden objects
@@ -594,7 +594,7 @@ class ObjectApi(WithApiClient):
             {"2XX": response_type}
             if response_type is not None
             else {
-                "200": ResponseListObject if not select_path else Model,
+                "200": ResponseList if not select_path else Model,
             }
         )
         non_200_response_types_map: Dict[str, Any] = {

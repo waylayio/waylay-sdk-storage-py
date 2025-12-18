@@ -11,14 +11,16 @@ Do not edit the class manually.
 
 from __future__ import annotations
 
-from typing import Union
+from typing import (
+    Union,
+)
 
 from typing_extensions import Annotated
 
-from ..models.system_channel_config_input import SystemChannelConfigInput
-from ..models.web_script_channel_config_input import WebScriptChannelConfigInput
+from ..models.system_channel_config import SystemChannelConfig
+from ..models.web_script_channel_config import WebScriptChannelConfig
 
 Channel = Union[
-    Annotated[WebScriptChannelConfigInput, ""], Annotated[SystemChannelConfigInput, ""]
+    Annotated[WebScriptChannelConfig, ""], Annotated[SystemChannelConfig, ""]
 ]
 """Channel."""
