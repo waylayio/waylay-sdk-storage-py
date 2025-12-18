@@ -43,11 +43,13 @@ notification_queue_status_model_schema = json.loads(
     },
     "configured_parameters" : {
       "title" : "Configured Parameters",
-      "type" : "object"
+      "type" : "object",
+      "additionalProperties" : true
     },
     "actual_parameters" : {
       "title" : "Actual Parameters",
-      "type" : "object"
+      "type" : "object",
+      "additionalProperties" : true
     },
     "error" : {
       "title" : "Error",

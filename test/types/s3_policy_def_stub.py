@@ -16,63 +16,59 @@ from pydantic import TypeAdapter
 from ..openapi import MODEL_DEFINITIONS, with_example_provider
 
 try:
-    from waylay.services.storage.models.bucket_listing import BucketListing
+    from waylay.services.storage.models.s3_policy_def import S3PolicyDef
 
-    BucketListingAdapter = TypeAdapter(BucketListing)
+    S3PolicyDefAdapter = TypeAdapter(S3PolicyDef)
     MODELS_AVAILABLE = True
 except ImportError as exc:
     MODELS_AVAILABLE = False
 
-bucket_listing_model_schema = json.loads(
+s3_policy_def_model_schema = json.loads(
     r"""{
-  "required" : [ "buckets" ],
+  "title" : "S3PolicyDef",
   "type" : "object",
   "properties" : {
-    "_links" : {
-      "title" : "Links",
-      "type" : "object",
-      "additionalProperties" : {
-        "$ref" : "#/components/schemas/Links_value"
-      }
-    },
-    "buckets" : {
-      "title" : "Buckets",
+    "Statement" : {
+      "title" : "Statement",
       "type" : "array",
       "items" : {
-        "$ref" : "#/components/schemas/Bucket"
+        "$ref" : "#/components/schemas/S3PolicyStatement"
       }
+    },
+    "Version" : {
+      "title" : "Version",
+      "type" : "string"
     }
   },
-  "description" : "List of Bucket representations."
+  "additionalProperties" : true,
+  "description" : "AWS S3 Policy definition."
 }
 """,
     object_hook=with_example_provider,
 )
-bucket_listing_model_schema.update({"definitions": MODEL_DEFINITIONS})
+s3_policy_def_model_schema.update({"definitions": MODEL_DEFINITIONS})
 
-bucket_listing_faker = JSF(bucket_listing_model_schema, allow_none_optionals=1)
+s3_policy_def_faker = JSF(s3_policy_def_model_schema, allow_none_optionals=1)
 
 
-class BucketListingStub:
-    """BucketListing unit test stubs."""
+class S3PolicyDefStub:
+    """S3PolicyDef unit test stubs."""
 
     @classmethod
     def create_json(cls):
         """Create a dict stub instance."""
-        return bucket_listing_faker.generate(use_defaults=True, use_examples=True)
+        return s3_policy_def_faker.generate(use_defaults=True, use_examples=True)
 
     @classmethod
-    def create_instance(cls) -> "BucketListing":
-        """Create BucketListing stub instance."""
+    def create_instance(cls) -> "S3PolicyDef":
+        """Create S3PolicyDef stub instance."""
         if not MODELS_AVAILABLE:
             raise ImportError("Models must be installed to create class stubs")
         json = cls.create_json()
         if json is None:
             # use backup example based on the pydantic model schema
-            backup_faker = JSF(
-                BucketListingAdapter.json_schema(), allow_none_optionals=1
-            )
+            backup_faker = JSF(S3PolicyDefAdapter.json_schema(), allow_none_optionals=1)
             json = backup_faker.generate(use_defaults=True, use_examples=True)
-        return BucketListingAdapter.validate_python(
+        return S3PolicyDefAdapter.validate_python(
             json, context={"skip_validation": True}
         )

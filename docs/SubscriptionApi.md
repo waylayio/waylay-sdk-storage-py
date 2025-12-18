@@ -21,7 +21,7 @@ Method | HTTP request | Description
 
 Create Bucket Subscription
 
-Create a new notification subscription on a bucket with a given or generated id.
+Create a new notification subscription...  on a bucket with a given or generated id.  > it can take a few minutes before this change > is fully effective on the forwarding of change events
 
 ### Example
 
@@ -99,7 +99,7 @@ str | False _(default)_ | **`Any`** | If any other string value for the selected
 
 Delete All Bucket Subscriptions
 
-Remove all notification subscription on a bucket that match a given event and/or channel filter.
+Remove all notification subscriptions on a bucket that match a given event and/or channel filter.  > it can take a few minutes before this change > is fully effective on the forwarding of change events
 
 ### Example
 
@@ -124,8 +124,6 @@ try:
         'bucket_name_example', # bucket_name | path param "bucket_name"
         # query parameters:
         query = {
-            'event_type': 'delete'
-            'channel_type': 'webhook'
         },
     )
     print("The response of storage.subscription.delete_by:\n")
@@ -286,8 +284,6 @@ try:
     api_response = await waylay_client.storage.subscription.list(
         # query parameters:
         query = {
-            'event_type': 'delete'
-            'channel_type': 'webhook'
         },
     )
     print("The response of storage.subscription.list:\n")
@@ -370,8 +366,6 @@ try:
         'bucket_name_example', # bucket_name | path param "bucket_name"
         # query parameters:
         query = {
-            'event_type': 'delete'
-            'channel_type': 'webhook'
         },
     )
     print("The response of storage.subscription.query:\n")
@@ -510,7 +504,7 @@ str | False _(default)_ | **`Any`** | If any other string value for the selected
 
 Replace Bucket Subscription
 
-Create or replace a notification subscription on a bucket with a given id.
+Create or replace a notification subscription on a bucket with a given id.  > it can take a few minutes before this change > is fully effective on the forwarding of change events
 
 ### Example
 

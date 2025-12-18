@@ -13,7 +13,7 @@ Name | Type | Description | Notes
 **creation_date** | **datetime** |  | [optional] 
 **size** | **int** |  | [optional] 
 **status** | [**BUCKETCREATIONSTATUS**](BUCKETCREATIONSTATUS.md) |  | [optional] 
-**public_policy_json** | **object** |  | [optional] 
+**public_policy_json** | [**S3PolicyDef**](S3PolicyDef.md) |  | [optional] 
 **public_policy_type** | **str** |  | [optional] 
 **error** | **str** |  | [optional] 
 

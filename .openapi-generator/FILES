@@ -30,7 +30,10 @@ docs/ObjectApi.md
 docs/Operation.md
 docs/PayloadConfig.md
 docs/QUEUESETUPSTATUS.md
+docs/Resource.md
 docs/ResponseList.md
+docs/S3PolicyDef.md
+docs/S3PolicyStatement.md
 docs/SIGN.md
 docs/STORETYPE.md
 docs/Store.md
@@ -79,7 +82,10 @@ test/types/notification_queue_status_report_stub.py
 test/types/notification_queue_status_stub.py
 test/types/payload_config_stub.py
 test/types/queuesetupstatus_stub.py
+test/types/resource_stub.py
 test/types/response_list_stub.py
+test/types/s3_policy_def_stub.py
+test/types/s3_policy_statement_stub.py
 test/types/sign_stub.py
 test/types/store_stub.py
 test/types/storetype_stub.py

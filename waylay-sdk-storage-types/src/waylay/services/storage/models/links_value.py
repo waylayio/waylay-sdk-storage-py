@@ -11,14 +11,9 @@ Do not edit the class manually.
 
 from __future__ import annotations
 
-from typing import (
-    List,
-    Union,
-)
+from typing import List, Union
 
-from typing_extensions import (
-    Annotated,  # >=3.9
-)
+from typing_extensions import Annotated
 
 from ..models.hal_link import HALLink
 

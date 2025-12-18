@@ -29,10 +29,10 @@ bucket_configuration_model_schema = json.loads(
   "type" : "object",
   "properties" : {
     "_links" : {
-      "title" : " Links",
+      "title" : "Links",
       "type" : "object",
       "additionalProperties" : {
-        "$ref" : "#/components/schemas/_Links_value"
+        "$ref" : "#/components/schemas/Links_value"
       }
     },
     "alias" : {
@@ -56,14 +56,10 @@ bucket_configuration_model_schema = json.loads(
       "type" : "integer"
     },
     "status" : {
-      "allOf" : [ {
-        "$ref" : "#/components/schemas/BUCKET_CREATION_STATUS"
-      } ],
-      "default" : "unknown"
+      "$ref" : "#/components/schemas/BUCKET_CREATION_STATUS"
     },
     "public_policy_json" : {
-      "title" : "Public Policy Json",
-      "type" : "object"
+      "$ref" : "#/components/schemas/S3PolicyDef"
     },
     "public_policy_type" : {
       "title" : "Public Policy Type",

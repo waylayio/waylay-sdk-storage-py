@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **store** | **str** |  | 
 **notification_queues** | [**List[NotificationQueueStatus]**](NotificationQueueStatus.md) |  | 
-**messages** | **List[object]** |  | [optional] 
+**messages** | **List[Dict[str, object]]** |  | [optional] 
 
 ## Example
 

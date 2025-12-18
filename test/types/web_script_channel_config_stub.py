@@ -34,8 +34,8 @@ web_script_channel_config_model_schema = json.loads(
       "$ref" : "#/components/schemas/WebScriptChannelConfig_type"
     },
     "description" : {
-      "title" : "Description",
-      "type" : "string"
+      "type" : "string",
+      "nullable" : true
     },
     "payload" : {
       "$ref" : "#/components/schemas/PayloadConfig"
@@ -51,14 +51,11 @@ web_script_channel_config_model_schema = json.loads(
       "type" : "string"
     },
     "version" : {
-      "title" : "Version",
-      "type" : "string"
+      "type" : "string",
+      "nullable" : true
     },
     "method" : {
-      "allOf" : [ {
-        "$ref" : "#/components/schemas/HTTP_METHOD"
-      } ],
-      "default" : "POST"
+      "$ref" : "#/components/schemas/HTTP_METHOD"
     }
   },
   "description" : "Channel configuration for invoking a waylay webscript."

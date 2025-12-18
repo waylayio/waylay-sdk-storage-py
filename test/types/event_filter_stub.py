@@ -28,14 +28,15 @@ event_filter_model_schema = json.loads(
   "type" : "object",
   "properties" : {
     "prefix" : {
-      "title" : "Prefix",
-      "type" : "string"
+      "type" : "string",
+      "nullable" : true
     },
     "suffix" : {
-      "title" : "Suffix",
-      "type" : "string"
+      "type" : "string",
+      "nullable" : true
     },
     "events" : {
+      "title" : "Events",
       "uniqueItems" : true,
       "type" : "array",
       "items" : {
@@ -44,15 +45,15 @@ event_filter_model_schema = json.loads(
       "default" : [ "put" ]
     },
     "description" : {
-      "title" : "Description",
-      "type" : "string"
+      "type" : "string",
+      "nullable" : true
     },
     "queue" : {
-      "title" : "Queue",
-      "type" : "string"
+      "type" : "string",
+      "nullable" : true
     }
   },
-  "description" : "Filter on change events in a storage backend.\n\nThe `prefix` and `suffix` properties are conditions on the object path\n(not including the bucket name). When not specified, all paths in the bucket will selected.\n\nThe `events` property can contain `put` and/or `delete` values, corresponding\nto create/update and deletion events.\nWhen not specified, only the create/update events are filtered."
+  "description" : "Filter on change events in a storage backend.\n\nThe `prefix` and `suffix` properties are conditions on the object path\n(not including the bucket name).\nWhen not specified, all paths in the bucket will selected.\n\nThe `events` property can contain `put` and/or `delete` values, corresponding\nto create/update and deletion events.\nWhen not specified, only the create/update events are filtered."
 }
 """,
     object_hook=with_example_provider,

@@ -28,13 +28,16 @@ payload_config_model_schema = json.loads(
   "type" : "object",
   "properties" : {
     "signed_links" : {
+      "title" : "Signed Links",
       "type" : "array",
       "items" : {
         "$ref" : "#/components/schemas/SIGN"
       }
     },
     "reference" : {
-      "title" : "Reference"
+      "title" : "Reference",
+      "nullable" : true,
+      "anyOf" : [ ]
     }
   },
   "description" : "Configuration object that specifies the expected notification payload."

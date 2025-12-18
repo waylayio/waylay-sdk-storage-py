@@ -31,8 +31,8 @@ system_channel_config_model_schema = json.loads(
       "$ref" : "#/components/schemas/SystemChannelConfig_type"
     },
     "description" : {
-      "title" : "Description",
-      "type" : "string"
+      "type" : "string",
+      "nullable" : true
     },
     "payload" : {
       "$ref" : "#/components/schemas/PayloadConfig"

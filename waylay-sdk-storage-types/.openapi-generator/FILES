@@ -26,7 +26,10 @@ src/waylay/services/storage/models/object.py
 src/waylay/services/storage/models/payload_config.py
 src/waylay/services/storage/models/py.typed
 src/waylay/services/storage/models/queuesetupstatus.py
+src/waylay/services/storage/models/resource.py
 src/waylay/services/storage/models/response_list.py
+src/waylay/services/storage/models/s3_policy_def.py
+src/waylay/services/storage/models/s3_policy_statement.py
 src/waylay/services/storage/models/sign.py
 src/waylay/services/storage/models/store.py
 src/waylay/services/storage/models/storetype.py

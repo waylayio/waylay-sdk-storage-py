@@ -28,7 +28,7 @@ store_type_model_schema = json.loads(
   "title" : "STORE_TYPE",
   "type" : "string",
   "description" : "Supported backend store types.",
-  "enum" : [ "gs", "s3", "azure" ]
+  "enum" : [ "gs", "s3", "azure", "zenko" ]
 }
 """,
     object_hook=with_example_provider,

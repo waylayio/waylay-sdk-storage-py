@@ -26,7 +26,14 @@ except ImportError as exc:
 channel_model_schema = json.loads(
     r"""{
   "title" : "Channel",
-  "anyOf" : [ {
+  "discriminator" : {
+    "propertyName" : "type",
+    "mapping" : {
+      "system" : "#/components/schemas/SystemChannelConfig",
+      "webscript" : "#/components/schemas/WebScriptChannelConfig"
+    }
+  },
+  "oneOf" : [ {
     "$ref" : "#/components/schemas/WebScriptChannelConfig"
   }, {
     "$ref" : "#/components/schemas/SystemChannelConfig"

@@ -30,21 +30,18 @@ authentication_config_model_schema = json.loads(
   "type" : "object",
   "properties" : {
     "method" : {
-      "allOf" : [ {
-        "$ref" : "#/components/schemas/AUTH"
-      } ],
-      "default" : "DEFAULT"
+      "$ref" : "#/components/schemas/AUTH"
     },
     "key" : {
-      "title" : "Key",
-      "type" : "string"
+      "type" : "string",
+      "nullable" : true
     },
     "secret" : {
-      "title" : "Secret",
-      "type" : "string"
+      "type" : "string",
+      "nullable" : true
     }
   },
-  "description" : "Configuration for the authentication method used when forwarding an event to a channel."
+  "description" : "Authentication configuration when forwarding an event to a channel."
 }
 """,
     object_hook=with_example_provider,

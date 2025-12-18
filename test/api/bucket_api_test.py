@@ -11,7 +11,6 @@ Do not edit the class manually.
 import json
 import re
 from importlib.util import find_spec
-from typing import Union
 from urllib.parse import quote
 
 import pytest
@@ -79,7 +78,7 @@ async def test_get(service: StorageService, gateway_url: str, httpx_mock: HTTPXM
     }
     _get_set_mock_response(httpx_mock, gateway_url, quote(str(bucket_name)))
     resp = await service.bucket.get(bucket_name, **kwargs)
-    check_type(resp, Union[Bucket,])
+    check_type(resp, Bucket)
 
 
 @pytest.mark.asyncio
@@ -129,7 +128,7 @@ async def test_list(service: StorageService, gateway_url: str, httpx_mock: HTTPX
     }
     _list_set_mock_response(httpx_mock, gateway_url)
     resp = await service.bucket.list(**kwargs)
-    check_type(resp, Union[BucketListing,])
+    check_type(resp, BucketListing)
 
 
 @pytest.mark.asyncio

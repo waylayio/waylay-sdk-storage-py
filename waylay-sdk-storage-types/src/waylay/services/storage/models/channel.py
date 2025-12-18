@@ -15,9 +15,7 @@ from typing import (
     Union,
 )
 
-from typing_extensions import (
-    Annotated,  # >=3.9
-)
+from typing_extensions import Annotated
 
 from ..models.system_channel_config import SystemChannelConfig
 from ..models.web_script_channel_config import WebScriptChannelConfig

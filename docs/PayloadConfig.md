@@ -7,7 +7,7 @@ Configuration object that specifies the expected notification payload.
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **signed_links** | [**List[SIGN]**](SIGN.md) |  | [optional] 
-**reference** | **object** |  | [optional] 
+**reference** | [**AnyOf**](AnyOf.md) |  | [optional] 
 
 ## Example
 

@@ -6,7 +6,7 @@ info:
     Manage storage buckets and subscriptions.
 
     '
-  version: v0.5.2
+  version: 0.9.0
 paths:
   /storage/v1/bucket:
     get:
@@ -16,12 +16,14 @@ paths:
       description: List authorized buckets.
       operationId: list_bucket
       parameters:
-      - required: false
-        schema:
-          type: string
-          title: Store
-        name: store
+      - name: store
         in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Store
       responses:
         '200':
           description: Successful Response
@@ -45,18 +47,20 @@ paths:
       description: Get a descriptive representation of a bucket.
       operationId: get_bucket
       parameters:
-      - required: true
+      - name: bucket_name
+        in: path
+        required: true
         schema:
           type: string
           title: Bucket Name
-        name: bucket_name
-        in: path
-      - required: false
-        schema:
-          type: string
-          title: Store
-        name: store
+      - name: store
         in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Store
       responses:
         '200':
           description: Successful Response
@@ -84,112 +88,142 @@ paths:
         \ hidden objects"
       operationId: list_object
       parameters:
-      - required: true
+      - name: bucket_name
+        in: path
+        required: true
         schema:
           type: string
           title: Bucket Name
-        name: bucket_name
+      - name: object_path
         in: path
-      - required: true
+        required: true
         schema:
           type: string
           title: Object Path
-        name: object_path
-        in: path
-      - required: false
+      - name: stat
+        in: query
+        required: false
         schema:
           type: boolean
-          title: Stat
           default: false
-        name: stat
+          title: Stat
+      - name: recursive
         in: query
-      - required: false
+        required: false
         schema:
-          type: boolean
+          anyOf:
+          - type: boolean
+          - type: 'null'
           title: Recursive
-        name: recursive
+      - name: all
         in: query
-      - required: false
+        required: false
         schema:
-          type: boolean
+          anyOf:
+          - type: boolean
+          - type: 'null'
           title: All
-        name: all
+      - name: start_after
         in: query
-      - required: false
+        required: false
         schema:
-          type: string
+          anyOf:
+          - type: string
+          - type: 'null'
           title: Start After
-        name: start_after
+      - name: fetch_content_type
         in: query
-      - required: false
+        required: false
         schema:
           type: boolean
+          description: 'If true, fetch content type for each object when not already
+            available from the listing (e.g. on s3 stores).
+
+            This is less efficient but may be necessary for certain use cases.'
+          default: false
           title: Fetch Content Type
-          default: true
-        name: fetch_content_type
+        description: 'If true, fetch content type for each object when not already
+          available from the listing (e.g. on s3 stores).
+
+          This is less efficient but may be necessary for certain use cases.'
+      - name: get_as_attachment
         in: query
-      - required: false
+        required: false
         schema:
           type: boolean
-          title: Get As Attachment
           default: true
-        name: get_as_attachment
+          title: Get As Attachment
+      - name: sign
         in: query
-      - required: false
+        required: false
         schema:
-          type: integer
-          title: Max Keys
-        name: max_keys
-        in: query
-      - required: false
-        schema:
-          type: string
+          anyOf:
+          - type: string
+          - type: 'null'
           title: Sign
-        name: sign
+      - name: max_keys
         in: query
-      - required: false
+        required: false
         schema:
-          type: string
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Max Keys
+      - name: store
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
           title: Store
-        name: store
+      - name: expiry_days
         in: query
-      - required: false
+        required: false
         schema:
-          type: integer
+          anyOf:
+          - type: integer
+          - type: 'null'
           title: Expiry Days
-        name: expiry_days
+      - name: expiry_hours
         in: query
-      - required: false
+        required: false
         schema:
-          type: integer
+          anyOf:
+          - type: integer
+          - type: 'null'
           title: Expiry Hours
-        name: expiry_hours
+      - name: expiry_seconds
         in: query
-      - required: false
+        required: false
         schema:
-          type: integer
+          anyOf:
+          - type: integer
+          - type: 'null'
           title: Expiry Seconds
-        name: expiry_seconds
+      - name: content_length_min
         in: query
-      - required: false
+        required: false
         schema:
           type: integer
-          title: Content Length Min
           default: 0
-        name: content_length_min
+          title: Content Length Min
+      - name: content_length_max
         in: query
-      - required: false
+        required: false
         schema:
-          type: integer
+          anyOf:
+          - type: integer
+          - type: 'null'
           title: Content Length Max
-        name: content_length_max
+      - name: content_type
         in: query
-      - required: false
+        required: false
         schema:
-          type: string
+          anyOf:
+          - type: string
+          - type: 'null'
           title: Content Type
-        name: content_type
-        in: query
       responses:
         '200':
           description: Successful Response
@@ -224,48 +258,58 @@ paths:
         * (`all=true`) forces recursive deletion, including hidden objects.'
       operationId: remove_object
       parameters:
-      - required: true
+      - name: bucket_name
+        in: path
+        required: true
         schema:
           type: string
           title: Bucket Name
-        name: bucket_name
+      - name: object_path
         in: path
-      - required: true
+        required: true
         schema:
           type: string
           title: Object Path
-        name: object_path
-        in: path
-      - required: false
+      - name: recursive
+        in: query
+        required: false
         schema:
-          type: boolean
+          anyOf:
+          - type: boolean
+          - type: 'null'
           title: Recursive
-        name: recursive
+      - name: all
         in: query
-      - required: false
+        required: false
         schema:
-          type: boolean
+          anyOf:
+          - type: boolean
+          - type: 'null'
           title: All
-        name: all
+      - name: start_after
         in: query
-      - required: false
+        required: false
         schema:
-          type: string
+          anyOf:
+          - type: string
+          - type: 'null'
           title: Start After
-        name: start_after
+      - name: max_keys
         in: query
-      - required: false
+        required: false
         schema:
-          type: integer
+          anyOf:
+          - type: integer
+          - type: 'null'
           title: Max Keys
-        name: max_keys
+      - name: store
         in: query
-      - required: false
+        required: false
         schema:
-          type: string
+          anyOf:
+          - type: string
+          - type: 'null'
           title: Store
-        name: store
-        in: query
       responses:
         '200':
           description: Successful Response
@@ -289,31 +333,33 @@ paths:
         \ a hidden folder,\n  having a path element that starts with a `.`."
       operationId: createFolder_object
       parameters:
-      - required: true
+      - name: bucket_name
+        in: path
+        required: true
         schema:
           type: string
           title: Bucket Name
-        name: bucket_name
+      - name: object_path
         in: path
-      - required: true
+        required: true
         schema:
           type: string
           title: Object Path
-        name: object_path
-        in: path
-      - required: false
+      - name: all
+        in: query
+        required: false
         schema:
           type: boolean
-          title: All
           default: false
-        name: all
+          title: All
+      - name: store
         in: query
-      - required: false
+        required: false
         schema:
-          type: string
+          anyOf:
+          - type: string
+          - type: 'null'
           title: Store
-        name: store
-        in: query
       responses:
         '200':
           description: Successful Response
@@ -336,37 +382,39 @@ paths:
       description: Copy or move object to new location.
       operationId: copyOrMove_object
       parameters:
-      - required: true
+      - name: bucket_name
+        in: path
+        required: true
         schema:
           type: string
           title: Bucket Name
-        name: bucket_name
+      - name: target_path
         in: path
-      - required: true
+        required: true
         schema:
           type: string
           title: Target Path
-        name: target_path
-        in: path
-      - required: true
+      - name: source
+        in: query
+        required: true
         schema:
           type: string
           title: Source
-        name: source
+      - name: move
         in: query
-      - required: false
+        required: false
         schema:
           type: boolean
-          title: Move
           default: false
-        name: move
+          title: Move
+      - name: store
         in: query
-      - required: false
+        required: false
         schema:
-          type: string
+          anyOf:
+          - type: string
+          - type: 'null'
           title: Store
-        name: store
-        in: query
       responses:
         '200':
           description: Successful Response
@@ -390,46 +438,62 @@ paths:
         enabled.
       operationId: list_subscription
       parameters:
-      - required: false
+      - name: store
+        in: query
+        required: false
         schema:
-          type: string
+          anyOf:
+          - type: string
+          - type: 'null'
           title: Store
-        name: store
+      - name: prefix
         in: query
-      - required: false
+        required: false
         schema:
-          type: string
+          anyOf:
+          - type: string
+          - type: 'null'
           title: Prefix
-        name: prefix
+      - name: suffix
         in: query
-      - required: false
+        required: false
         schema:
-          type: string
+          anyOf:
+          - type: string
+          - type: 'null'
           title: Suffix
-        name: suffix
+      - name: event_type
         in: query
-      - required: false
+        required: false
         schema:
-          $ref: '#/components/schemas/EVENT_TYPE'
-        name: event_type
+          anyOf:
+          - $ref: '#/components/schemas/EVENT_TYPE'
+          - type: 'null'
+          title: Event Type
+      - name: channel_type
         in: query
-      - required: false
+        required: false
         schema:
-          $ref: '#/components/schemas/CHANNEL_TYPE'
-        name: channel_type
+          anyOf:
+          - $ref: '#/components/schemas/CHANNEL_TYPE'
+          - type: 'null'
+          title: Channel Type
+      - name: channel_id
         in: query
-      - required: false
+        required: false
         schema:
-          type: string
+          anyOf:
+          - type: string
+          - type: 'null'
           title: Channel Id
-        name: channel_id
+      - name: max_keys
         in: query
-      - required: false
+        required: false
         schema:
-          type: integer
+          anyOf:
+          - type: integer
+          - type: 'null'
           title: Max Keys
-        name: max_keys
-        in: query
       responses:
         '200':
           description: Successful Response
@@ -452,58 +516,76 @@ paths:
       description: List notification subscriptions for given bucket.
       operationId: query_subscription
       parameters:
-      - required: true
+      - name: bucket_name
+        in: path
+        required: true
         schema:
           type: string
           title: Bucket Name
-        name: bucket_name
-        in: path
-      - required: false
+      - name: start_after
+        in: query
+        required: false
         schema:
-          type: string
+          anyOf:
+          - type: string
+          - type: 'null'
           title: Start After
-        name: start_after
+      - name: store
         in: query
-      - required: false
+        required: false
         schema:
-          type: string
+          anyOf:
+          - type: string
+          - type: 'null'
           title: Store
-        name: store
+      - name: prefix
         in: query
-      - required: false
+        required: false
         schema:
-          type: string
+          anyOf:
+          - type: string
+          - type: 'null'
           title: Prefix
-        name: prefix
+      - name: suffix
         in: query
-      - required: false
+        required: false
         schema:
-          type: string
+          anyOf:
+          - type: string
+          - type: 'null'
           title: Suffix
-        name: suffix
+      - name: event_type
         in: query
-      - required: false
+        required: false
         schema:
-          $ref: '#/components/schemas/EVENT_TYPE'
-        name: event_type
+          anyOf:
+          - $ref: '#/components/schemas/EVENT_TYPE'
+          - type: 'null'
+          title: Event Type
+      - name: channel_type
         in: query
-      - required: false
+        required: false
         schema:
-          $ref: '#/components/schemas/CHANNEL_TYPE'
-        name: channel_type
+          anyOf:
+          - $ref: '#/components/schemas/CHANNEL_TYPE'
+          - type: 'null'
+          title: Channel Type
+      - name: channel_id
         in: query
-      - required: false
+        required: false
         schema:
-          type: string
+          anyOf:
+          - type: string
+          - type: 'null'
           title: Channel Id
-        name: channel_id
+      - name: max_keys
         in: query
-      - required: false
+        required: false
         schema:
-          type: integer
+          anyOf:
+          - type: integer
+          - type: 'null'
           title: Max Keys
-        name: max_keys
-        in: query
       responses:
         '200':
           description: Successful Response
@@ -518,107 +600,90 @@ paths:
               schema:
                 $ref: '#/components/schemas/HTTPValidationError'
       security: *id001
-    post:
-      tags:
-      - Subscription
-      summary: Create Bucket Subscription
-      description: Create a new notification subscription on a bucket with a given
-        or generated id.
-      operationId: create_subscription
-      parameters:
-      - required: true
-        schema:
-          type: string
-          title: Bucket Name
-        name: bucket_name
-        in: path
-      - required: false
-        schema:
-          type: string
-          title: Store
-        name: store
-        in: query
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/SubscriptionConfig'
-        required: true
-      responses:
-        '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/SubscriptionConfig'
-        '422':
-          description: Validation Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HTTPValidationError'
-      security: *id001
     delete:
       tags:
       - Subscription
       summary: Delete All Bucket Subscriptions
-      description: 'Remove all notification subscription on a bucket
+      description: 'Remove all notification subscriptions on a bucket
 
-        that match a given event and/or channel filter.'
+        that match a given event and/or channel filter.
+
+
+        > it can take a few minutes before this change
+
+        > is fully effective on the forwarding of change events'
       operationId: deleteBy_subscription
       parameters:
-      - required: true
+      - name: bucket_name
+        in: path
+        required: true
         schema:
           type: string
           title: Bucket Name
-        name: bucket_name
-        in: path
-      - required: false
+      - name: start_after
+        in: query
+        required: false
         schema:
-          type: string
+          anyOf:
+          - type: string
+          - type: 'null'
           title: Start After
-        name: start_after
+      - name: prefix
         in: query
-      - required: false
+        required: false
         schema:
-          type: string
+          anyOf:
+          - type: string
+          - type: 'null'
           title: Prefix
-        name: prefix
+      - name: suffix
         in: query
-      - required: false
+        required: false
         schema:
-          type: string
+          anyOf:
+          - type: string
+          - type: 'null'
           title: Suffix
-        name: suffix
+      - name: event_type
         in: query
-      - required: false
+        required: false
         schema:
-          $ref: '#/components/schemas/EVENT_TYPE'
-        name: event_type
+          anyOf:
+          - $ref: '#/components/schemas/EVENT_TYPE'
+          - type: 'null'
+          title: Event Type
+      - name: channel_type
         in: query
-      - required: false
+        required: false
         schema:
-          $ref: '#/components/schemas/CHANNEL_TYPE'
-        name: channel_type
+          anyOf:
+          - $ref: '#/components/schemas/CHANNEL_TYPE'
+          - type: 'null'
+          title: Channel Type
+      - name: channel_id
         in: query
-      - required: false
+        required: false
         schema:
-          type: string
+          anyOf:
+          - type: string
+          - type: 'null'
           title: Channel Id
-        name: channel_id
+      - name: store
         in: query
-      - required: false
+        required: false
         schema:
-          type: string
+          anyOf:
+          - type: string
+          - type: 'null'
           title: Store
-        name: store
+      - name: max_keys
         in: query
-      - required: false
+        required: false
         schema:
-          type: integer
+          anyOf:
+          - type: integer
+          - type: 'null'
           title: Max Keys
-        name: max_keys
-        in: query
       responses:
         '200':
           description: Successful Response
@@ -626,6 +691,55 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/HALEntity'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security: *id001
+    post:
+      tags:
+      - Subscription
+      summary: Create Bucket Subscription
+      description: 'Create a new notification subscription...
+
+
+        on a bucket with a given or generated id.
+
+
+        > it can take a few minutes before this change
+
+        > is fully effective on the forwarding of change events'
+      operationId: create_subscription
+      parameters:
+      - name: bucket_name
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Bucket Name
+      - name: store
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Store
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubscriptionConfig'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubscriptionConfig'
         '422':
           description: Validation Error
           content:
@@ -641,70 +755,26 @@ paths:
       description: Fetch a notification subscription.
       operationId: get_subscription
       parameters:
-      - required: true
-        schema:
-          type: string
-          title: Bucket Name
-        name: bucket_name
+      - name: bucket_name
         in: path
-      - required: true
-        schema:
-          type: string
-          title: Subscription Id
-        name: subscription_id
-        in: path
-      - required: false
-        schema:
-          type: string
-          title: Store
-        name: store
-        in: query
-      responses:
-        '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/SubscriptionConfig'
-        '422':
-          description: Validation Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HTTPValidationError'
-      security: *id001
-    put:
-      tags:
-      - Subscription
-      summary: Replace Bucket Subscription
-      description: Create or replace a notification subscription on a bucket with
-        a given id.
-      operationId: replace_subscription
-      parameters:
-      - required: true
-        schema:
-          type: string
-          title: Bucket Name
-        name: bucket_name
-        in: path
-      - required: true
-        schema:
-          type: string
-          title: Subscription Id
-        name: subscription_id
-        in: path
-      - required: false
-        schema:
-          type: string
-          title: Store
-        name: store
-        in: query
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/SubscriptionConfig'
         required: true
+        schema:
+          type: string
+          title: Bucket Name
+      - name: subscription_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Subscription Id
+      - name: store
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Store
       responses:
         '200':
           description: Successful Response
@@ -726,24 +796,26 @@ paths:
       description: Remove a notification subscription.
       operationId: remove_subscription
       parameters:
-      - required: true
+      - name: bucket_name
+        in: path
+        required: true
         schema:
           type: string
           title: Bucket Name
-        name: bucket_name
+      - name: subscription_id
         in: path
-      - required: true
+        required: true
         schema:
           type: string
           title: Subscription Id
-        name: subscription_id
-        in: path
-      - required: false
-        schema:
-          type: string
-          title: Store
-        name: store
+      - name: store
         in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Store
       responses:
         '200':
           description: Successful Response
@@ -751,6 +823,59 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/HALEntity'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security: *id001
+    put:
+      tags:
+      - Subscription
+      summary: Replace Bucket Subscription
+      description: 'Create or replace a notification subscription on a bucket with
+        a given id.
+
+
+        > it can take a few minutes before this change
+
+        > is fully effective on the forwarding of change events'
+      operationId: replace_subscription
+      parameters:
+      - name: bucket_name
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Bucket Name
+      - name: subscription_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Subscription Id
+      - name: store
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Store
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubscriptionConfig'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubscriptionConfig'
         '422':
           description: Validation Error
           content:
@@ -783,33 +908,35 @@ paths:
         tenant.
       operationId: status_about
       parameters:
-      - required: false
+      - name: store
+        in: query
+        required: false
         schema:
-          type: string
+          anyOf:
+          - type: string
+          - type: 'null'
           title: Store
-        name: store
+      - name: include_buckets
         in: query
-      - required: false
+        required: false
         schema:
           type: boolean
+          default: true
           title: Include Buckets
-          default: true
-        name: include_buckets
+      - name: include_queues
         in: query
-      - required: false
+        required: false
         schema:
           type: boolean
+          default: true
           title: Include Queues
-          default: true
-        name: include_queues
+      - name: include_disk_usage
         in: query
-      - required: false
+        required: false
         schema:
           type: boolean
-          title: Include Disk Usage
           default: false
-        name: include_disk_usage
-        in: query
+          title: Include Disk Usage
       responses:
         '200':
           description: Successful Response
@@ -841,19 +968,21 @@ components:
     AuthenticationConfig:
       properties:
         method:
-          allOf:
-          - $ref: '#/components/schemas/AUTH'
+          $ref: '#/components/schemas/AUTH'
           default: DEFAULT
         key:
-          type: string
+          anyOf:
+          - type: string
+          - type: 'null'
           title: Key
         secret:
-          type: string
+          anyOf:
+          - type: string
+          - type: 'null'
           title: Secret
       type: object
       title: AuthenticationConfig
-      description: Configuration for the authentication method used when forwarding
-        an event to a channel.
+      description: Authentication configuration when forwarding an event to a channel.
     BUCKET_CREATION_STATUS:
       type: string
       enum:
@@ -882,7 +1011,7 @@ components:
                 $ref: '#/components/schemas/HALLink'
               type: array
           type: object
-          title: ' Links'
+          title: Links
         alias:
           type: string
           title: Alias
@@ -913,7 +1042,7 @@ components:
                 $ref: '#/components/schemas/HALLink'
               type: array
           type: object
-          title: ' Links'
+          title: Links
         alias:
           type: string
           title: Alias
@@ -930,12 +1059,10 @@ components:
           type: integer
           title: Size
         status:
-          allOf:
-          - $ref: '#/components/schemas/BUCKET_CREATION_STATUS'
+          $ref: '#/components/schemas/BUCKET_CREATION_STATUS'
           default: unknown
         public_policy_json:
-          type: object
-          title: Public Policy Json
+          $ref: '#/components/schemas/S3PolicyDef'
         public_policy_type:
           type: string
           title: Public Policy Type
@@ -957,7 +1084,7 @@ components:
                 $ref: '#/components/schemas/HALLink'
               type: array
           type: object
-          title: ' Links'
+          title: Links
         buckets:
           items:
             $ref: '#/components/schemas/Bucket'
@@ -978,7 +1105,7 @@ components:
                 $ref: '#/components/schemas/HALLink'
               type: array
           type: object
-          title: ' Links'
+          title: Links
         bucket:
           $ref: '#/components/schemas/Bucket'
         name:
@@ -1026,7 +1153,7 @@ components:
                 $ref: '#/components/schemas/HALLink'
               type: array
           type: object
-          title: ' Links'
+          title: Links
         objects:
           items:
             $ref: '#/components/schemas/BucketObject'
@@ -1056,23 +1183,32 @@ components:
     EventFilter:
       properties:
         prefix:
-          type: string
+          anyOf:
+          - type: string
+          - type: 'null'
           title: Prefix
         suffix:
-          type: string
+          anyOf:
+          - type: string
+          - type: 'null'
           title: Suffix
         events:
           items:
             $ref: '#/components/schemas/EVENT_TYPE'
           type: array
           uniqueItems: true
+          title: Events
           default:
           - put
         description:
-          type: string
+          anyOf:
+          - type: string
+          - type: 'null'
           title: Description
         queue:
-          type: string
+          anyOf:
+          - type: string
+          - type: 'null'
           title: Queue
       type: object
       title: EventFilter
@@ -1081,8 +1217,9 @@ components:
 
         The `prefix` and `suffix` properties are conditions on the object path
 
-        (not including the bucket name). When not specified, all paths in the bucket
-        will selected.
+        (not including the bucket name).
+
+        When not specified, all paths in the bucket will selected.
 
 
         The `events` property can contain `put` and/or `delete` values, corresponding
@@ -1093,13 +1230,19 @@ components:
     Expiry:
       properties:
         seconds:
-          type: integer
+          anyOf:
+          - type: integer
+          - type: 'null'
           title: Seconds
         hours:
-          type: integer
+          anyOf:
+          - type: integer
+          - type: 'null'
           title: Hours
         days:
-          type: integer
+          anyOf:
+          - type: integer
+          - type: 'null'
           title: Days
       type: object
       title: Expiry
@@ -1114,7 +1257,7 @@ components:
                 $ref: '#/components/schemas/HALLink'
               type: array
           type: object
-          title: ' Links'
+          title: Links
       type: object
       title: HALEntity
       description: Output model representing a collection of HAL links.
@@ -1124,13 +1267,21 @@ components:
           type: string
           title: Href
         method:
-          type: string
+          anyOf:
+          - type: string
+          - type: 'null'
           title: Method
         form_data:
-          type: object
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
           title: Form Data
         headers:
-          type: object
+          anyOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
           title: Headers
       type: object
       required:
@@ -1165,9 +1316,11 @@ components:
           type: string
           title: Method
         configured_parameters:
+          additionalProperties: true
           type: object
           title: Configured Parameters
         actual_parameters:
+          additionalProperties: true
           type: object
           title: Actual Parameters
         error:
@@ -1192,6 +1345,7 @@ components:
           title: Notification Queues
         messages:
           items:
+            additionalProperties: true
             type: object
           type: array
           title: Messages
@@ -1207,7 +1361,11 @@ components:
           items:
             $ref: '#/components/schemas/SIGN'
           type: array
+          title: Signed Links
         reference:
+          anyOf:
+          - {}
+          - type: 'null'
           title: Reference
       type: object
       title: PayloadConfig
@@ -1222,6 +1380,33 @@ components:
       - up_to_date
       title: QUEUE_SETUP_STATUS
       description: Possbile queue setup status codes.
+    S3PolicyDef:
+      properties:
+        Statement:
+          items:
+            $ref: '#/components/schemas/S3PolicyStatement'
+          type: array
+          title: Statement
+        Version:
+          type: string
+          title: Version
+      additionalProperties: true
+      type: object
+      title: S3PolicyDef
+      description: AWS S3 Policy definition.
+    S3PolicyStatement:
+      properties:
+        Resource:
+          anyOf:
+          - type: string
+          - items:
+              type: string
+            type: array
+          title: Resource
+      additionalProperties: true
+      type: object
+      title: S3PolicyStatement
+      description: AWS S3 Policy definition statement.
     SIGN:
       type: string
       enum:
@@ -1236,6 +1421,7 @@ components:
       - gs
       - s3
       - azure
+      - zenko
       title: STORE_TYPE
       description: Supported backend store types.
     Store:
@@ -1248,7 +1434,7 @@ components:
                 $ref: '#/components/schemas/HALLink'
               type: array
           type: object
-          title: ' Links'
+          title: Links
         type:
           $ref: '#/components/schemas/STORE_TYPE'
         name:
@@ -1274,7 +1460,7 @@ components:
                 $ref: '#/components/schemas/HALLink'
               type: array
           type: object
-          title: ' Links'
+          title: Links
         id:
           type: string
           title: Id
@@ -1285,10 +1471,15 @@ components:
           type: string
           title: Description
         channel:
-          anyOf:
+          oneOf:
           - $ref: '#/components/schemas/WebScriptChannelConfig'
           - $ref: '#/components/schemas/SystemChannelConfig'
           title: Channel
+          discriminator:
+            propertyName: type
+            mapping:
+              system: '#/components/schemas/SystemChannelConfig'
+              webscript: '#/components/schemas/WebScriptChannelConfig'
         filters:
           items:
             $ref: '#/components/schemas/EventFilter'
@@ -1311,7 +1502,7 @@ components:
                 $ref: '#/components/schemas/HALLink'
               type: array
           type: object
-          title: ' Links'
+          title: Links
         bucket:
           $ref: '#/components/schemas/Bucket'
         subscriptions:
@@ -1321,6 +1512,7 @@ components:
           title: Subscriptions
         warnings:
           items:
+            additionalProperties: true
             type: object
           type: array
           title: Warnings
@@ -1340,7 +1532,7 @@ components:
                 $ref: '#/components/schemas/HALLink'
               type: array
           type: object
-          title: ' Links'
+          title: Links
         buckets:
           items:
             $ref: '#/components/schemas/Bucket'
@@ -1355,12 +1547,13 @@ components:
       properties:
         type:
           type: string
-          enum:
-          - system
+          const: system
           title: Type
           default: system
         description:
-          type: string
+          anyOf:
+          - type: string
+          - type: 'null'
           title: Description
         payload:
           $ref: '#/components/schemas/PayloadConfig'
@@ -1428,12 +1621,13 @@ components:
       properties:
         type:
           type: string
-          enum:
-          - webscript
+          const: webscript
           title: Type
           default: webscript
         description:
-          type: string
+          anyOf:
+          - type: string
+          - type: 'null'
           title: Description
         payload:
           $ref: '#/components/schemas/PayloadConfig'
@@ -1445,11 +1639,12 @@ components:
           type: string
           title: Name
         version:
-          type: string
+          anyOf:
+          - type: string
+          - type: 'null'
           title: Version
         method:
-          allOf:
-          - $ref: '#/components/schemas/HTTP_METHOD'
+          $ref: '#/components/schemas/HTTP_METHOD'
           default: POST
       type: object
       required:

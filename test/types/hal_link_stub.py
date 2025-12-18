@@ -33,16 +33,18 @@ hal_link_model_schema = json.loads(
       "type" : "string"
     },
     "method" : {
-      "title" : "Method",
-      "type" : "string"
+      "type" : "string",
+      "nullable" : true
     },
     "form_data" : {
-      "title" : "Form Data",
-      "type" : "object"
+      "type" : "object",
+      "additionalProperties" : true,
+      "nullable" : true
     },
     "headers" : {
-      "title" : "Headers",
-      "type" : "object"
+      "type" : "object",
+      "additionalProperties" : true,
+      "nullable" : true
     }
   },
   "description" : "Represents a HAL link."

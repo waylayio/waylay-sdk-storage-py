@@ -13,20 +13,18 @@ from __future__ import annotations
 
 from pydantic import (
     ConfigDict,
-    StrictStr,
+    Field,
 )
 from waylay.sdk.api._models import BaseModel as WaylayBaseModel
 
-from ..models.auth import AUTH
+from ..models.resource import Resource
 
 
-class AuthenticationConfig(WaylayBaseModel):
-    """Authentication configuration when forwarding an event to a channel.."""
+class S3PolicyStatement(WaylayBaseModel):
+    """AWS S3 Policy definition statement.."""
 
-    method: AUTH | None = None
-    key: StrictStr | None = None
-    secret: StrictStr | None = None
+    resource: Resource | None = Field(default=None, alias="Resource")
 
     model_config = ConfigDict(
-        populate_by_name=True, protected_namespaces=(), extra="ignore"
+        populate_by_name=True, protected_namespaces=(), extra="allow"
     )

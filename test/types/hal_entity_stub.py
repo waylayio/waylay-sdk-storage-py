@@ -28,10 +28,10 @@ hal_entity_model_schema = json.loads(
   "type" : "object",
   "properties" : {
     "_links" : {
-      "title" : " Links",
+      "title" : "Links",
       "type" : "object",
       "additionalProperties" : {
-        "$ref" : "#/components/schemas/_Links_value"
+        "$ref" : "#/components/schemas/Links_value"
       }
     }
   },

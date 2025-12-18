@@ -29,10 +29,10 @@ subscriptions_model_schema = json.loads(
   "type" : "object",
   "properties" : {
     "_links" : {
-      "title" : " Links",
+      "title" : "Links",
       "type" : "object",
       "additionalProperties" : {
-        "$ref" : "#/components/schemas/_Links_value"
+        "$ref" : "#/components/schemas/Links_value"
       }
     },
     "bucket" : {
@@ -49,7 +49,8 @@ subscriptions_model_schema = json.loads(
       "title" : "Warnings",
       "type" : "array",
       "items" : {
-        "type" : "object"
+        "type" : "object",
+        "additionalProperties" : true
       }
     }
   },

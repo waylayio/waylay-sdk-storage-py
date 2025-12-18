@@ -20,6 +20,7 @@ class STORETYPE(str, Enum):
     GS = "gs"
     S3 = "s3"
     AZURE = "azure"
+    ZENKO = "zenko"
 
     def __str__(self) -> str:
         return str(self.value)

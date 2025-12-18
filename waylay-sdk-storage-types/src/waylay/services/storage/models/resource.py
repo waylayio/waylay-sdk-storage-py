@@ -11,9 +11,9 @@ Do not edit the class manually.
 
 from __future__ import annotations
 
-from typing import Union
+from typing import List, Union
 
 from typing_extensions import Annotated
 
-LocationInner = Union[Annotated[str, ""], Annotated[int, ""]]
-"""LocationInner."""
+Resource = Union[Annotated[str, ""], Annotated[List[str], ""]]
+"""Resource."""

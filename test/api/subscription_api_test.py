@@ -11,7 +11,6 @@ Do not edit the class manually.
 import json
 import re
 from importlib.util import find_spec
-from typing import Union
 from urllib.parse import quote
 
 import pytest
@@ -96,7 +95,7 @@ async def test_create(service: StorageService, gateway_url: str, httpx_mock: HTT
     }
     _create_set_mock_response(httpx_mock, gateway_url, quote(str(bucket_name)))
     resp = await service.subscription.create(bucket_name, **kwargs)
-    check_type(resp, Union[SubscriptionConfig,])
+    check_type(resp, SubscriptionConfig)
 
 
 @pytest.mark.asyncio
@@ -162,7 +161,7 @@ async def test_delete_by(
     }
     _delete_by_set_mock_response(httpx_mock, gateway_url, quote(str(bucket_name)))
     resp = await service.subscription.delete_by(bucket_name, **kwargs)
-    check_type(resp, Union[HALEntity,])
+    check_type(resp, HALEntity)
 
 
 @pytest.mark.asyncio
@@ -229,7 +228,7 @@ async def test_get(service: StorageService, gateway_url: str, httpx_mock: HTTPXM
         httpx_mock, gateway_url, quote(str(bucket_name)), quote(str(subscription_id))
     )
     resp = await service.subscription.get(bucket_name, subscription_id, **kwargs)
-    check_type(resp, Union[SubscriptionConfig,])
+    check_type(resp, SubscriptionConfig)
 
 
 @pytest.mark.asyncio
@@ -289,7 +288,7 @@ async def test_list(service: StorageService, gateway_url: str, httpx_mock: HTTPX
     }
     _list_set_mock_response(httpx_mock, gateway_url)
     resp = await service.subscription.list(**kwargs)
-    check_type(resp, Union[SubscriptionsListing,])
+    check_type(resp, SubscriptionsListing)
 
 
 @pytest.mark.asyncio
@@ -354,7 +353,7 @@ async def test_query(service: StorageService, gateway_url: str, httpx_mock: HTTP
     }
     _query_set_mock_response(httpx_mock, gateway_url, quote(str(bucket_name)))
     resp = await service.subscription.query(bucket_name, **kwargs)
-    check_type(resp, Union[Subscriptions,])
+    check_type(resp, Subscriptions)
 
 
 @pytest.mark.asyncio
@@ -421,7 +420,7 @@ async def test_remove(service: StorageService, gateway_url: str, httpx_mock: HTT
         httpx_mock, gateway_url, quote(str(bucket_name)), quote(str(subscription_id))
     )
     resp = await service.subscription.remove(bucket_name, subscription_id, **kwargs)
-    check_type(resp, Union[HALEntity,])
+    check_type(resp, HALEntity)
 
 
 @pytest.mark.asyncio
@@ -488,7 +487,7 @@ async def test_replace(
         httpx_mock, gateway_url, quote(str(bucket_name)), quote(str(subscription_id))
     )
     resp = await service.subscription.replace(bucket_name, subscription_id, **kwargs)
-    check_type(resp, Union[SubscriptionConfig,])
+    check_type(resp, SubscriptionConfig)
 
 
 @pytest.mark.asyncio
