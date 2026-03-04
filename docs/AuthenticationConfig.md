@@ -2,6 +2,11 @@
 
 Authentication configuration when forwarding an event to a channel.
 
+**Source:** `waylay.services.storage.models.authentication_config`
+
+
+
+
 ## Properties
 
 Name | Type | Description | Notes
@@ -10,23 +15,25 @@ Name | Type | Description | Notes
 **key** | **str** |  | [optional] 
 **secret** | **str** |  | [optional] 
 
+
 ## Example
 
 ```python
 from waylay.services.storage.models.authentication_config import AuthenticationConfig
 
-# TODO update the JSON string below
-json = "{}"
-# create an instance of AuthenticationConfig from a JSON string
-authentication_config_instance = AuthenticationConfig.from_json(json)
-# print the JSON string representation of the object
-print AuthenticationConfig.to_json()
+authentication_config = AuthenticationConfig(method=..., key=..., secret=...)
 
-# convert the object into a dict
-authentication_config_dict = authentication_config_instance.to_dict()
-# create an instance of AuthenticationConfig from a dict
-authentication_config_form_dict = authentication_config.from_dict(authentication_config_dict)
+# Create from JSON
+authentication_config = AuthenticationConfig.from_json(
+    '{ "method": ..., "key": ..., "secret": ... }'
+)
+
+# Export to dictionary
+authentication_config_dict = authentication_config.to_dict()
 ```
+
+
+
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
 

@@ -2,6 +2,11 @@
 
 Response model for the notification queue configuration.
 
+**Source:** `waylay.services.storage.models.notification_queue_status`
+
+
+
+
 ## Properties
 
 Name | Type | Description | Notes
@@ -13,23 +18,34 @@ Name | Type | Description | Notes
 **actual_parameters** | **Dict[str, object]** |  | [optional] 
 **error** | **str** |  | [optional] 
 
+
 ## Example
 
 ```python
-from waylay.services.storage.models.notification_queue_status import NotificationQueueStatus
+from waylay.services.storage.models.notification_queue_status import (
+    NotificationQueueStatus,
+)
 
-# TODO update the JSON string below
-json = "{}"
-# create an instance of NotificationQueueStatus from a JSON string
-notification_queue_status_instance = NotificationQueueStatus.from_json(json)
-# print the JSON string representation of the object
-print NotificationQueueStatus.to_json()
+notification_queue_status = NotificationQueueStatus(
+    status=...,
+    name=...,
+    method=...,
+    configured_parameters=...,
+    actual_parameters=...,
+    error=...,
+)
 
-# convert the object into a dict
-notification_queue_status_dict = notification_queue_status_instance.to_dict()
-# create an instance of NotificationQueueStatus from a dict
-notification_queue_status_form_dict = notification_queue_status.from_dict(notification_queue_status_dict)
+# Create from JSON
+notification_queue_status = NotificationQueueStatus.from_json(
+    '{ "status": ..., "name": ..., "method": ..., "configured_parameters": ..., "actual_parameters": ..., "error": ... }'
+)
+
+# Export to dictionary
+notification_queue_status_dict = notification_queue_status.to_dict()
 ```
+
+
+
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
 

@@ -23,13 +23,14 @@ CMD_CHECK=ruff check --no-respect-gitignore --preview
 # disables test QA unless set to empty string
 TEST_QA_PREFIX?=echo DISABLED
 
+export UV_PYTHON?=3.11
 VENV_DIR=.venv
 VENV_TYPES_DIR=.venv/types
 VENV_TYPES_ACTIVATE_CMD=${VENV_TYPES_DIR}/bin/activate
 VENV_TYPES_ACTIVATE=. ${VENV_TYPES_ACTIVATE_CMD}
 
 ${VENV_TYPES_ACTIVATE_CMD}:
-	python3 -m venv ${VENV_TYPES_DIR}
+	uv venv ${VENV_TYPES_DIR}
 	${VENV_TYPES_ACTIVATE} && make exec-dev-install-types
 
 VENV_NOTYPES_DIR=.venv/notypes
@@ -37,7 +38,7 @@ VENV_NOTYPES_ACTIVATE_CMD=${VENV_NOTYPES_DIR}/bin/activate
 VENV_NOTYPES_ACTIVATE=. ${VENV_NOTYPES_ACTIVATE_CMD}
 
 ${VENV_NOTYPES_ACTIVATE_CMD}:
-	python3 -m venv ${VENV_NOTYPES_DIR}
+	uv venv ${VENV_NOTYPES_DIR}
 	${VENV_NOTYPES_ACTIVATE} && make exec-dev-install-api
 
 
@@ -108,37 +109,35 @@ exec-test: ${TEST_RUN_FOLDER} ### Run unit tests
 	cd ${TEST_RUN_FOLDER} && pytest ..
 
 exec-format: ### Format code
-	${CMD_FIX} ${API_FOLDER}
 	${CMD_FORMAT} ${API_FOLDER}
+	${CMD_FIX} ${API_FOLDER}
 	@${printMsg} 'format api' 'OK'
-	${CMD_FIX} ${TYPES_FOLDER}
 	${CMD_FORMAT} ${TYPES_FOLDER}
+	${CMD_FIX} ${TYPES_FOLDER}
 	@${printMsg} 'format types' 'OK'
-	${CMD_FIX} ${TEST_FOLDER}
 	${CMD_FORMAT} ${TEST_FOLDER}
+	${CMD_FIX} ${TEST_FOLDER}
 	@${printMsg} 'format test' 'OK'
+	blacken-docs --skip-errors README.md $$(find docs -name '*.md' 2>/dev/null || true) || true
+	@${printMsg} 'format docs' 'OK'
 
 exec-code-qa: exec-lint exec-typecheck ### perform code quality checks
 
 ci-code-qa: exec-code-qa ### perform ci code quality checks
 
 exec-dev-install-types: exec-dev-install-api ### Install the development environment including types
-	pip install -e ${TYPES_FOLDER}[dev]
+	uv pip install -e ${TYPES_FOLDER}[dev]
 
-exec-dev-install-api: _install_requirements ### Install the minimal development environment
-	pip install -e ${API_FOLDER}[dev]
+exec-dev-install-api: ### Install the minimal development environment
+	uv pip install -e ${API_FOLDER}[dev]
 
 ci-install-types: ci-install-api ### Install the environment including types with frozen requirements
-	pip install './${TYPES_FOLDER}[dev]'
+	uv pip install './${TYPES_FOLDER}[dev]'
 
-ci-install-api: _install_requirements ### Install the minimal environment with frozen requirements
-	pip install './${API_FOLDER}[dev]'
+ci-install-api: ### Install the minimal environment with frozen requirements
+	uv pip install './${API_FOLDER}[dev]'
 
 ci-test: exec-test ### perform ci unit tests
-
-_install_requirements:
-	pip install --upgrade pip
-	pip install -r requirements.txt
 
 _GENERATED_FOLDER?=.
 _GENERATED_FILES=.openapi-generator/FILES

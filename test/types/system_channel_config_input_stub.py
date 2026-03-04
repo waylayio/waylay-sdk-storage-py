@@ -1,0 +1,82 @@
+"""Waylay Storage model tests.
+
+This code was generated from the OpenAPI documentation of 'Waylay Storage'
+
+Do not edit the class manually.
+"""
+
+import json
+
+from jsf import JSF
+from pydantic import TypeAdapter
+
+from ..openapi import MODEL_DEFINITIONS, with_example_provider
+
+try:
+    from waylay.services.storage.models.system_channel_config_input import (
+        SystemChannelConfigInput,
+    )
+
+    SystemChannelConfigInputAdapter = TypeAdapter(SystemChannelConfigInput)
+    MODELS_AVAILABLE = True
+except ImportError:
+    MODELS_AVAILABLE = False
+
+system_channel_config_input_model_schema = json.loads(
+    r"""{
+  "type" : "object",
+  "properties" : {
+    "type" : {
+      "$ref" : "#/components/schemas/SystemChannelConfig_Input_type"
+    },
+    "description" : {
+      "type" : "string",
+      "nullable" : true
+    },
+    "payload" : {
+      "$ref" : "#/components/schemas/PayloadConfig"
+    },
+    "authentication" : {
+      "$ref" : "#/components/schemas/AuthenticationConfig"
+    },
+    "expiry" : {
+      "$ref" : "#/components/schemas/Expiry"
+    }
+  },
+  "description" : "Channel configuration for functionality that is fixed by the platform.\n\nThis cannot be selected by the end user."
+}
+""",
+    object_hook=with_example_provider,
+)
+system_channel_config_input_model_schema.update({"definitions": MODEL_DEFINITIONS})
+
+system_channel_config_input_faker = JSF(
+    system_channel_config_input_model_schema, allow_none_optionals=1
+)
+
+
+class SystemChannelConfigInputStub:
+    """SystemChannelConfigInput unit test stubs."""
+
+    @classmethod
+    def create_json(cls):
+        """Create a dict stub instance."""
+        return system_channel_config_input_faker.generate(
+            use_defaults=True, use_examples=True
+        )
+
+    @classmethod
+    def create_instance(cls) -> "SystemChannelConfigInput":
+        """Create SystemChannelConfigInput stub instance."""
+        if not MODELS_AVAILABLE:
+            raise ImportError("Models must be installed to create class stubs")
+        json = cls.create_json()
+        if json is None:
+            # use backup example based on the pydantic model schema
+            backup_faker = JSF(
+                SystemChannelConfigInputAdapter.json_schema(), allow_none_optionals=1
+            )
+            json = backup_faker.generate(use_defaults=True, use_examples=True)
+        return SystemChannelConfigInputAdapter.validate_python(
+            json, context={"skip_validation": True}
+        )

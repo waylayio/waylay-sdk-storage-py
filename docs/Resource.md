@@ -1,28 +1,29 @@
 # Resource
 
 
-## Properties
+**Source:** `waylay.services.storage.models.resource`
 
-Name | Type | Description | Notes
------------- | ------------- | ------------- | -------------
+
+
+## Union Type (Any Of)
+
+This type allows any of the following:
+
+Type | Description
+------------ | -------------
+**str** | -
+**List[str]** | -
 
 ## Example
 
 ```python
 from waylay.services.storage.models.resource import Resource
 
-# TODO update the JSON string below
-json = "{}"
-# create an instance of Resource from a JSON string
-resource_instance = Resource.from_json(json)
-# print the JSON string representation of the object
-print Resource.to_json()
-
-# convert the object into a dict
-resource_dict = resource_instance.to_dict()
-# create an instance of Resource from a dict
-resource_form_dict = resource.from_dict(resource_dict)
+# Use any of the accepted types (see table above)
+my_resource: Resource = ...
 ```
+
+
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
 

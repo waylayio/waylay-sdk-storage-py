@@ -2,6 +2,11 @@
 
 Representation of a storage bucket.
 
+**Source:** `waylay.services.storage.models.bucket`
+
+
+
+
 ## Properties
 
 Name | Type | Description | Notes
@@ -13,23 +18,25 @@ Name | Type | Description | Notes
 **creation_date** | **datetime** |  | [optional] 
 **size** | **int** |  | [optional] 
 
+
 ## Example
 
 ```python
 from waylay.services.storage.models.bucket import Bucket
 
-# TODO update the JSON string below
-json = "{}"
-# create an instance of Bucket from a JSON string
-bucket_instance = Bucket.from_json(json)
-# print the JSON string representation of the object
-print Bucket.to_json()
+bucket = Bucket(links=..., alias=..., name=..., store=..., creation_date=..., size=...)
 
-# convert the object into a dict
-bucket_dict = bucket_instance.to_dict()
-# create an instance of Bucket from a dict
-bucket_form_dict = bucket.from_dict(bucket_dict)
+# Create from JSON
+bucket = Bucket.from_json(
+    '{ "_links": ..., "alias": ..., "name": ..., "store": ..., "creation_date": ..., "size": ... }'
+)
+
+# Export to dictionary
+bucket_dict = bucket.to_dict()
 ```
+
+
+
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
 

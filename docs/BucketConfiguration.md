@@ -2,6 +2,11 @@
 
 Representation of a bucket configuration.
 
+**Source:** `waylay.services.storage.models.bucket_configuration`
+
+
+
+
 ## Properties
 
 Name | Type | Description | Notes
@@ -17,23 +22,36 @@ Name | Type | Description | Notes
 **public_policy_type** | **str** |  | [optional] 
 **error** | **str** |  | [optional] 
 
+
 ## Example
 
 ```python
 from waylay.services.storage.models.bucket_configuration import BucketConfiguration
 
-# TODO update the JSON string below
-json = "{}"
-# create an instance of BucketConfiguration from a JSON string
-bucket_configuration_instance = BucketConfiguration.from_json(json)
-# print the JSON string representation of the object
-print BucketConfiguration.to_json()
+bucket_configuration = BucketConfiguration(
+    links=...,
+    alias=...,
+    name=...,
+    store=...,
+    creation_date=...,
+    size=...,
+    status=...,
+    public_policy_json=...,
+    public_policy_type=...,
+    error=...,
+)
 
-# convert the object into a dict
-bucket_configuration_dict = bucket_configuration_instance.to_dict()
-# create an instance of BucketConfiguration from a dict
-bucket_configuration_form_dict = bucket_configuration.from_dict(bucket_configuration_dict)
+# Create from JSON
+bucket_configuration = BucketConfiguration.from_json(
+    '{ "_links": ..., "alias": ..., "name": ..., "store": ..., "creation_date": ..., "size": ..., "status": ..., "public_policy_json": ..., "public_policy_type": ..., "error": ... }'
+)
+
+# Export to dictionary
+bucket_configuration_dict = bucket_configuration.to_dict()
 ```
+
+
+
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
 

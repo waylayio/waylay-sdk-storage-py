@@ -24,8 +24,6 @@ Copy or move object to new location.
 ### Example
 
 ```python
-from pprint import pprint
-
 # Import the waylay-client from the waylay-sdk-core package
 from waylay.sdk.client import WaylayClient
 from waylay.sdk.api.api_exceptions import ApiError
@@ -35,19 +33,19 @@ waylay_client = WaylayClient.from_profile()
 
 # Note that the typed model classes for responses/parameters/... are only available when `waylay-sdk-storage-types` is installed
 from waylay.services.storage.models.hal_entity import HALEntity
+
 try:
     # Copy Or Move Object
     # calls `PUT /storage/v1/bucket/{bucket_name}/{target_path}`
     api_response = await waylay_client.storage.object.copy_or_move(
-        'bucket_name_example', # bucket_name | path param "bucket_name"
-        'target_path_example', # target_path | path param "target_path"
+        "bucket_name_example",  # bucket_name | path param "bucket_name"
+        "target_path_example",  # target_path | path param "target_path"
         # query parameters:
-        query = {
-            'move': False
+        query={
+            "move": False,
         },
     )
-    print("The response of storage.object.copy_or_move:\n")
-    pprint(api_response)
+    print(f"Response: {api_response}")
 except ApiError as e:
     print("Exception when calling storage.object.copy_or_move: %s\n" % e)
 ```
@@ -105,8 +103,6 @@ Create a (virtual) folder.  * (`all=true`) force creation of a hidden folder,   
 ### Example
 
 ```python
-from pprint import pprint
-
 # Import the waylay-client from the waylay-sdk-core package
 from waylay.sdk.client import WaylayClient
 from waylay.sdk.api.api_exceptions import ApiError
@@ -116,19 +112,19 @@ waylay_client = WaylayClient.from_profile()
 
 # Note that the typed model classes for responses/parameters/... are only available when `waylay-sdk-storage-types` is installed
 from waylay.services.storage.models.bucket_object import BucketObject
+
 try:
     # Create Folder
     # calls `PUT /storage/v1/bucket/{bucket_name}/{object_path}/`
     api_response = await waylay_client.storage.object.create_folder(
-        'bucket_name_example', # bucket_name | path param "bucket_name"
-        'object_path_example', # object_path | path param "object_path"
+        "bucket_name_example",  # bucket_name | path param "bucket_name"
+        "object_path_example",  # object_path | path param "object_path"
         # query parameters:
-        query = {
-            'all': False
+        query={
+            "all": False,
         },
     )
-    print("The response of storage.object.create_folder:\n")
-    pprint(api_response)
+    print(f"Response: {api_response}")
 except ApiError as e:
     print("Exception when calling storage.object.create_folder: %s\n" % e)
 ```
@@ -176,7 +172,7 @@ str | False _(default)_ | **`Any`** | If any other string value for the selected
 > object_path: str,
 > query: ListQuery,
 > headers
-> ) -> ResponseList
+> ) -> ResponseListObject
 
 List Objects
 
@@ -185,8 +181,6 @@ List, inspect or sign objects.  * list the objects of a bucket with {object_path
 ### Example
 
 ```python
-from pprint import pprint
-
 # Import the waylay-client from the waylay-sdk-core package
 from waylay.sdk.client import WaylayClient
 from waylay.sdk.api.api_exceptions import ApiError
@@ -195,23 +189,23 @@ from waylay.sdk.api.api_exceptions import ApiError
 waylay_client = WaylayClient.from_profile()
 
 # Note that the typed model classes for responses/parameters/... are only available when `waylay-sdk-storage-types` is installed
-from waylay.services.storage.models.response_list import ResponseList
+from waylay.services.storage.models.response_list_object import ResponseListObject
+
 try:
     # List Objects
     # calls `GET /storage/v1/bucket/{bucket_name}/{object_path}`
     api_response = await waylay_client.storage.object.list(
-        'bucket_name_example', # bucket_name | path param "bucket_name"
-        'object_path_example', # object_path | path param "object_path"
+        "bucket_name_example",  # bucket_name | path param "bucket_name"
+        "object_path_example",  # object_path | path param "object_path"
         # query parameters:
-        query = {
-            'stat': False
-            'fetch_content_type': False
-            'get_as_attachment': True
-            'content_length_min': 0
+        query={
+            "stat": False,
+            "fetch_content_type": False,
+            "get_as_attachment": True,
+            "content_length_min": 0,
         },
     )
-    print("The response of storage.object.list:\n")
-    pprint(api_response)
+    print(f"Response: {api_response}")
 except ApiError as e:
     print("Exception when calling storage.object.list: %s\n" % e)
 ```
@@ -248,7 +242,7 @@ Name     | Type  | API binding   | Description   | Notes
 
 Selected path param | Raw response param | Return Type  | Description | Links
 ------------------- | ------------------ | ------------ | ----------- | -----
-Literal[""] _(default)_  | False _(default)_ | **`ResponseList`** |  | [ResponseList](ResponseList.md)
+Literal[""] _(default)_  | False _(default)_ | **`ResponseListObject`** |  | [ResponseListObject](ResponseListObject.md)
 str | False _(default)_ | **`Any`** | If any other string value for the selected path is provided, the exact type of the response will only be known at runtime. | 
 / | True | `Response` | The raw http response object.
 
@@ -281,8 +275,6 @@ Remove the object or folder at {object_path}.  An {object_path} ending in a `/` 
 ### Example
 
 ```python
-from pprint import pprint
-
 # Import the waylay-client from the waylay-sdk-core package
 from waylay.sdk.client import WaylayClient
 from waylay.sdk.api.api_exceptions import ApiError
@@ -292,18 +284,17 @@ waylay_client = WaylayClient.from_profile()
 
 # Note that the typed model classes for responses/parameters/... are only available when `waylay-sdk-storage-types` is installed
 from waylay.services.storage.models.hal_entity import HALEntity
+
 try:
     # Remove Object Or Folder
     # calls `DELETE /storage/v1/bucket/{bucket_name}/{object_path}`
     api_response = await waylay_client.storage.object.remove(
-        'bucket_name_example', # bucket_name | path param "bucket_name"
-        'object_path_example', # object_path | path param "object_path"
+        "bucket_name_example",  # bucket_name | path param "bucket_name"
+        "object_path_example",  # object_path | path param "object_path"
         # query parameters:
-        query = {
-        },
+        query={},
     )
-    print("The response of storage.object.remove:\n")
-    pprint(api_response)
+    print(f"Response: {api_response}")
 except ApiError as e:
     print("Exception when calling storage.object.remove: %s\n" % e)
 ```

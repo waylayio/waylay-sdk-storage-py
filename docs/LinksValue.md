@@ -1,32 +1,29 @@
 # LinksValue
 
 
-## Properties
+**Source:** `waylay.services.storage.models.links_value`
 
-Name | Type | Description | Notes
------------- | ------------- | ------------- | -------------
-**href** | **str** |  | 
-**method** | **str** |  | [optional] 
-**form_data** | **Dict[str, object]** |  | [optional] 
-**headers** | **Dict[str, object]** |  | [optional] 
+
+
+## Union Type (Any Of)
+
+This type allows any of the following:
+
+Type | Description
+------------ | -------------
+[**HALLink**](HALLink.md) | -
+[**List[HALLink]**](HALLink.md) | -
 
 ## Example
 
 ```python
 from waylay.services.storage.models.links_value import LinksValue
 
-# TODO update the JSON string below
-json = "{}"
-# create an instance of LinksValue from a JSON string
-links_value_instance = LinksValue.from_json(json)
-# print the JSON string representation of the object
-print LinksValue.to_json()
-
-# convert the object into a dict
-links_value_dict = links_value_instance.to_dict()
-# create an instance of LinksValue from a dict
-links_value_form_dict = links_value.from_dict(links_value_dict)
+# Use any of the accepted types (see table above)
+my_links_value: LinksValue = ...
 ```
+
+
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
 

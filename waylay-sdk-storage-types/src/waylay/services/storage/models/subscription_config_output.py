@@ -1,0 +1,35 @@
+"""Waylay Storage models.
+
+This code was generated from the OpenAPI documentation of 'Waylay Storage'
+
+Do not edit the class manually.
+
+"""
+
+from __future__ import annotations
+
+from pydantic import (
+    ConfigDict,
+    Field,
+    StrictStr,
+)
+from waylay.sdk.api._models import BaseModel as WaylayBaseModel
+
+from ..models.channel1 import Channel1
+from ..models.event_filter import EventFilter
+from ..models.links_value import LinksValue
+
+
+class SubscriptionConfigOutput(WaylayBaseModel):
+    """Specification of a notification subscription that forwards to a given channel.."""
+
+    links: dict[str, LinksValue] | None = Field(default=None, alias="_links")
+    id: StrictStr | None = None
+    title: StrictStr | None = None
+    description: StrictStr | None = None
+    channel: Channel1
+    filters: list[EventFilter]
+
+    model_config = ConfigDict(
+        populate_by_name=True, protected_namespaces=(), extra="allow"
+    )

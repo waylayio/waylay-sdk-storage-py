@@ -19,8 +19,6 @@ Get the application version.
 ### Example
 
 ```python
-from pprint import pprint
-
 # Import the waylay-client from the waylay-sdk-core package
 from waylay.sdk.client import WaylayClient
 from waylay.sdk.api.api_exceptions import ApiError
@@ -32,10 +30,8 @@ waylay_client = WaylayClient.from_profile()
 try:
     # Version
     # calls `GET /storage/v1/`
-    api_response = await waylay_client.storage.about.get(
-    )
-    print("The response of storage.about.get:\n")
-    pprint(api_response)
+    api_response = await waylay_client.storage.about.get()
+    print(f"Response: {api_response}")
 except ApiError as e:
     print("Exception when calling storage.about.get: %s\n" % e)
 ```
@@ -83,8 +79,6 @@ Validate consistency of buckets and notification queues for this tenant.
 ### Example
 
 ```python
-from pprint import pprint
-
 # Import the waylay-client from the waylay-sdk-core package
 from waylay.sdk.client import WaylayClient
 from waylay.sdk.api.api_exceptions import ApiError
@@ -94,19 +88,19 @@ waylay_client = WaylayClient.from_profile()
 
 # Note that the typed model classes for responses/parameters/... are only available when `waylay-sdk-storage-types` is installed
 from waylay.services.storage.models.tenant_status_report import TenantStatusReport
+
 try:
     # Status
     # calls `GET /storage/v1/status`
     api_response = await waylay_client.storage.about.status(
         # query parameters:
-        query = {
-            'include_buckets': True
-            'include_queues': True
-            'include_disk_usage': False
+        query={
+            "include_buckets": True,
+            "include_queues": True,
+            "include_disk_usage": False,
         },
     )
-    print("The response of storage.about.status:\n")
-    pprint(api_response)
+    print(f"Response: {api_response}")
 except ApiError as e:
     print("Exception when calling storage.about.status: %s\n" % e)
 ```

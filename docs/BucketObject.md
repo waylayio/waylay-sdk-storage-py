@@ -2,6 +2,11 @@
 
 Representation of a storage object.
 
+**Source:** `waylay.services.storage.models.bucket_object`
+
+
+
+
 ## Properties
 
 Name | Type | Description | Notes
@@ -18,23 +23,37 @@ Name | Type | Description | Notes
 **owner_id** | **str** |  | [optional] 
 **owner_name** | **str** |  | [optional] 
 
+
 ## Example
 
 ```python
 from waylay.services.storage.models.bucket_object import BucketObject
 
-# TODO update the JSON string below
-json = "{}"
-# create an instance of BucketObject from a JSON string
-bucket_object_instance = BucketObject.from_json(json)
-# print the JSON string representation of the object
-print BucketObject.to_json()
+bucket_object = BucketObject(
+    links=...,
+    bucket=...,
+    name=...,
+    last_modified=...,
+    etag=...,
+    size=...,
+    content_type=...,
+    is_dir=...,
+    storage_class=...,
+    owner_id=...,
+    owner_name=...,
+)
 
-# convert the object into a dict
-bucket_object_dict = bucket_object_instance.to_dict()
-# create an instance of BucketObject from a dict
-bucket_object_form_dict = bucket_object.from_dict(bucket_object_dict)
+# Create from JSON
+bucket_object = BucketObject.from_json(
+    '{ "_links": ..., "bucket": ..., "name": ..., "last_modified": ..., "etag": ..., "size": ..., "content_type": ..., "is_dir": ..., "storage_class": ..., "owner_id": ..., "owner_name": ... }'
+)
+
+# Export to dictionary
+bucket_object_dict = bucket_object.to_dict()
 ```
+
+
+
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
 

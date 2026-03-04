@@ -234,7 +234,7 @@ paths:
                 - $ref: '#/components/schemas/BucketObjectListing'
                 - $ref: '#/components/schemas/BucketObject'
                 - $ref: '#/components/schemas/HALEntity'
-                title: Response List
+                title: Response List Object
         '422':
           description: Validation Error
           content:
@@ -732,14 +732,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SubscriptionConfig'
+              $ref: '#/components/schemas/SubscriptionConfig-Input'
       responses:
         '200':
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SubscriptionConfig'
+                $ref: '#/components/schemas/SubscriptionConfig-Output'
         '422':
           description: Validation Error
           content:
@@ -781,7 +781,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SubscriptionConfig'
+                $ref: '#/components/schemas/SubscriptionConfig-Output'
         '422':
           description: Validation Error
           content:
@@ -868,14 +868,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SubscriptionConfig'
+              $ref: '#/components/schemas/SubscriptionConfig-Input'
       responses:
         '200':
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SubscriptionConfig'
+                $ref: '#/components/schemas/SubscriptionConfig-Output'
         '422':
           description: Validation Error
           content:
@@ -1450,7 +1450,7 @@ components:
       - url
       title: Store
       description: Representation of a backend store.
-    SubscriptionConfig:
+    SubscriptionConfig-Input:
       properties:
         _links:
           additionalProperties:
@@ -1471,15 +1471,47 @@ components:
           type: string
           title: Description
         channel:
-          oneOf:
-          - $ref: '#/components/schemas/WebScriptChannelConfig'
-          - $ref: '#/components/schemas/SystemChannelConfig'
+          anyOf:
+          - $ref: '#/components/schemas/WebScriptChannelConfig-Input'
+          - $ref: '#/components/schemas/SystemChannelConfig-Input'
           title: Channel
-          discriminator:
-            propertyName: type
-            mapping:
-              system: '#/components/schemas/SystemChannelConfig'
-              webscript: '#/components/schemas/WebScriptChannelConfig'
+        filters:
+          items:
+            $ref: '#/components/schemas/EventFilter'
+          type: array
+          title: Filters
+      type: object
+      required:
+      - channel
+      - filters
+      title: SubscriptionConfig
+      description: Specification of a notification subscription that forwards to a
+        given channel.
+    SubscriptionConfig-Output:
+      properties:
+        _links:
+          additionalProperties:
+            anyOf:
+            - $ref: '#/components/schemas/HALLink'
+            - items:
+                $ref: '#/components/schemas/HALLink'
+              type: array
+          type: object
+          title: Links
+        id:
+          type: string
+          title: Id
+        title:
+          type: string
+          title: Title
+        description:
+          type: string
+          title: Description
+        channel:
+          anyOf:
+          - $ref: '#/components/schemas/WebScriptChannelConfig-Output'
+          - $ref: '#/components/schemas/SystemChannelConfig-Output'
+          title: Channel
         filters:
           items:
             $ref: '#/components/schemas/EventFilter'
@@ -1507,7 +1539,7 @@ components:
           $ref: '#/components/schemas/Bucket'
         subscriptions:
           items:
-            $ref: '#/components/schemas/SubscriptionConfig'
+            $ref: '#/components/schemas/SubscriptionConfig-Output'
           type: array
           title: Subscriptions
         warnings:
@@ -1543,7 +1575,31 @@ components:
       - buckets
       title: SubscriptionsListing
       description: List of buckets that support subscriptions.
-    SystemChannelConfig:
+    SystemChannelConfig-Input:
+      properties:
+        type:
+          type: string
+          const: system
+          title: Type
+          default: system
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        payload:
+          $ref: '#/components/schemas/PayloadConfig'
+        authentication:
+          $ref: '#/components/schemas/AuthenticationConfig'
+        expiry:
+          $ref: '#/components/schemas/Expiry'
+      type: object
+      title: SystemChannelConfig
+      description: 'Channel configuration for functionality that is fixed by the platform.
+
+
+        This cannot be selected by the end user.'
+    SystemChannelConfig-Output:
       properties:
         type:
           type: string
@@ -1617,7 +1673,41 @@ components:
       - msg
       - type
       title: ValidationError
-    WebScriptChannelConfig:
+    WebScriptChannelConfig-Input:
+      properties:
+        type:
+          type: string
+          const: webscript
+          title: Type
+          default: webscript
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        payload:
+          $ref: '#/components/schemas/PayloadConfig'
+        authentication:
+          $ref: '#/components/schemas/AuthenticationConfig'
+        expiry:
+          $ref: '#/components/schemas/Expiry'
+        name:
+          type: string
+          title: Name
+        version:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Version
+        method:
+          $ref: '#/components/schemas/HTTP_METHOD'
+          default: POST
+      type: object
+      required:
+      - name
+      title: WebScriptChannelConfig
+      description: Channel configuration for invoking a waylay webscript.
+    WebScriptChannelConfig-Output:
       properties:
         type:
           type: string
