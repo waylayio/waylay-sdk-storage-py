@@ -1,28 +1,29 @@
 # LocationInner
 
 
-## Properties
+**Source:** `waylay.services.storage.models.location_inner`
 
-Name | Type | Description | Notes
------------- | ------------- | ------------- | -------------
+
+
+## Union Type (Any Of)
+
+This type allows any of the following:
+
+Type | Description
+------------ | -------------
+**str** | -
+**int** | -
 
 ## Example
 
 ```python
 from waylay.services.storage.models.location_inner import LocationInner
 
-# TODO update the JSON string below
-json = "{}"
-# create an instance of LocationInner from a JSON string
-location_inner_instance = LocationInner.from_json(json)
-# print the JSON string representation of the object
-print LocationInner.to_json()
-
-# convert the object into a dict
-location_inner_dict = location_inner_instance.to_dict()
-# create an instance of LocationInner from a dict
-location_inner_form_dict = location_inner.from_dict(location_inner_dict)
+# Use any of the accepted types (see table above)
+my_location_inner: LocationInner = ...
 ```
+
+
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
 

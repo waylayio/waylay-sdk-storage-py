@@ -1,3 +1,0 @@
-pydantic ~= 2.6
-typing-extensions ~= 4.9
-waylay-sdk-core ~= 0.4.1

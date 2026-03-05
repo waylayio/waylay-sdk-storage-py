@@ -1,29 +1,34 @@
 # HTTPValidationError
 
 
+**Source:** `waylay.services.storage.models.http_validation_error`
+
+
+
+
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **detail** | [**List[ValidationError]**](ValidationError.md) |  | [optional] 
 
+
 ## Example
 
 ```python
 from waylay.services.storage.models.http_validation_error import HTTPValidationError
 
-# TODO update the JSON string below
-json = "{}"
-# create an instance of HTTPValidationError from a JSON string
-http_validation_error_instance = HTTPValidationError.from_json(json)
-# print the JSON string representation of the object
-print HTTPValidationError.to_json()
+http_validation_error = HTTPValidationError(detail=...)
 
-# convert the object into a dict
-http_validation_error_dict = http_validation_error_instance.to_dict()
-# create an instance of HTTPValidationError from a dict
-http_validation_error_form_dict = http_validation_error.from_dict(http_validation_error_dict)
+# Create from JSON
+http_validation_error = HTTPValidationError.from_json('{ "detail": ... }')
+
+# Export to dictionary
+http_validation_error_dict = http_validation_error.to_dict()
 ```
+
+
+
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
 

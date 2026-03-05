@@ -29,8 +29,6 @@ Alternatively, you can install support for this _storage_ service only, installi
 ## Usage
 
 ```python
-from pprint import pprint
-
 # Import the waylay-client from the waylay-sdk-core package
 from waylay.sdk.client import WaylayClient
 from waylay.sdk.api.api_exceptions import ApiError
@@ -40,47 +38,50 @@ waylay_client = WaylayClient.from_profile()
 
 # Note that the typed model classes for responses/parameters/... are only available when `waylay-sdk-storage-types` is installed
 from waylay.services.storage.models.tenant_status_report import TenantStatusReport
+
 try:
     # Status
     # calls `GET /storage/v1/status`
     api_response = await waylay_client.storage.about.status(
         # query parameters:
-        query = {
-            'include_buckets': True
-            'include_queues': True
-            'include_disk_usage': False
+        query={
+            "include_buckets": True,
+            "include_queues": True,
+            "include_disk_usage": False,
         },
     )
-    print("The response of storage.about.status:\n")
-    pprint(api_response)
+    print(f"Response: {api_response}")
 except ApiError as e:
     print("Exception when calling storage.about.status: %s\n" % e)
 ```
 
 
-For more information, please visit the [Waylay API documentation](https://docs.waylay.io/#/api/?id=software-development-kits).
+For more information, please visit the [Waylay API documentation](https://docs.waylay.io/#/api/sdk/waylay-sdk/).
 
 ## Documentation for API Endpoints
 
 All URIs are relative to *https://api.waylay.io*
 
-Class | Method | HTTP request | Description
+SDK Path | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-*AboutApi* | [**get**](docs/AboutApi.md#get) | **GET** /storage/v1/ | Version
-*AboutApi* | [**status**](docs/AboutApi.md#status) | **GET** /storage/v1/status | Status
-*BucketApi* | [**get**](docs/BucketApi.md#get) | **GET** /storage/v1/bucket/{bucket_name} | Get Bucket
-*BucketApi* | [**list**](docs/BucketApi.md#list) | **GET** /storage/v1/bucket | List Buckets
-*ObjectApi* | [**copy_or_move**](docs/ObjectApi.md#copy_or_move) | **PUT** /storage/v1/bucket/{bucket_name}/{target_path} | Copy Or Move Object
-*ObjectApi* | [**create_folder**](docs/ObjectApi.md#create_folder) | **PUT** /storage/v1/bucket/{bucket_name}/{object_path}/ | Create Folder
-*ObjectApi* | [**list**](docs/ObjectApi.md#list) | **GET** /storage/v1/bucket/{bucket_name}/{object_path} | List Objects
-*ObjectApi* | [**remove**](docs/ObjectApi.md#remove) | **DELETE** /storage/v1/bucket/{bucket_name}/{object_path} | Remove Object Or Folder
-*SubscriptionApi* | [**create**](docs/SubscriptionApi.md#create) | **POST** /storage/v1/subscription/{bucket_name} | Create Bucket Subscription
-*SubscriptionApi* | [**delete_by**](docs/SubscriptionApi.md#delete_by) | **DELETE** /storage/v1/subscription/{bucket_name} | Delete All Bucket Subscriptions
-*SubscriptionApi* | [**get**](docs/SubscriptionApi.md#get) | **GET** /storage/v1/subscription/{bucket_name}/{subscription_id} | Get Bucket Subscription
-*SubscriptionApi* | [**list**](docs/SubscriptionApi.md#list) | **GET** /storage/v1/subscription | Query All Subscriptions
-*SubscriptionApi* | [**query**](docs/SubscriptionApi.md#query) | **GET** /storage/v1/subscription/{bucket_name} | Query Bucket Subscriptions
-*SubscriptionApi* | [**remove**](docs/SubscriptionApi.md#remove) | **DELETE** /storage/v1/subscription/{bucket_name}/{subscription_id} | Delete Bucket Subscription
-*SubscriptionApi* | [**replace**](docs/SubscriptionApi.md#replace) | **PUT** /storage/v1/subscription/{bucket_name}/{subscription_id} | Replace Bucket Subscription
+**waylay_client.storage.about** | [**get**](docs/AboutApi.md#get) | **GET** /storage/v1/ | Version
+**waylay_client.storage.about** | [**status**](docs/AboutApi.md#status) | **GET** /storage/v1/status | Status
+ | | |
+**waylay_client.storage.bucket** | [**get**](docs/BucketApi.md#get) | **GET** /storage/v1/bucket/{bucket_name} | Get Bucket
+**waylay_client.storage.bucket** | [**list**](docs/BucketApi.md#list) | **GET** /storage/v1/bucket | List Buckets
+ | | |
+**waylay_client.storage.object** | [**copy_or_move**](docs/ObjectApi.md#copy_or_move) | **PUT** /storage/v1/bucket/{bucket_name}/{target_path} | Copy Or Move Object
+**waylay_client.storage.object** | [**create_folder**](docs/ObjectApi.md#create_folder) | **PUT** /storage/v1/bucket/{bucket_name}/{object_path}/ | Create Folder
+**waylay_client.storage.object** | [**list**](docs/ObjectApi.md#list) | **GET** /storage/v1/bucket/{bucket_name}/{object_path} | List Objects
+**waylay_client.storage.object** | [**remove**](docs/ObjectApi.md#remove) | **DELETE** /storage/v1/bucket/{bucket_name}/{object_path} | Remove Object Or Folder
+ | | |
+**waylay_client.storage.subscription** | [**create**](docs/SubscriptionApi.md#create) | **POST** /storage/v1/subscription/{bucket_name} | Create Bucket Subscription
+**waylay_client.storage.subscription** | [**delete_by**](docs/SubscriptionApi.md#delete_by) | **DELETE** /storage/v1/subscription/{bucket_name} | Delete All Bucket Subscriptions
+**waylay_client.storage.subscription** | [**get**](docs/SubscriptionApi.md#get) | **GET** /storage/v1/subscription/{bucket_name}/{subscription_id} | Get Bucket Subscription
+**waylay_client.storage.subscription** | [**list**](docs/SubscriptionApi.md#list) | **GET** /storage/v1/subscription | Query All Subscriptions
+**waylay_client.storage.subscription** | [**query**](docs/SubscriptionApi.md#query) | **GET** /storage/v1/subscription/{bucket_name} | Query Bucket Subscriptions
+**waylay_client.storage.subscription** | [**remove**](docs/SubscriptionApi.md#remove) | **DELETE** /storage/v1/subscription/{bucket_name}/{subscription_id} | Delete Bucket Subscription
+**waylay_client.storage.subscription** | [**replace**](docs/SubscriptionApi.md#replace) | **PUT** /storage/v1/subscription/{bucket_name}/{subscription_id} | Replace Bucket Subscription
 
 
 ## Documentation For Models
@@ -96,6 +97,8 @@ Class | Method | HTTP request | Description
  - [BucketObjectListing](docs/BucketObjectListing.md)
  - [CHANNELTYPE](docs/CHANNELTYPE.md)
  - [Channel](docs/Channel.md)
+ - [Channel1](docs/Channel1.md)
+ - [EVENTTYPE](docs/EVENTTYPE.md)
  - [EventFilter](docs/EventFilter.md)
  - [Expiry](docs/Expiry.md)
  - [HALEntity](docs/HALEntity.md)
@@ -109,20 +112,22 @@ Class | Method | HTTP request | Description
  - [PayloadConfig](docs/PayloadConfig.md)
  - [QUEUESETUPSTATUS](docs/QUEUESETUPSTATUS.md)
  - [Resource](docs/Resource.md)
- - [ResponseList](docs/ResponseList.md)
+ - [ResponseListObject](docs/ResponseListObject.md)
  - [S3PolicyDef](docs/S3PolicyDef.md)
  - [S3PolicyStatement](docs/S3PolicyStatement.md)
  - [SIGN](docs/SIGN.md)
  - [STORETYPE](docs/STORETYPE.md)
  - [Store](docs/Store.md)
- - [SubscriptionConfig](docs/SubscriptionConfig.md)
+ - [SubscriptionConfigInput](docs/SubscriptionConfigInput.md)
+ - [SubscriptionConfigOutput](docs/SubscriptionConfigOutput.md)
  - [Subscriptions](docs/Subscriptions.md)
  - [SubscriptionsListing](docs/SubscriptionsListing.md)
- - [SystemChannelConfig](docs/SystemChannelConfig.md)
- - [SystemChannelConfigType](docs/SystemChannelConfigType.md)
+ - [SystemChannelConfigInput](docs/SystemChannelConfigInput.md)
+ - [SystemChannelConfigInputType](docs/SystemChannelConfigInputType.md)
+ - [SystemChannelConfigOutput](docs/SystemChannelConfigOutput.md)
  - [TenantStatusReport](docs/TenantStatusReport.md)
- - [VENTTYPE](docs/VENTTYPE.md)
  - [ValidationError](docs/ValidationError.md)
- - [WebScriptChannelConfig](docs/WebScriptChannelConfig.md)
- - [WebScriptChannelConfigType](docs/WebScriptChannelConfigType.md)
+ - [WebScriptChannelConfigInput](docs/WebScriptChannelConfigInput.md)
+ - [WebScriptChannelConfigInputType](docs/WebScriptChannelConfigInputType.md)
+ - [WebScriptChannelConfigOutput](docs/WebScriptChannelConfigOutput.md)
 

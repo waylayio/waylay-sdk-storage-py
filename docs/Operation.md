@@ -18,18 +18,14 @@ These _operation methods_ have a standard sequence of (_positional_ and _named_)
 ```python
 response = await waylay_client.demo.gadgets.combatulate_trinket(
     # required path parameters (positional), for the `id` path parameter
-    '23456',
+    "23456",
     # required or optional query parameters (named)
-    query={
-        'compression_level': 15
-    },
+    query={"compression_level": 15},
     # request body named arguments (named)
     # in this case using generated model for an `application/json` request
-    json=CombatulationRecipe(mode='traditional', decoration='minimal'),
+    json=CombatulationRecipe(mode="traditional", decoration="minimal"),
     # optional http headers (named)
-    headers: {
-        'accept' : 'text/csv'
-    },
+    headers={"accept": "text/csv"},
     # optional named arguments that specify how the response should be rendered (named)
     raw_response=False,
     select_path=None,
@@ -57,7 +53,7 @@ Each _operation method_ of this SDK uses the following arguments:
 * [response rendering](#req_arg_render) arguments that specify how the response is presented
   * [`raw_response: bool`](#req_arg_raw): if `True` returns a http `Response` object
   * [`select_path: str`](#req_arg_select): used on a `json` `dict` response to select the relevant part of the response.
-  * [`response_type: Type | None`](#req_arg_response_type): parse the response as an instance of specified type.
+  * [`response_type: type[T] | None`](#req_arg_response_type): parse the response as an instance of specified type.
 * [http client](#req_arg_client) arguments that influence the handling of the http call.
 
 ## Typing of arguments
@@ -80,9 +76,7 @@ you can alternatively specify a binary `content` request to stream an already js
 ```python
 binary_req_body = b'{"mode":"traditional","decoration":"minimal"}'
 response = await waylay_client.demo.gadgets.combatulate_trinket(
-    '23456',
-    content=binary_req_body,
-    headers={'content-type' : 'application/json'}
+    "23456", content=binary_req_body, headers={"content-type": "application/json"}
 )
 ```
 
@@ -107,7 +101,7 @@ PrimitiveData = str | int | float | bool | None
 # a mapping of query keys to values or list of values
 QueryMap = Mapping[str, Union[PrimitiveData, Sequence[PrimitiveData]]]
 # a list of query tuples, with repeated keys
-QueryEntries = List[Tuple[str, PrimitiveData]] | Tuple[Tuple[str, PrimitiveData], ...]
+QueryEntries = list[tuple[str, PrimitiveData]] | tuple[tuple[str, PrimitiveData], ...]
 # a query string, to be used as is on the request
 QueryString = str | bytes
 ```
@@ -152,14 +146,12 @@ The following examples assume that the server supports `application/json` reques
 
 ```python
 response = await waylay_client.demo.gadgets.combatulate_trinket(
-    '43466',
-    json=CombatulationRecipe(mode='traditional', decoration='minimal')
+    "43466", json=CombatulationRecipe(mode="traditional", decoration="minimal")
 )
 ```
 ```python
 response = await waylay_client.demo.gadgets.combatulate_trinket(
-    '43466',
-    json={'mode':'traditional', 'decoration':'minimal'}
+    "43466", json={"mode": "traditional", "decoration": "minimal"}
 )
 ```
 Will both send a json request with payload `{"mode":"traditional","decoration":"minimal"}` to the server,
@@ -200,9 +192,9 @@ looping over the iterable or buffered reads from the stream.
 Using a bytes string:
 ```python
 response = await waylay_client.demo.gadgets.combatulate_trinket(
-    '23456',
+    "23456",
     content=b'{"mode":"traditional","decoration":"minimal"}',
-    headers={'content-type' : 'application/json'}
+    headers={"content-type": "application/json"},
 )
 ```
 Using an iterator with `bytes` chunks:
@@ -211,21 +203,19 @@ def generate_chunks():
     yield b'{"mode":'
     yield b'"traditional",'
     yield b'"decoration":"minimal"'
-    yield b'}'
+    yield b"}"
+
+
 response = await waylay_client.demo.gadgets.combatulate_trinket(
-    '23456',
-    content=generate_chunks(),
-    headers={'content-type' : 'application/json'}
+    "23456", content=generate_chunks(), headers={"content-type": "application/json"}
 )
 ```
 
 From file, assuming the server supports xml requests:
 ```python
-with open('~/combatulation_requests/example_23456.xml') as xml_file:
+with open("~/combatulation_requests/example_23456.xml") as xml_file:
     response = await waylay_client.demo.gadgets.combatulate_trinket(
-        '23456',
-        content=xml_file,
-        headers={'content-type' : 'text/xml'}
+        "23456", content=xml_file, headers={"content-type": "text/xml"}
     )
 ```
 
@@ -237,10 +227,12 @@ data: DataRequest
 ```
 with types
 ```python
-FilesRequest = Mapping[str, FileTypes] | Sequence[Tuple[str, FileTypes]]
+FilesRequest = Mapping[str, FileTypes] | Sequence[tuple[str, FileTypes]]
 DataRequest = Optional[Mapping[str, bytes | PrimitiveData]]
 
-FileTypes = FileContent | FileNameContent | FileNameContentType | FileNameContentTypeHeaders
+FileTypes = (
+    FileContent | FileNameContent | FileNameContentType | FileNameContentTypeHeaders
+)
 
 # the raw content as bytes (stream)
 FileContent = Union[IO[bytes], bytes, str]
@@ -249,7 +241,12 @@ FileNameContent = [Optional[str], FileContent]
 # a file name, content and mediatype string
 FileNameContentType = [Optional[str], FileContent, Optional[str]]
 # a file name, content, mediatype and additional headers
-FileNameContentTypeHeaders = [Optional[str], FileContent, Optional[str], Mapping[str, str]]
+FileNameContentTypeHeaders = [
+    Optional[str],
+    FileContent,
+    Optional[str],
+    Mapping[str, str],
+]
 
 PrimitiveData = str | int | float | bool | None
 ```
@@ -268,9 +265,9 @@ When a `data` argument is specified, these will be added as additional non-file 
 The following examples assume that the server supports `multipart/form-data` requests.
 ```python
 response = await waylay_client.demo.gadgets.combatulate_trinket(
-    '43466',
-    files={'background': open('~/images/deepblue.png)},
-    data={'mode':'traditional', 'decoration':'minimal'}
+    "43466",
+    files={"background": open("~/images/deepblue.png")},
+    data={"mode": "traditional", "decoration": "minimal"},
 )
 ```
 
@@ -278,11 +275,9 @@ Will send the data as `multipart/form-data`, with three sections `background`, `
 
 ```python
 response = await waylay_client.demo.gadgets.combatulate_trinket(
-    '43466',
-    files={
-        'background': ['deepblue.png', open('~/images/deepblue.png),'image/png']
-    },
-    data={'mode':'traditional', 'decoration':'minimal'}
+    "43466",
+    files={"background": ["deepblue.png", open("~/images/deepblue.png"), "image/png"]},
+    data={"mode": "traditional", "decoration": "minimal"},
 )
 ```
 sends the same data, but a filename and content type is added to the `background` part.
@@ -309,8 +304,7 @@ The following example assumes that the server supports `application/x-www-form-u
 
 ```python
 response = await waylay_client.demo.gadgets.combatulate_trinket(
-    '43466',
-    data={'mode':'traditional', 'decoration':'minimal'}
+    "43466", data={"mode": "traditional", "decoration": "minimal"}
 )
 ```
 Will send the data with content-type `application/x-www-form-urlencoded`, as if an html form submitted
@@ -318,19 +312,32 @@ this request with form inputs `mode` and `decoration`.
 
 ## <a id='req_arg_headers'></a> Request `headers` argument
 
-TODO
+Add custom headers to the request using the `headers` argument.
+
+For complete documentation, see the [waylay-sdk documentation](https://docs.waylay.io/#/api/sdk/waylay-sdk/?id=req_arg_headers).
 
 ## <a id='req_arg_render'></a> Response rendering arguments
 
 ### <a id='req_arg_raw'></a> Render a raw http response: `raw_response`
-TODO
+
+Set `raw_response=True` to return the raw HTTP response object instead of the parsed result.
+
+For complete documentation, see the [waylay-sdk documentation](https://docs.waylay.io/#/api/sdk/waylay-sdk/?id=req_arg_raw).
 
 ### <a id='req_arg_select'></a> Select a part of the response: `select_path`
-TODO
+
+Use the `select_path` argument to extract a specific part of the response using a JSONPath expression.
+
+For complete documentation, see the [waylay-sdk documentation](https://docs.waylay.io/#/api/sdk/waylay-sdk/?id=req_arg_select).
 
 ### <a id='req_arg_response_type'></a> Parse the 2XX response as an instance of type: `response_type`
-TODO
+
+Use the `response_type` argument to parse the response as a specific type instead of the default response type.
+
+For complete documentation, see the [waylay-sdk documentation](https://docs.waylay.io/#/api/sdk/waylay-sdk/?id=req_arg_response_type).
 
 ## <a id='req_arg_http'></a> Http client arguments
 
-TODO
+Pass additional arguments to the underlying HTTP client (e.g., timeout, follow_redirects).
+
+For complete documentation, see the [waylay-sdk documentation](https://docs.waylay.io/#/api/sdk/waylay-sdk/?id=argument-overview).

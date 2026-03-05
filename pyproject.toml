@@ -2,20 +2,31 @@
 include = ["pyproject.toml", "test/**/*.py"]
 
 [tool.ruff.lint]
-# allow duplicate imports
-ignore=["F811"]
 # https://docs.astral.sh/ruff/rules
 select= [
-    "UP007", "FA102", "UP045",  # convert Union to | (pep-604)
-    "I001", "F401",  # sort and remove unused imports
-    "PIE790",  # remove unnecessary pass statements
-    "E303",  # too many blank lines
+    "E", 
+    "F",
+    "UP", 
+    "B",
+    "SIM",
+    "I", # sort and remove unused imports
+    "FA",
+    "RET",
+    "PIE",
+    "ARG",
+    "TC",
+]
+ignore=[
+    "E501",  # line-too-long
+    "TC001",  # pydantic validation needs model imports them at runtime
 ]
 
 [tool.ruff.lint.per-file-ignores]
 # do not touch imports here
 "__init__.py" = ["F401"]
 "conftest.py" = ["F401"]
+# pydantic models needs all imports at runtime, not just for type checking
+"**/models/**/*.py" = ["TC001", "TC002", "TC003"]
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"

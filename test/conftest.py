@@ -46,9 +46,7 @@ def fixture_my_app():
         content_type = request.headers.get("content-type", "application/octet-stream")
         if content_type.startswith("application/json"):
             response = res.JSONResponse(await request.json())
-        elif content_type.startswith("multipart/form-data") or content_type.startswith(
-            "application/x-www-form-urlencoded"
-        ):
+        elif content_type.startswith(("multipart/form-data", "application/x-www-form-urlencoded")):
             form = await request.form()
             response = res.JSONResponse({
                 key: (value if isinstance(value, str) else {"size": value.size})

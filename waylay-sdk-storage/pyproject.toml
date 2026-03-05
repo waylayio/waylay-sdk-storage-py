@@ -4,27 +4,28 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "waylay-sdk-storage"
-version = "0.9.0.20251218"
+version = "0.9.0rc20260304"
 description = "Waylay Storage"
 authors = [
     { name = "Waylay", email = "info@waylay.io"}
 ]
 keywords = ["Waylay Storage"]
-requires-python = ">= 3.9"
+requires-python = ">= 3.10"
 dependencies = [
-    "waylay-sdk-core ~= 0.4.1",
+    "waylay-sdk-core ~= 1.0",
 ]
 readme = "README.md"
 license={file = "LICENSE.txt"}
 
 [project.urls]
 Homepage = "https://www.waylay.io/"
-Documentation = "https://docs.waylay.io/#/api/?id=software-development-kits"
+Documentation = "https://docs.waylay.io/#/api/sdk/waylay-sdk/"
 Repository = "https://github.com/waylayio/waylay-sdk-storage-py.git"
 "Openapi Specification" = "https://docs.waylay.io/openapi/public/redocly/storage.html"
 
 [project.optional-dependencies]
 dev = [
+    "blacken-docs",
     "mypy",
     "ruff",
     "types-python-jose",
@@ -46,6 +47,7 @@ types = ["waylay-sdk-storage-types"]
 [project.entry-points.dynamic]
 "waylay_sdk_plugins"= "waylay.services.storage.service:PLUGINS"
 
+
 [tool.setuptools.packages.find]
 where = ["src/"]
 namespaces = true
@@ -54,20 +56,31 @@ namespaces = true
 include = ["pyproject.toml", "src/**/*.py"]
 
 [tool.ruff.lint]
-# allow duplicate imports
-ignore=["F811"]
 # https://docs.astral.sh/ruff/rules
 select= [
-    "UP007", "FA102", "UP045",  # convert Union to | (pep-604)
-    "I001", "F401",  # sort and remove unused imports
-    "PIE790",  # remove unnecessary pass statements
-    "E303",  # too many blank lines
+    "E", 
+    "F",
+    "UP", 
+    "B",
+    "SIM",
+    "I", # sort and remove unused imports
+    "FA",
+    "RET",
+    "PIE",
+    "ARG",
+    "TC",
+]
+ignore=[
+    "E501",  # line-too-long
+    "TC001",  # pydantic validation needs model imports them at runtime
 ]
 
 [tool.ruff.lint.per-file-ignores]
 # do not touch imports here
 "__init__.py" = ["F401"]
 "conftest.py" = ["F401"]
+# pydantic models needs all imports at runtime, not just for type checking
+"**/models/**/*.py" = ["TC001", "TC002", "TC003"]
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"

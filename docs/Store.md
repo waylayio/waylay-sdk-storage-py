@@ -2,6 +2,11 @@
 
 Representation of a backend store.
 
+**Source:** `waylay.services.storage.models.store`
+
+
+
+
 ## Properties
 
 Name | Type | Description | Notes
@@ -11,23 +16,23 @@ Name | Type | Description | Notes
 **name** | **str** |  | 
 **url** | **str** |  | 
 
+
 ## Example
 
 ```python
 from waylay.services.storage.models.store import Store
 
-# TODO update the JSON string below
-json = "{}"
-# create an instance of Store from a JSON string
-store_instance = Store.from_json(json)
-# print the JSON string representation of the object
-print Store.to_json()
+store = Store(links=..., type=..., name=..., url=...)
 
-# convert the object into a dict
-store_dict = store_instance.to_dict()
-# create an instance of Store from a dict
-store_form_dict = store.from_dict(store_dict)
+# Create from JSON
+store = Store.from_json('{ "_links": ..., "type": ..., "name": ..., "url": ... }')
+
+# Export to dictionary
+store_dict = store.to_dict()
 ```
+
+
+
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
 

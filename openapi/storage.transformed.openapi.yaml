@@ -18,10 +18,7 @@ paths:
           in: query
           required: false
           schema:
-            anyOf:
-              - type: string
-                nullable: true
-            title: Store
+            $ref: '#/components/schemas/ListBucketStore'
           x-showExample: false
       responses:
         '200':
@@ -62,10 +59,7 @@ paths:
           in: query
           required: false
           schema:
-            anyOf:
-              - type: string
-                nullable: true
-            title: Store
+            $ref: '#/components/schemas/GetBucketStore'
           x-showExample: false
       responses:
         '200':
@@ -132,28 +126,19 @@ paths:
           in: query
           required: false
           schema:
-            anyOf:
-              - type: boolean
-                nullable: true
-            title: Recursive
+            $ref: '#/components/schemas/ListObjectRecursive'
           x-showExample: false
         - name: all
           in: query
           required: false
           schema:
-            anyOf:
-              - type: boolean
-                nullable: true
-            title: All
+            $ref: '#/components/schemas/ListObjectAll'
           x-showExample: false
         - name: start_after
           in: query
           required: false
           schema:
-            anyOf:
-              - type: string
-                nullable: true
-            title: Start After
+            $ref: '#/components/schemas/ListObjectStartAfter'
           x-showExample: false
         - name: fetch_content_type
           in: query
@@ -185,55 +170,37 @@ paths:
           in: query
           required: false
           schema:
-            anyOf:
-              - type: string
-                nullable: true
-            title: Sign
+            $ref: '#/components/schemas/ListObjectSign'
           x-showExample: false
         - name: max_keys
           in: query
           required: false
           schema:
-            anyOf:
-              - type: integer
-                nullable: true
-            title: Max Keys
+            $ref: '#/components/schemas/ListObjectMaxKeys'
           x-showExample: false
         - name: store
           in: query
           required: false
           schema:
-            anyOf:
-              - type: string
-                nullable: true
-            title: Store
+            $ref: '#/components/schemas/ListObjectStore'
           x-showExample: false
         - name: expiry_days
           in: query
           required: false
           schema:
-            anyOf:
-              - type: integer
-                nullable: true
-            title: Expiry Days
+            $ref: '#/components/schemas/ListObjectExpiryDays'
           x-showExample: false
         - name: expiry_hours
           in: query
           required: false
           schema:
-            anyOf:
-              - type: integer
-                nullable: true
-            title: Expiry Hours
+            $ref: '#/components/schemas/ListObjectExpiryHours'
           x-showExample: false
         - name: expiry_seconds
           in: query
           required: false
           schema:
-            anyOf:
-              - type: integer
-                nullable: true
-            title: Expiry Seconds
+            $ref: '#/components/schemas/ListObjectExpirySeconds'
           x-showExample: false
         - name: content_length_min
           in: query
@@ -247,19 +214,13 @@ paths:
           in: query
           required: false
           schema:
-            anyOf:
-              - type: integer
-                nullable: true
-            title: Content Length Max
+            $ref: '#/components/schemas/ListObjectContentLengthMax'
           x-showExample: false
         - name: content_type
           in: query
           required: false
           schema:
-            anyOf:
-              - type: string
-                nullable: true
-            title: Content Type
+            $ref: '#/components/schemas/ListObjectContentType'
           x-showExample: false
       responses:
         '200':
@@ -271,7 +232,7 @@ paths:
                   - $ref: '#/components/schemas/BucketObjectListing'
                   - $ref: '#/components/schemas/BucketObject'
                   - $ref: '#/components/schemas/HALEntity'
-                title: Response List
+                title: Response List Object
         '422':
           description: Validation Error
           content:
@@ -316,46 +277,31 @@ paths:
           in: query
           required: false
           schema:
-            anyOf:
-              - type: boolean
-                nullable: true
-            title: Recursive
+            $ref: '#/components/schemas/RemoveObjectRecursive'
           x-showExample: false
         - name: all
           in: query
           required: false
           schema:
-            anyOf:
-              - type: boolean
-                nullable: true
-            title: All
+            $ref: '#/components/schemas/RemoveObjectAll'
           x-showExample: false
         - name: start_after
           in: query
           required: false
           schema:
-            anyOf:
-              - type: string
-                nullable: true
-            title: Start After
+            $ref: '#/components/schemas/RemoveObjectStartAfter'
           x-showExample: false
         - name: max_keys
           in: query
           required: false
           schema:
-            anyOf:
-              - type: integer
-                nullable: true
-            title: Max Keys
+            $ref: '#/components/schemas/RemoveObjectMaxKeys'
           x-showExample: false
         - name: store
           in: query
           required: false
           schema:
-            anyOf:
-              - type: string
-                nullable: true
-            title: Store
+            $ref: '#/components/schemas/RemoveObjectStore'
           x-showExample: false
       responses:
         '200':
@@ -415,10 +361,7 @@ paths:
           in: query
           required: false
           schema:
-            anyOf:
-              - type: string
-                nullable: true
-            title: Store
+            $ref: '#/components/schemas/CreateFolderObjectStore'
           x-showExample: false
       responses:
         '200':
@@ -481,10 +424,7 @@ paths:
           in: query
           required: false
           schema:
-            anyOf:
-              - type: string
-                nullable: true
-            title: Store
+            $ref: '#/components/schemas/CopyOrMoveObjectStore'
           x-showExample: false
       responses:
         '200':
@@ -520,64 +460,43 @@ paths:
           in: query
           required: false
           schema:
-            anyOf:
-              - type: string
-                nullable: true
-            title: Store
+            $ref: '#/components/schemas/ListSubscriptionStore'
           x-showExample: false
         - name: prefix
           in: query
           required: false
           schema:
-            anyOf:
-              - type: string
-                nullable: true
-            title: Prefix
+            $ref: '#/components/schemas/ListSubscriptionPrefix'
           x-showExample: false
         - name: suffix
           in: query
           required: false
           schema:
-            anyOf:
-              - type: string
-                nullable: true
-            title: Suffix
+            $ref: '#/components/schemas/ListSubscriptionSuffix'
           x-showExample: false
         - name: event_type
           in: query
           required: false
           schema:
-            anyOf:
-              - $ref: '#/components/schemas/VENT_TYPE'
-                nullable: true
-            title: Event Type
+            $ref: '#/components/schemas/ListSubscriptionEventType'
           x-showExample: false
         - name: channel_type
           in: query
           required: false
           schema:
-            anyOf:
-              - $ref: '#/components/schemas/CHANNEL_TYPE'
-                nullable: true
-            title: Channel Type
+            $ref: '#/components/schemas/ListSubscriptionChannelType'
           x-showExample: false
         - name: channel_id
           in: query
           required: false
           schema:
-            anyOf:
-              - type: string
-                nullable: true
-            title: Channel Id
+            $ref: '#/components/schemas/ListSubscriptionChannelId'
           x-showExample: false
         - name: max_keys
           in: query
           required: false
           schema:
-            anyOf:
-              - type: integer
-                nullable: true
-            title: Max Keys
+            $ref: '#/components/schemas/ListSubscriptionMaxKeys'
           x-showExample: false
       responses:
         '200':
@@ -618,73 +537,49 @@ paths:
           in: query
           required: false
           schema:
-            anyOf:
-              - type: string
-                nullable: true
-            title: Start After
+            $ref: '#/components/schemas/QuerySubscriptionStartAfter'
           x-showExample: false
         - name: store
           in: query
           required: false
           schema:
-            anyOf:
-              - type: string
-                nullable: true
-            title: Store
+            $ref: '#/components/schemas/QuerySubscriptionStore'
           x-showExample: false
         - name: prefix
           in: query
           required: false
           schema:
-            anyOf:
-              - type: string
-                nullable: true
-            title: Prefix
+            $ref: '#/components/schemas/QuerySubscriptionPrefix'
           x-showExample: false
         - name: suffix
           in: query
           required: false
           schema:
-            anyOf:
-              - type: string
-                nullable: true
-            title: Suffix
+            $ref: '#/components/schemas/QuerySubscriptionSuffix'
           x-showExample: false
         - name: event_type
           in: query
           required: false
           schema:
-            anyOf:
-              - $ref: '#/components/schemas/VENT_TYPE'
-                nullable: true
-            title: Event Type
+            $ref: '#/components/schemas/QuerySubscriptionEventType'
           x-showExample: false
         - name: channel_type
           in: query
           required: false
           schema:
-            anyOf:
-              - $ref: '#/components/schemas/CHANNEL_TYPE'
-                nullable: true
-            title: Channel Type
+            $ref: '#/components/schemas/QuerySubscriptionChannelType'
           x-showExample: false
         - name: channel_id
           in: query
           required: false
           schema:
-            anyOf:
-              - type: string
-                nullable: true
-            title: Channel Id
+            $ref: '#/components/schemas/QuerySubscriptionChannelId'
           x-showExample: false
         - name: max_keys
           in: query
           required: false
           schema:
-            anyOf:
-              - type: integer
-                nullable: true
-            title: Max Keys
+            $ref: '#/components/schemas/QuerySubscriptionMaxKeys'
           x-showExample: false
       responses:
         '200':
@@ -729,73 +624,49 @@ paths:
           in: query
           required: false
           schema:
-            anyOf:
-              - type: string
-                nullable: true
-            title: Start After
+            $ref: '#/components/schemas/DeleteBySubscriptionStartAfter'
           x-showExample: false
         - name: prefix
           in: query
           required: false
           schema:
-            anyOf:
-              - type: string
-                nullable: true
-            title: Prefix
+            $ref: '#/components/schemas/DeleteBySubscriptionPrefix'
           x-showExample: false
         - name: suffix
           in: query
           required: false
           schema:
-            anyOf:
-              - type: string
-                nullable: true
-            title: Suffix
+            $ref: '#/components/schemas/DeleteBySubscriptionSuffix'
           x-showExample: false
         - name: event_type
           in: query
           required: false
           schema:
-            anyOf:
-              - $ref: '#/components/schemas/VENT_TYPE'
-                nullable: true
-            title: Event Type
+            $ref: '#/components/schemas/DeleteBySubscriptionEventType'
           x-showExample: false
         - name: channel_type
           in: query
           required: false
           schema:
-            anyOf:
-              - $ref: '#/components/schemas/CHANNEL_TYPE'
-                nullable: true
-            title: Channel Type
+            $ref: '#/components/schemas/DeleteBySubscriptionChannelType'
           x-showExample: false
         - name: channel_id
           in: query
           required: false
           schema:
-            anyOf:
-              - type: string
-                nullable: true
-            title: Channel Id
+            $ref: '#/components/schemas/DeleteBySubscriptionChannelId'
           x-showExample: false
         - name: store
           in: query
           required: false
           schema:
-            anyOf:
-              - type: string
-                nullable: true
-            title: Store
+            $ref: '#/components/schemas/DeleteBySubscriptionStore'
           x-showExample: false
         - name: max_keys
           in: query
           required: false
           schema:
-            anyOf:
-              - type: integer
-                nullable: true
-            title: Max Keys
+            $ref: '#/components/schemas/DeleteBySubscriptionMaxKeys'
           x-showExample: false
       responses:
         '200':
@@ -841,24 +712,21 @@ paths:
           in: query
           required: false
           schema:
-            anyOf:
-              - type: string
-                nullable: true
-            title: Store
+            $ref: '#/components/schemas/CreateSubscriptionStore'
           x-showExample: false
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SubscriptionConfig'
+              $ref: '#/components/schemas/SubscriptionConfig-Input'
       responses:
         '200':
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SubscriptionConfig'
+                $ref: '#/components/schemas/SubscriptionConfig-Output'
         '422':
           description: Validation Error
           content:
@@ -898,10 +766,7 @@ paths:
           in: query
           required: false
           schema:
-            anyOf:
-              - type: string
-                nullable: true
-            title: Store
+            $ref: '#/components/schemas/GetSubscriptionStore'
           x-showExample: false
       responses:
         '200':
@@ -909,7 +774,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SubscriptionConfig'
+                $ref: '#/components/schemas/SubscriptionConfig-Output'
         '422':
           description: Validation Error
           content:
@@ -948,10 +813,7 @@ paths:
           in: query
           required: false
           schema:
-            anyOf:
-              - type: string
-                nullable: true
-            title: Store
+            $ref: '#/components/schemas/RemoveSubscriptionStore'
           x-showExample: false
       responses:
         '200':
@@ -1005,24 +867,21 @@ paths:
           in: query
           required: false
           schema:
-            anyOf:
-              - type: string
-                nullable: true
-            title: Store
+            $ref: '#/components/schemas/ReplaceSubscriptionStore'
           x-showExample: false
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SubscriptionConfig'
+              $ref: '#/components/schemas/SubscriptionConfig-Input'
       responses:
         '200':
           description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SubscriptionConfig'
+                $ref: '#/components/schemas/SubscriptionConfig-Output'
         '422':
           description: Validation Error
           content:
@@ -1070,10 +929,7 @@ paths:
           in: query
           required: false
           schema:
-            anyOf:
-              - type: string
-                nullable: true
-            title: Store
+            $ref: '#/components/schemas/StatusAboutStore'
           x-showExample: false
         - name: include_buckets
           in: query
@@ -1330,7 +1186,7 @@ components:
         - webscript
         - system
       description: Supported notification channel types.
-    VENT_TYPE:
+    EVENT_TYPE:
       type: string
       enum:
         - delete
@@ -1351,7 +1207,7 @@ components:
           title: Suffix
         events:
           items:
-            $ref: '#/components/schemas/VENT_TYPE'
+            $ref: '#/components/schemas/EVENT_TYPE'
           type: array
           uniqueItems: true
           title: Events
@@ -1593,7 +1449,7 @@ components:
         - name
         - url
       description: Representation of a backend store.
-    SubscriptionConfig:
+    SubscriptionConfig-Input:
       properties:
         _links:
           additionalProperties:
@@ -1614,15 +1470,47 @@ components:
           type: string
           title: Description
         channel:
-          oneOf:
-            - $ref: '#/components/schemas/WebScriptChannelConfig'
-            - $ref: '#/components/schemas/SystemChannelConfig'
+          anyOf:
+            - $ref: '#/components/schemas/WebScriptChannelConfig-Input'
+            - $ref: '#/components/schemas/SystemChannelConfig-Input'
           title: Channel
-          discriminator:
-            propertyName: type
-            mapping:
-              system: '#/components/schemas/SystemChannelConfig'
-              webscript: '#/components/schemas/WebScriptChannelConfig'
+        filters:
+          items:
+            $ref: '#/components/schemas/EventFilter'
+          type: array
+          title: Filters
+      type: object
+      required:
+        - channel
+        - filters
+      description: >-
+        Specification of a notification subscription that forwards to a given
+        channel.
+    SubscriptionConfig-Output:
+      properties:
+        _links:
+          additionalProperties:
+            anyOf:
+              - $ref: '#/components/schemas/HALLink'
+              - items:
+                  $ref: '#/components/schemas/HALLink'
+                type: array
+          type: object
+          title: Links
+        id:
+          type: string
+          title: Id
+        title:
+          type: string
+          title: Title
+        description:
+          type: string
+          title: Description
+        channel:
+          anyOf:
+            - $ref: '#/components/schemas/WebScriptChannelConfig-Output'
+            - $ref: '#/components/schemas/SystemChannelConfig-Output'
+          title: Channel
         filters:
           items:
             $ref: '#/components/schemas/EventFilter'
@@ -1650,7 +1538,7 @@ components:
           $ref: '#/components/schemas/Bucket'
         subscriptions:
           items:
-            $ref: '#/components/schemas/SubscriptionConfig'
+            $ref: '#/components/schemas/SubscriptionConfig-Output'
           type: array
           title: Subscriptions
         warnings:
@@ -1684,7 +1572,30 @@ components:
       required:
         - buckets
       description: List of buckets that support subscriptions.
-    SystemChannelConfig:
+    SystemChannelConfig-Input:
+      properties:
+        type:
+          type: string
+          default: system
+          enum:
+            - system
+        description:
+          anyOf:
+            - type: string
+              nullable: true
+          title: Description
+        payload:
+          $ref: '#/components/schemas/PayloadConfig'
+        authentication:
+          $ref: '#/components/schemas/AuthenticationConfig'
+        expiry:
+          $ref: '#/components/schemas/Expiry'
+      type: object
+      description: |-
+        Channel configuration for functionality that is fixed by the platform.
+
+        This cannot be selected by the end user.
+    SystemChannelConfig-Output:
       properties:
         type:
           type: string
@@ -1755,7 +1666,7 @@ components:
         - loc
         - msg
         - type
-    WebScriptChannelConfig:
+    WebScriptChannelConfig-Input:
       properties:
         type:
           type: string
@@ -1788,6 +1699,231 @@ components:
       required:
         - name
       description: Channel configuration for invoking a waylay webscript.
+    WebScriptChannelConfig-Output:
+      properties:
+        type:
+          type: string
+          default: webscript
+          enum:
+            - webscript
+        description:
+          anyOf:
+            - type: string
+              nullable: true
+          title: Description
+        payload:
+          $ref: '#/components/schemas/PayloadConfig'
+        authentication:
+          $ref: '#/components/schemas/AuthenticationConfig'
+        expiry:
+          $ref: '#/components/schemas/Expiry'
+        name:
+          type: string
+          title: Name
+        version:
+          anyOf:
+            - type: string
+              nullable: true
+          title: Version
+        method:
+          $ref: '#/components/schemas/HTTP_METHOD'
+          default: POST
+      type: object
+      required:
+        - name
+      description: Channel configuration for invoking a waylay webscript.
+    ListBucketStore:
+      anyOf:
+        - type: string
+          nullable: true
+    GetBucketStore:
+      anyOf:
+        - type: string
+          nullable: true
+    ListObjectRecursive:
+      anyOf:
+        - type: boolean
+          nullable: true
+    ListObjectAll:
+      anyOf:
+        - type: boolean
+          nullable: true
+    ListObjectStartAfter:
+      anyOf:
+        - type: string
+          nullable: true
+    ListObjectSign:
+      anyOf:
+        - type: string
+          nullable: true
+    ListObjectMaxKeys:
+      anyOf:
+        - type: integer
+          nullable: true
+    ListObjectStore:
+      anyOf:
+        - type: string
+          nullable: true
+    ListObjectExpiryDays:
+      anyOf:
+        - type: integer
+          nullable: true
+    ListObjectExpiryHours:
+      anyOf:
+        - type: integer
+          nullable: true
+    ListObjectExpirySeconds:
+      anyOf:
+        - type: integer
+          nullable: true
+    ListObjectContentLengthMax:
+      anyOf:
+        - type: integer
+          nullable: true
+    ListObjectContentType:
+      anyOf:
+        - type: string
+          nullable: true
+    RemoveObjectRecursive:
+      anyOf:
+        - type: boolean
+          nullable: true
+    RemoveObjectAll:
+      anyOf:
+        - type: boolean
+          nullable: true
+    RemoveObjectStartAfter:
+      anyOf:
+        - type: string
+          nullable: true
+    RemoveObjectMaxKeys:
+      anyOf:
+        - type: integer
+          nullable: true
+    RemoveObjectStore:
+      anyOf:
+        - type: string
+          nullable: true
+    CreateFolderObjectStore:
+      anyOf:
+        - type: string
+          nullable: true
+    CopyOrMoveObjectStore:
+      anyOf:
+        - type: string
+          nullable: true
+    ListSubscriptionStore:
+      anyOf:
+        - type: string
+          nullable: true
+    ListSubscriptionPrefix:
+      anyOf:
+        - type: string
+          nullable: true
+    ListSubscriptionSuffix:
+      anyOf:
+        - type: string
+          nullable: true
+    ListSubscriptionEventType:
+      anyOf:
+        - $ref: '#/components/schemas/EVENT_TYPE'
+          nullable: true
+    ListSubscriptionChannelType:
+      anyOf:
+        - $ref: '#/components/schemas/CHANNEL_TYPE'
+          nullable: true
+    ListSubscriptionChannelId:
+      anyOf:
+        - type: string
+          nullable: true
+    ListSubscriptionMaxKeys:
+      anyOf:
+        - type: integer
+          nullable: true
+    QuerySubscriptionStartAfter:
+      anyOf:
+        - type: string
+          nullable: true
+    QuerySubscriptionStore:
+      anyOf:
+        - type: string
+          nullable: true
+    QuerySubscriptionPrefix:
+      anyOf:
+        - type: string
+          nullable: true
+    QuerySubscriptionSuffix:
+      anyOf:
+        - type: string
+          nullable: true
+    QuerySubscriptionEventType:
+      anyOf:
+        - $ref: '#/components/schemas/EVENT_TYPE'
+          nullable: true
+    QuerySubscriptionChannelType:
+      anyOf:
+        - $ref: '#/components/schemas/CHANNEL_TYPE'
+          nullable: true
+    QuerySubscriptionChannelId:
+      anyOf:
+        - type: string
+          nullable: true
+    QuerySubscriptionMaxKeys:
+      anyOf:
+        - type: integer
+          nullable: true
+    DeleteBySubscriptionStartAfter:
+      anyOf:
+        - type: string
+          nullable: true
+    DeleteBySubscriptionPrefix:
+      anyOf:
+        - type: string
+          nullable: true
+    DeleteBySubscriptionSuffix:
+      anyOf:
+        - type: string
+          nullable: true
+    DeleteBySubscriptionEventType:
+      anyOf:
+        - $ref: '#/components/schemas/EVENT_TYPE'
+          nullable: true
+    DeleteBySubscriptionChannelType:
+      anyOf:
+        - $ref: '#/components/schemas/CHANNEL_TYPE'
+          nullable: true
+    DeleteBySubscriptionChannelId:
+      anyOf:
+        - type: string
+          nullable: true
+    DeleteBySubscriptionStore:
+      anyOf:
+        - type: string
+          nullable: true
+    DeleteBySubscriptionMaxKeys:
+      anyOf:
+        - type: integer
+          nullable: true
+    CreateSubscriptionStore:
+      anyOf:
+        - type: string
+          nullable: true
+    GetSubscriptionStore:
+      anyOf:
+        - type: string
+          nullable: true
+    RemoveSubscriptionStore:
+      anyOf:
+        - type: string
+          nullable: true
+    ReplaceSubscriptionStore:
+      anyOf:
+        - type: string
+          nullable: true
+    StatusAboutStore:
+      anyOf:
+        - type: string
+          nullable: true
   securitySchemes:
     waylayApiKeySecret:
       type: http
